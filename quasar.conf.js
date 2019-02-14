@@ -127,7 +127,7 @@ module.exports = function (ctx) {
     },
 
     cordova: {
-      // id: 'org.cordova.quasar.app'
+      id: 'com.fjrotgerl.caliope.app'
     },
 
     electron: {
