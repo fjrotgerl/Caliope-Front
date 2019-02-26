@@ -1,7 +1,16 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
-    <p>asdsdd</p>
+    <q-knob
+      show-value
+      class="text-white q-ma-md"
+      v-model="value"
+      size="90px"
+      :thickness="0.2"
+      color="orange"
+      center-color="grey-8"
+      track-color="transparent"
+    ><q-icon name="volume_up" />
+    </q-knob>
   </q-page>
 </template>
 
@@ -10,6 +19,6 @@
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'Index'
 }
 </script>
