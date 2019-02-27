@@ -38,7 +38,15 @@ module.exports = function (ctx) {
         'QItem',
         'QItemSection',
         'QItemLabel',
-        'QKnob'
+        'QKnob',
+        'QStepper',
+        'QStep',
+        'QStepperNavigation',
+        'QInput',
+        'QToggle',
+        'QDate',
+        'QPopupProxy'
+
       ],
 
       directives: [
