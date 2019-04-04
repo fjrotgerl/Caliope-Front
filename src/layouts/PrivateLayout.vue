@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-layout view="hHh lpR fFf">
 
     <q-header reveal bordered class="bg-primary text-accent">
@@ -7,6 +7,7 @@
           <img style="margin-top: 2px" src="/assets/logo.svg" @click="$router.push('/')">
         </q-toolbar-title>
 
+        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/hello')"/>
 
         <q-input style="margin-right: 5px;" dark dense standout v-model="text" input-class="text-right">
           <template v-slot:append>
@@ -15,9 +16,9 @@
           </template>
         </q-input>
 
-        <q-btn flat rounded color="accent" label="Iniciar sesión" @click="$router.push('/login')"/>
+        <q-btn flat rounded color="accent" label="Subir canción" @click=""/>
 
-        <q-btn flat rounded color="accent" label="Registrarse" @click="$router.push('/registro')"/>
+        <q-btn flat rounded color="accent" label="Perfil" @click=""/>
       </q-toolbar>
     </q-header>
 

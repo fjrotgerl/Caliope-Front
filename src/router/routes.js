@@ -1,16 +1,30 @@
 const routes = [
   {
-    path: '/',
-    component: () => import("layouts/IndexLayout.vue"),
+    path: '/hello',
+    component: () => import("layouts/PublicLayout.vue"),
     children: [
       {
         path: 'login',
-        component: () => import("pages/Index.vue"),
+        component: () => import("pages/public/Index.vue"),
       },
       {
         path: 'registro',
-        component: () => import("pages/Register.vue"),
+        component: () => import("pages/public/Register.vue"),
+      },
+      {
+        path: 'faq',
+        component: () => import("pages/public/PreguntasFrecuentes.vue"),
       }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import("layouts/PrivateLayout.vue"),
+    children: [
+      {
+        path: 'home',
+        component: () => import("pages/private/Home.vue"),
+      },
     ]
   }
 ];
