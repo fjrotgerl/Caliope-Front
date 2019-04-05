@@ -9,6 +9,6 @@
 
 <script>
 export default {
-  name: 'Playlist'
+  name: 'Perfil'
 }
 </script>

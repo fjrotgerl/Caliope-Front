@@ -45,7 +45,13 @@ module.exports = function (ctx) {
         'QInput',
         'QToggle',
         'QDate',
-        'QPopupProxy'
+        'QPopupProxy',
+        'QTabs',
+        'QTab',
+        'QRouteTab',
+        'QSplitter',
+        'QTabPanels',
+        'QTabPanel'
 
       ],
 

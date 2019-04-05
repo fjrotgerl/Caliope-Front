@@ -4,10 +4,10 @@
     <q-header reveal bordered class="bg-primary text-accent">
       <q-toolbar>
         <q-toolbar-title>
-          <img style="margin-top: 2px" src="/assets/logo.svg" @click="$router.push('/')">
+          <p>PARTE PRIVADA</p>
         </q-toolbar-title>
 
-        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/hello')"/>
+        <q-btn flat rounded color="accent" label="Ir a la parte publica (solo dev)" @click="$router.push('/hello')"/>
 
         <q-input style="margin-right: 5px;" dark dense standout v-model="text" input-class="text-right">
           <template v-slot:append>
