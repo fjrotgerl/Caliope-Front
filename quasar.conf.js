@@ -27,7 +27,11 @@ module.exports = function (ctx) {
       components: [
         'QLayout',
         'QHeader',
+        'QCard',
+        'QCardSection',
+        'QCardActions',
         'QDrawer',
+        'QDialog',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -56,6 +60,7 @@ module.exports = function (ctx) {
       ],
 
       directives: [
+        'ClosePopup',
         'Ripple'
       ],
 

@@ -7,7 +7,7 @@
           <p>PARTE PRIVADA</p>
         </q-toolbar-title>
 
-        <q-btn flat rounded color="accent" label="Ir a la parte publica (solo dev)" @click="$router.push('/hello')"/>
+        <q-btn flat rounded color="accent" label="Ir a la parte publica (solo dev)" @click="$router.push('/')"/>
 
         <q-input style="margin-right: 5px;" dark dense standout v-model="text" input-class="text-right">
           <template v-slot:append>

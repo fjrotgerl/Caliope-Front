@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/hello',
+    path: '/',
     component: () => import("layouts/PublicLayout.vue"),
     children: [
       {
@@ -18,7 +18,7 @@ const routes = [
     ]
   },
   {
-    path: '/',
+    path: '/user',
     component: () => import("layouts/PrivateLayout.vue"),
     children: [
       {
