@@ -19,6 +19,10 @@
 
 <script>
 export default {
-  name: 'Index'
+  data () {
+    return {
+      value: 100
+    }
+  }
 }
 </script>
