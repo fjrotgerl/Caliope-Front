@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import constants from '../statics/js/configuration'
+import axios from 'axios'
 
 import routes from './routes'
 
@@ -21,6 +23,30 @@ export default function (/* { store, ssrContext } */) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
   })
+
+  function existToken() {
+    return !!localStorage.token;
+  }
+
+  Router.beforeEach((to, from, next) => {
+    if(to.path === '/user' ) {
+      if (existToken()) {
+        axios.post(constants.AUTH_API_URL + "/verify-token", {}, {
+          headers: {
+            'Authorization': localStorage.getItem("token"),
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+          .then(response => console.log(response))
+          .catch(error => console.error(error));
+        next();
+      } else {
+        next("/")
+      }
+    } else {
+      next();
+    }
+  });
 
   return Router
 }

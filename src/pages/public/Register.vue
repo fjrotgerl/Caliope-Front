@@ -108,6 +108,7 @@ export default {
   data () {
     return {
       step: 1,
+      accept: false,
       user: {
         username: '',
         email: '',

@@ -18,7 +18,7 @@
       </q-toolbar>
 
       <!-- Login modal -->
-      <div v-if="this.$q.screen.width > 500">
+      <!-- <div v-if="this.$q.screen.width > 500"> -->
         <q-dialog
           v-model="loginWindow"
         >
@@ -35,10 +35,6 @@
                   <q-btn flat v-close-popup><i class="material-icons">clear</i></q-btn>
                 </q-card-actions>
 
-                <div v-if="this.$q.screen.width < 500">
-                  <q-btn flat v-close-popup>LoginLoginLogin</q-btn>
-                </div>
-
               </div>
 
               <div class="row">
@@ -46,60 +42,23 @@
               </div>
 
               <div class="row">
-                <q-input style="text-align: center" class="col-xs-12" outlined v-model="usuario.contraseña" label="Contraseña" />
+                <q-input type="password" style="text-align: center" class="col-xs-12" outlined v-model="usuario.password" label="Contraseña" />
               </div>
 
               <div class="row">
-                <q-card-actions align="center" class="col-xs-12">
+                <q-card-actions align="center" class="col-sm-6 col-md-6 col-xs-12">
                   <q-btn flat v-close-popup @click="login()">Iniciar sesión</q-btn>
+                </q-card-actions>
+
+                <q-card-actions align="center" class="col-sm-6 col-md-6 col-xs-12">
+                  <q-btn flat v-close-popup @click="googleLogin()">Entrar con google</q-btn>
                 </q-card-actions>
               </div>
             </div>
 
           </q-card>
         </q-dialog>
-      </div>
-      <div v-else>
-        <q-dialog
-          v-model="loginWindow"
-        >
-          <q-card class="fullscreen">
-            <div >
-              <div class="row">
-                <q-card-section class="col-12">
-                  <div class="text-h6">
-                    Login
-                  </div>
-                </q-card-section>
-
-                <q-card-actions class="absolute-top-right" >
-                  <q-btn flat v-close-popup><i class="material-icons">clear</i></q-btn>
-                </q-card-actions>
-
-                <div v-if="this.$q.screen.width < 500">
-                  <q-btn flat v-close-popup>LoginLoginLogin</q-btn>
-                </div>
-
-              </div>
-
-              <div class="row">
-                <q-input class="col-xs" outlined v-model="usuario.username" label="Nombre de usuario" />
-              </div>
-
-              <div class="row">
-                <q-input style="text-align: center" class="col-xs-12" outlined v-model="usuario.contraseña" label="Contraseña" />
-              </div>
-
-              <div class="row">
-                <q-card-actions align="center" class="col-xs-12">
-                  <q-btn flat v-close-popup @click="login()">Iniciar sesión</q-btn>
-                </q-card-actions>
-              </div>
-            </div>
-
-          </q-card>
-        </q-dialog>
-      </div>
+      <!--</div> -->
 
     </q-header>
 
@@ -111,23 +70,27 @@
 </template>
 
 <script>
+  const constants  = require('../statics/js/configuration');
+  const md5        = require('md5');
+
   export default {
     data () {
       return {
         loginWindow: false,
         usuario: {
           username: "",
-          contraseña: ""
+          password: ""
         },
         login: () => {
-          this.$axios.post("http://localhost:8080/autenticador", this.usuario)
-            .then(response => {
-              console.log(response.data);
-              if (response.data.status === "autenticado") {
-                // push
-              }
-            })
-            .catch(error => console.log(error))
+          this.$axios.post(constants.AUTH_API_URL + "/token-local", {
+            username: this.usuario.username,
+            password: md5(this.usuario.password)
+          })
+            .then(response => localStorage.setItem("token",response.data))
+            .catch(error => console.error(error))
+        },
+        googleLogin: () => {
+          window.open(constants.AUTH_API_URL + "/token-google");
         }
       }
     }

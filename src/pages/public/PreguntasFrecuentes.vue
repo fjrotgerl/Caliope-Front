@@ -9,6 +9,6 @@
 
 <script>
 export default {
-  name: 'Preguntas frecuentes'
+  name: ''
 }
 </script>
