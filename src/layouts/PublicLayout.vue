@@ -2,18 +2,20 @@
   <q-layout view="hHh lpR fFf">
 
     <q-header reveal bordered class="bg-primary text-accent">
-      <q-toolbar>
-        <q-toolbar-title>
-          <p>PARTE PUBLICA</p>
+      <q-toolbar id="menu-superior">
+        <q-toolbar-title id="home-publica">
+          <p @click="$router.push('/')">PARTE PÚBLICA</p>
         </q-toolbar-title>
 
-        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>
-
+<!--        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>-->
+        <div id="menu-superior">
         <q-btn flat rounded color="accent" label="Preguntas frecuentes" @click="$router.push('/faq')"/>
 
         <q-btn flat rounded color="accent" label="Iniciar sesión"  @click="loginWindow = true"/>
 
         <q-btn flat rounded color="accent" label="Registrarse" @click="$router.push('/registro')"/>
+
+        </div>
 
       </q-toolbar>
 

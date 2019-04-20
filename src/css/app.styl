@@ -1,5 +1,44 @@
 // app global css
+
+@font-face
+  font-family customfont
+  src url(../assets/IndieFlower.ttf)
+
+* {
+  font-family 'customfont'
+}
+
+.portada{
+  background: linear-gradient(to right bottom, rgb(0, 51, 204) 0%, rgb(0, 255, 153) 100%);
+  height: calc(100vh - 51px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  #home-publica:hover{
+    cursor:pointer;
+  }
+.q-toolbar__title p{
+  margin-bottom:0;
+}
+
 a {
   color: inherit;
   text-decoration: inherit;
-};
+}
+
+@media screen and (max-width: 900px) {
+  #menu-superior {
+    display: flex;
+    flex-direction column;
+  }
+
+  .portada h1{
+    font-size: 60px;
+  }
+
+  .portada h4{
+    font-size: 20px;
+  }
+}
