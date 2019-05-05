@@ -25,6 +25,10 @@ const routes = [
         path: 'home',
         component: () => import("pages/private/Home.vue"),
       },
+      {
+        path: 'playlist',
+        component: () => import("pages/private/Playlist.vue"),
+      },
     ]
   }
 ];

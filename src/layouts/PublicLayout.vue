@@ -25,8 +25,8 @@
           v-model="loginWindow"
         >
           <q-card style="width: 800px; max-width: 80vw; background: white;">
-            <div class="">
-              <div class="row">
+            <div style="padding: 5% 25%;">
+              <div class="row" style="margin-bottom: 5%;">
                 <q-card-section class="col-12">
                   <div class="text-h6">
                     Login
@@ -39,11 +39,9 @@
 
               </div>
 
-              <div class="row">
+              <div class="column justify-between" style="height: 150px;">
                 <q-input class="col-xs" outlined v-model="usuario.username" label="Nombre de usuario" />
-              </div>
 
-              <div class="row">
                 <q-input type="password" style="text-align: center" class="col-xs-12" outlined v-model="usuario.password" label="Contraseña" />
               </div>
 
