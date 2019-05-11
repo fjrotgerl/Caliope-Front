@@ -5,15 +5,15 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import("pages/public/Index.vue"),
+        component: () => import("pages/public/Index.vue")
       },
       {
         path: 'registro',
-        component: () => import("pages/public/Register.vue"),
+        component: () => import("pages/public/Register.vue")
       },
       {
         path: 'faq',
-        component: () => import("pages/public/PreguntasFrecuentes.vue"),
+        component: () => import("pages/public/PreguntasFrecuentes.vue")
       }
     ]
   },
@@ -23,12 +23,28 @@ const routes = [
     children: [
       {
         path: 'home',
-        component: () => import("pages/private/Home.vue"),
+        component: () => import("pages/private/Home.vue")
       },
       {
         path: 'playlist',
-        component: () => import("pages/private/Playlist.vue"),
+        component: () => import("pages/private/Playlist.vue")
       },
+      {
+        path: 'playlists',
+        component: () => import("pages/private/Playlists.vue")
+      },
+      {
+        path: 'descubrir',
+        component: () => import("pages/private/Descubrir.vue")
+      },
+      {
+        path: 'cancion',
+        component: () => import("pages/private/Cancion.vue")
+      },
+      {
+        path: 'buscador',
+        component: () => import("pages/private/Buscador.vue")
+      }
     ]
   }
 ];
