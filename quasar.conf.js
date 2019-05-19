@@ -22,7 +22,7 @@ module.exports = function (ctx) {
       // 'eva-icons'
     ],
 
-    // framework: 'all', // --- includes everything; for dev only!
+    framework: 'all', // --- includes everything; for dev only!
     framework: {
       components: [
         'QLayout',
@@ -37,6 +37,7 @@ module.exports = function (ctx) {
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
+        'QForm',
         'QIcon',
         'QList',
         'QItem',
@@ -55,7 +56,8 @@ module.exports = function (ctx) {
         'QRouteTab',
         'QSplitter',
         'QTabPanels',
-        'QTabPanel'
+        'QTabPanel',
+        'QUploader'
 
       ],
 

@@ -134,6 +134,7 @@
     data () {
       return {
         model: null,
+        calidad: "",
         options: [
           'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
         ],

@@ -47,7 +47,6 @@
 
       <q-form
         @submit="onSubmit"
-        @reset="onReset"
         class="q-gutter-md"
       >
         <q-input
@@ -89,6 +88,17 @@
 
 <script>
 export default {
-  name: ''
+  name: '',
+  data () {
+    return {
+      email: "",
+      asunto: "",
+      text: "",
+      accept: false
+    }
+  },
+  methods: {
+    onSubmit: () => console.log("Submit")
+  }
 }
 </script>

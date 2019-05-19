@@ -16,7 +16,7 @@
           </template>
         </q-input>
 
-        <q-btn flat rounded color="accent" label="Subir canción" @click=""/>
+        <q-btn flat rounded color="accent" label="Subir canción" @click="$router.push('/user/subircancion')"/>
 
         <q-btn flat rounded color="accent" label="Perfil" @click=""/>
       </q-toolbar>
