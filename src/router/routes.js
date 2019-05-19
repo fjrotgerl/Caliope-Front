@@ -44,6 +44,10 @@ const routes = [
       {
         path: 'buscador',
         component: () => import("pages/private/Buscador.vue")
+      },
+      {
+        path: 'opciones',
+        component: () => import("pages/private/Opciones.vue")
       }
     ]
   }
