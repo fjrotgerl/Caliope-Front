@@ -23,57 +23,57 @@ module.exports = function (ctx) {
     ],
 
     framework: 'all', // --- includes everything; for dev only!
-    framework: {
-      components: [
-        'QLayout',
-        'QHeader',
-        'QCard',
-        'QCardSection',
-        'QCardActions',
-        'QDrawer',
-        'QDialog',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QForm',
-        'QIcon',
-        'QList',
-        'QItem',
-        'QItemSection',
-        'QItemLabel',
-        'QKnob',
-        'QStepper',
-        'QStep',
-        'QStepperNavigation',
-        'QInput',
-        'QToggle',
-        'QDate',
-        'QPopupProxy',
-        'QTabs',
-        'QTab',
-        'QRouteTab',
-        'QSplitter',
-        'QTabPanels',
-        'QTabPanel',
-        'QUploader'
-
-      ],
-
-      directives: [
-        'ClosePopup',
-        'Ripple'
-      ],
-
-      // Quasar plugins
-      plugins: [
-        'Notify'
-      ]
-
-      // iconSet: 'ionicons-v4'
-      // lang: 'de' // Quasar language
-    },
+    // framework: {
+    //   components: [
+    //     'QLayout',
+    //     'QHeader',
+    //     'QCard',
+    //     'QCardSection',
+    //     'QCardActions',
+    //     'QDrawer',
+    //     'QDialog',
+    //     'QPageContainer',
+    //     'QPage',
+    //     'QToolbar',
+    //     'QToolbarTitle',
+    //     'QBtn',
+    //     'QForm',
+    //     'QIcon',
+    //     'QList',
+    //     'QItem',
+    //     'QItemSection',
+    //     'QItemLabel',
+    //     'QKnob',
+    //     'QStepper',
+    //     'QStep',
+    //     'QStepperNavigation',
+    //     'QInput',
+    //     'QToggle',
+    //     'QDate',
+    //     'QPopupProxy',
+    //     'QTabs',
+    //     'QTab',
+    //     'QRouteTab',
+    //     'QSplitter',
+    //     'QTabPanels',
+    //     'QTabPanel',
+    //     'QUploader'
+    //
+    //   ],
+    //
+    //   directives: [
+    //     'ClosePopup',
+    //     'Ripple'
+    //   ],
+    //
+    //   // Quasar plugins
+    //   plugins: [
+    //     'Notify'
+    //   ]
+    //
+    //   // iconSet: 'ionicons-v4'
+    //   // lang: 'de' // Quasar language
+    // },
 
     supportIE: true,
 
