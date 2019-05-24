@@ -1,5 +1,5 @@
 <template>
-<q-page class="flex flex-center">
+<q-page class="flex flex-center bg-white q-pa-md">
   <div class="pregunta">
     <div class="enunciado">
       <h4>Lorem ipsum dolor sit amet ?</h4>

@@ -8,13 +8,29 @@
 //  font-family 'customfont'
 //}
 
+.bg-black-gradient {
+  background: rgb(11,11,11);
+  background: linear-gradient(0deg, rgba(11,11,11,1) 0%, rgba(43,43,43,1) 100%);
+};
+
+.bg-no-opacity {
+  background: rgba(0, 0, 0, 0);
+};
+
+.bg-img {
+  background-image: url("../statics/carousel/festival3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+};
+
+
 .portada{
   background: linear-gradient(to right bottom, rgb(0, 51, 204) 0%, rgb(0, 255, 153) 100%);
   height: calc(100vh - 51px);
   display: flex;
   justify-content: center;
   align-items: center;
-}
+};
 
   #home-publica:hover{
     cursor:pointer;

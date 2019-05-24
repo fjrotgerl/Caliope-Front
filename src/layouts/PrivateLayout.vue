@@ -3,11 +3,9 @@
 
     <q-header reveal bordered class="bg-primary text-accent">
       <q-toolbar>
-        <q-toolbar-title>
-          <p>PARTE PRIVADA</p>
+        <q-toolbar-title id="home-publica">
+          <p @click="$router.push('/user/home')">Inicio</p>
         </q-toolbar-title>
-
-        <q-btn flat rounded color="accent" label="Ir a la parte publica (solo dev)" @click="$router.push('/')"/>
 
         <q-input style="margin-right: 5px;" dark dense standout v-model="text" input-class="text-right">
           <template v-slot:append>
@@ -16,9 +14,31 @@
           </template>
         </q-input>
 
-        <q-btn flat rounded color="accent" label="Subir canción" @click="$router.push('/user/subircancion')"/>
+        <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir')"/>
 
-        <q-btn flat rounded color="accent" label="Perfil" @click=""/>
+        <q-btn-dropdown color="primary" label="*nombre_de_usuario*">
+          <q-list>
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil')"/>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-btn flat rounded outline label="Opciones" @click="$router.push('/user/opciones')"/>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-btn flat rounded outline label="Cerrar sesión" @click="$router.push('/')"/>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
+
       </q-toolbar>
     </q-header>
 
@@ -33,7 +53,8 @@
   export default {
     data () {
       return {
-        text: ""
+        text: "",
+        username: ""
       }
     }
   }

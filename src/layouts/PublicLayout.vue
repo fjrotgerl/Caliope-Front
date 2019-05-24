@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" class="bg-black-gradient">
 
-    <q-header reveal bordered class="bg-primary text-accent">
+    <q-header class="bg-no-opacity text-accent">
       <q-toolbar id="menu-superior">
         <q-toolbar-title id="home-publica">
           <p @click="$router.push('/')">PARTE PÚBLICA</p>
@@ -60,6 +60,20 @@
         </q-dialog>
       <!--</div> -->
 
+      <q-dialog v-model="errorWindow" @escape-key="errorWindow = false">
+        <q-card>
+          <q-card-section class="row items-center">
+            <div class="text-h6">Información</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <p v-text="errorMsg"></p>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
     </q-header>
 
     <q-page-container>
@@ -77,6 +91,8 @@
     data () {
       return {
         loginWindow: false,
+        errorMsg: '',
+        errorWindow: false,
         usuario: {
           username: "",
           password: ""
@@ -86,12 +102,23 @@
             username: this.usuario.username,
             password: md5(this.usuario.password)
           })
-            .then(response => localStorage.setItem("token",response.data))
-            .catch(error => console.error(error))
+            .then(response => {
+              localStorage.setItem("token",response.data);
+              this.$router.push("/user/home");
+            })
+            .catch(() => {
+              this.errorMsg = "Por favor, revisa tus credenciales";
+              this.errorWindow = true;
+            })
         },
-        googleLogin: () => {
-          window.open(constants.AUTH_API_URL + "/token-google");
-        }
+      }
+    },
+    methods: {
+      googleLogin: () => {
+        window.open(constants.AUTH_API_URL + "/token-google");
+      },
+      goHome () {
+        this.$router.push("/");
       }
     }
   }

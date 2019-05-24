@@ -1,5 +1,35 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center bg-white">
+
+    <q-dialog v-model="errorWindow" @escape-key="errorWindow = false">
+      <q-card>
+        <q-card-section class="row items-center">
+          <div class="text-h6">Error al crear el usuario</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <p v-text="errorMsg"></p>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="successWindow" @escape-key="successWindow = false" @hide="goHome">
+      <q-card>
+        <q-card-section class="row items-center">
+          <div class="text-h6">¡Enhorabuena!</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <p v-text="successMsg"></p>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
     <div class="q-pa-md">
       <q-stepper
         v-model="step"
@@ -53,24 +83,9 @@
 
           <div class="q-gutter-md">
 
-            <q-input ref="user.nombre" filled v-model="user.nombre" label="Nombre"/>
+            <q-input ref="user.nombre" filled v-model="user.name" label="Nombre"/>
 
-            <q-input ref="user.apellidos" filled v-model="user.apellidos" label="Apellidos"/>
-
-            <q-input ref="user.direccion" filled v-model="user.direccion" label="Direccion"/>
-
-            <q-input ref="user.telefono" filled v-model="user.telefono" label="Telefono"
-                     mask="### ### ###"/>
-
-            <q-input filled v-model="user.fechaNacimiento" mask="date" :rules="['user.fechaNacimiento']" label="Fecha de nacimiento">
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy>
-                    <q-date v-model="user.fechaNacimiento" />
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+            <q-input ref="user.apellidos" filled v-model="user.surname" label="Apellidos"/>
 
           </div>
 
@@ -90,7 +105,8 @@
 
         <template v-slot:navigation>
           <q-stepper-navigation>
-            <q-btn @click="$refs.stepper.next()" color="primary" :label="step === 3 ? 'Finalizar' : 'Siguiente'" />
+            <q-btn v-if="step < 3" @click="$refs.stepper.next()" color="primary" :label="'Siguiente'" />
+            <q-btn v-else @click="register" color="primary" :label="'Finalizar'" />
             <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Atras" class="q-ml-sm" />
           </q-stepper-navigation>
         </template>
@@ -103,6 +119,11 @@
 </style>
 
 <script>
+
+  import moment from "moment";
+  const md5        = require('md5');
+  const constants  = require('../../statics/js/configuration');
+
 export default {
   name: 'Register',
   data () {
@@ -113,14 +134,46 @@ export default {
         username: '',
         email: '',
         password: '',
-        nombre: '',
-        apellidos: '',
-        edad: '',
-        direccion: '',
-        telefono: '',
-        fechaNacimiento: ''
-      }
+        name: '',
+        surname: '',
+      },
+      errorMsg: '',
+      successMsg: '',
+      errorWindow: false,
+      successWindow: false,
+      register: () => {
+        this.$axios.post(constants.REST_API_URL + "/registro", {
+          username: this.user.username,
+          email: this.user.email,
+          contraseña: md5(this.user.password),
+          nombre: this.user.name,
+          apellidos: this.user.surname,
+          permiso: 1,
+          numeroSeguidores: 0,
+          numeroSeguidos: 0,
+          fechaRegistro: moment().format("YYYY-MM-DD")
+        })
+          .then(response => {
+            let json = response.data;
 
+            if (json.status !== "OK") {
+              this.errorMsg = "";
+              this.errorMsg = json.message;
+              this.errorWindow = true;
+              return;
+            }
+
+            this.successWindow = true;
+            this.successMsg = json.message;
+
+          })
+          .catch(error => console.error(error))
+      }
+    }
+  },
+  methods: {
+    goHome: () => {
+      this.$router.push("/");
     }
   }
 }
