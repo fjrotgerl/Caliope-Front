@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-<q-page class="">
+<q-page class="bg-img">
 <!--    <q-knob-->
 <!--      show-value-->
 <!--      class="text-white q-ma-md"-->

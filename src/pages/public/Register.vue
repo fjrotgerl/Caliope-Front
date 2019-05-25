@@ -168,12 +168,10 @@ export default {
 
           })
           .catch(error => console.error(error))
+      },
+      goHome: () => {
+        this.$router.push("/");
       }
-    }
-  },
-  methods: {
-    goHome: () => {
-      this.$router.push("/");
     }
   }
 }
