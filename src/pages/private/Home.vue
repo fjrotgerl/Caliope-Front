@@ -7,7 +7,7 @@
       class="text-white q-ma-md"
       v-model="songVolume"
       size="60px"
-      @drag-value="test"
+      @drag-value="changeSongVolume"
       :thickness="0.2"
       color="orange"
       center-color="black"
@@ -153,6 +153,7 @@
 <script>
   import audioPlayer from '../../statics/js/audioPlayer'
   import constants from '../../statics/js/configuration'
+  import privateLayout from '../../layouts/PrivateLayout'
 
 export default {
   name: 'Home',
@@ -164,11 +165,12 @@ export default {
       toogleSong: () => {
         audioPlayer.toogle();
         this.isSongPlaying = audioPlayer.getSongStatus();
+        privateLayout.data().toogleFooter(true);
       },
       stopSong: () => {
         audioPlayer.stop();
       },
-      test: () => {
+      changeSongVolume: () => {
         if (this.songVolume < 10) {
           audioPlayer.changeVolume("0.0" + this.songVolume);
         } else {
