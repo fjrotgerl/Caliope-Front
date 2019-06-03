@@ -16,7 +16,7 @@
 
         <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir')"/>
 
-        <q-btn-dropdown color="primary" label="*nombre_de_usuario*">
+        <q-btn-dropdown color="primary" :label="user.username">
           <q-list>
             <q-item clickable v-close-popup>
               <q-item-section>
@@ -61,18 +61,28 @@
 </template>
 
 <script>
-  import audioPlayer from '../statics/js/audioPlayer'
 
   export default {
     data () {
       return {
         text: "",
         username: "",
+        user: { },
         isSongPlaying: false,
         toogleFooter: (status) => {
           this.isSongPlaying = status;
+        },
+        getUserData: () => {
+          let userToken = localStorage.getItem("token");
+          this.$axios.post(constants.REST_API_URL + "/getUsuarioByToken/" + userToken)
+            .then(response => {
+              this.user = response.data;
+            });
         }
       }
-    }
+    },
+    beforeMount(){
+      this.getUserData();
+    },
   }
 </script>

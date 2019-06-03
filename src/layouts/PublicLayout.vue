@@ -103,7 +103,15 @@
             password: md5(this.usuario.password)
           })
             .then(response => {
-              localStorage.setItem("token",response.data);
+              this.$axios.post(constants.REST_API_URL + "/setUsuarioToken", {
+                token: response.data,
+                username: this.usuario.username
+              })
+                .then(response => {
+                  console.log(response);
+                });
+              let userToken = response.data.split(" ");
+              localStorage.setItem("token",userToken[1]);
               this.$router.push("/user/home");
             })
             .catch(() => {
