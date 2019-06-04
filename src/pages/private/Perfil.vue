@@ -1,6 +1,10 @@
 <template>
   <q-page>
+
     <h3>Canciones que te gustan</h3>
+    <q-btn color="primary" @click="$router.push('/user/seguidores')" label="Seguidores" />
+    <q-btn color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
+
 
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in likedSongs">

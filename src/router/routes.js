@@ -56,6 +56,14 @@ const routes = [
       {
         path: 'subircancion',
         component: () => import("pages/private/SubirCancion.vue")
+      },
+      {
+        path: 'seguidores',
+        component: () => import("pages/private/Seguidores.vue")
+      },
+      {
+        path: 'seguidos',
+        component: () => import("pages/private/Seguidos.vue")
       }
     ]
   }
