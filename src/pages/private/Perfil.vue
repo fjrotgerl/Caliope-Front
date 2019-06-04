@@ -1,11 +1,28 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
+
+    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidores')" label="Seguidores" />
+
+    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
+
+    <h3>Tus canciones</h3>
+    <!-- ---------------------------------------- -->
+    <div class="row flex cancion" v-for="cancion in mySongs">
+      <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
+      <div class="flex column justify-between" style="width:90%;">
+        <div class="flex row justify-around">
+          <span>{{cancion.nombre}}</span>
+          <span>{{cancion.autor.username}}</span>
+        </div>
+        <div>
+          <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
+          <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
+        </div>
+      </div>
+    </div>
+    <!-- ---------------------------------------- -->
 
     <h3>Canciones que te gustan</h3>
-    <q-btn color="primary" @click="$router.push('/user/seguidores')" label="Seguidores" />
-    <q-btn color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
-
-
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in likedSongs">
       <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
@@ -40,6 +57,7 @@ export default {
       isSongPlaying: false,
       songVolume: constants.DEFAULT_SONG_VOLUME,
       likedSongs: {},
+      mySongs: {},
       user: {},
 
       toogleSong: () => {
@@ -71,6 +89,13 @@ export default {
           })
           .catch(error => console.error(error))
       },
+      getUserSongs: async () => {
+        await this.$axios.get(constants.REST_API_URL + "/getSongsFromUser/" + this.user.username)
+          .then(response => {
+            this.mySongs = response.data;
+          })
+          .catch(error => console.error(error))
+      },
       getUserData: async () => {
         let userId = localStorage.getItem("user");
         await this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
@@ -84,6 +109,7 @@ export default {
   async beforeMount(){
     await this.getUserData();
     await this.getLikedSongs();
+    await this.getUserSongs();
 
   },
 }
