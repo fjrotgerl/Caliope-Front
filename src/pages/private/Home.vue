@@ -17,8 +17,8 @@
             <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
             <div class="flex column justify-between" style="width:90%;">
               <div class="flex row justify-around">
-                <span>{{cancion.nombre}}</span>
-                <span>{{cancion.autor.username}}</span>
+                <q-btn flat color="primary" :label="cancion.nombre" />
+                <q-btn flat color="primary" :label="cancion.autor.username" />
               </div>
               <div>
                 <q-btn @click="openDialog(cancion.id)" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
