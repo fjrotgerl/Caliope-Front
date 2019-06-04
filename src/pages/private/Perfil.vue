@@ -8,7 +8,7 @@
     <h3>Tus canciones</h3>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in mySongs">
-      <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
+      <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
       <div class="flex column justify-between" style="width:90%;">
         <div class="flex row justify-around">
           <span>{{cancion.nombre}}</span>
@@ -60,9 +60,20 @@ export default {
       mySongs: {},
       user: {},
 
-      toogleSong: () => {
-        audioPlayer.toogle();
-        this.isSongPlaying = audioPlayer.getSongStatus();
+      toogleSong: (cancionId) => {
+        this.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
+          .then(response => {
+            let nombreCancion = response.data;
+            audioPlayer.setSong(nombreCancion);
+            this.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
+              .then(response => {
+                let autorCancion = response.data;
+                audioPlayer.setAutor(autorCancion);
+                console.log(autorCancion);
+                audioPlayer.toogle();
+              });
+            this.isSongPlaying = audioPlayer.getSongStatus();
+          });
       },
       stopSong: () => {
         if (audioPlayer.getSongStatus()) {

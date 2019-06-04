@@ -76,12 +76,17 @@ export default {
       actualSongId: "",
 
       toogleSong: (cancionId) => {
-        console.log(cancionId);
         this.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
           .then(response => {
             let nombreCancion = response.data;
             audioPlayer.setSong(nombreCancion);
-            audioPlayer.toogle();
+              this.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
+                .then(response => {
+                  let autorCancion = response.data;
+                  audioPlayer.setAutor(autorCancion);
+                  console.log(autorCancion);
+                  audioPlayer.toogle();
+                });
             this.isSongPlaying = audioPlayer.getSongStatus();
           });
       },

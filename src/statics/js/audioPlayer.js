@@ -55,8 +55,9 @@ var isNewSong = true;
 var actualTimeSong = 0;
 var actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
 
-let getSongUrl = constants.REST_API_URL + "/obtenerCancion/fjrotgerl/";
+let getSongUrl = constants.REST_API_URL + "/obtenerCancion/";
 let getSongName = "";
+let getUserSong = "";
 
 function init() {
   // Fix up prefixing
@@ -67,7 +68,7 @@ function init() {
       context,
       [
         //'http://localhost:8080/obtenerCancion/fjrotgerl/iphone-notificacion',
-        getSongUrl + getSongName
+        getSongUrl + "/" + getUserSong + "/" + getSongName
       ],
       finishedLoading
     );
@@ -131,4 +132,8 @@ function setSong(nombreCancion) {
   getSongName = nombreCancion;
 }
 
-export default { stop, toogle, getSongStatus, changeVolume, setSongStatus, setSong }
+function setAutor(autorCancion) {
+  getUserSong = autorCancion;
+}
+
+export default { stop, toogle, getSongStatus, changeVolume, setSongStatus, setSong, setAutor }
