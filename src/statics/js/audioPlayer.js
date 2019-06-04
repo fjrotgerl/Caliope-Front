@@ -113,6 +113,10 @@ function getSongStatus() {
   return this.playing;
 }
 
+function setSongStatus(inStatus) {
+  this.playing = inStatus;
+}
+
 function changeVolume(varNewVolume) {
   actualVolumeSong = varNewVolume;
   gainNode.gain.value = actualVolumeSong;
@@ -122,4 +126,4 @@ function stop() {
   context.suspend();
 }
 
-export default { stop, toogle, getSongStatus, changeVolume }
+export default { stop, toogle, getSongStatus, changeVolume, setSongStatus }

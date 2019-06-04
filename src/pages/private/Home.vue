@@ -2,144 +2,27 @@
   <q-page class="flex column">
 
 
-    <q-knob
-      show-value
-      class="text-white q-ma-md"
-      v-model="songVolume"
-      size="60px"
-      @drag-value="changeSongVolume"
-      :thickness="0.2"
-      color="orange"
-      center-color="black"
-      track-color="transparent"
-    ><q-icon name="volume_up" />
-    </q-knob>
-
-
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
         <h2>Feed</h2>
         <div class="flex column justify-between">
-          <div class="row flex cancion">
-          <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
-            <q-btn @click="stopSong" icon="stop" color="primary" style="margin-right: 20px;"></q-btn>
-          <div class="flex column justify-between" style="width:90%;">
-            <div class="flex row justify-around">
-              <span>Nombre Canción</span>
-              <span>Nombre Autor</span>
-            </div>
-            <div class="flex row justify-around">
-              <span>Comentar</span>
-              <span>Me gusta</span>
-              <span>...</span>
-            </div>
-          </div>
-        </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
+
+          <!-- ---------------------------------------- -->
+          <div class="row flex cancion" v-for="cancion in canciones">
+            <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
             <div class="flex column justify-between" style="width:90%;">
               <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
+                <span>{{cancion.nombre}}</span>
+                <span>{{cancion.autor.username}}</span>
               </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
+              <div>
+                <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
+                <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
               </div>
             </div>
           </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-3">
-        <h2>Tus playlists</h2>
-        <div class="flex row flex-lg-inline justify-between" style="width: 80%;margin: 0 auto;border: 1px solid;padding: 20px;">
-          <div class="flex flex-center column" style="margin-right: 5%;margin-bottom:5%;">
-            <p>Nombre</p>
-            <q-btn icon="play_arrow" color="primary"></q-btn>
-          </div>
-          <div class="flex flex-center column" style="margin-right: 5%;margin-bottom:5%;">
-            <p>Nombre</p>
-            <q-btn icon="play_arrow" color="primary"></q-btn>
-          </div>
-          <div class="flex flex-center column" style="margin-right: 5%;margin-bottom:5%;">
-            <p>Nombre</p>
-            <q-btn icon="play_arrow" color="primary"></q-btn>
-          </div>
-          <div class="flex flex-center column" style="margin-right: 5%;margin-bottom:5%;">
-            <p>Nombre</p>
-            <q-btn icon="play_arrow" color="primary"></q-btn>
-          </div>
+          <!-- ---------------------------------------- -->
+
         </div>
       </div>
     </div>
@@ -153,7 +36,6 @@
 <script>
   import audioPlayer from '../../statics/js/audioPlayer'
   import constants from '../../statics/js/configuration'
-  import privateLayout from '../../layouts/PrivateLayout'
 
 export default {
   name: 'Home',
@@ -161,23 +43,56 @@ export default {
     return {
       isSongPlaying: false,
       songVolume: constants.DEFAULT_SONG_VOLUME,
+      canciones: {},
+      user: {},
 
       toogleSong: () => {
         audioPlayer.toogle();
         this.isSongPlaying = audioPlayer.getSongStatus();
-        privateLayout.data().toogleFooter(true);
       },
       stopSong: () => {
-        audioPlayer.stop();
-      },
-      changeSongVolume: () => {
-        if (this.songVolume < 10) {
-          audioPlayer.changeVolume("0.0" + this.songVolume);
-        } else {
-          audioPlayer.changeVolume("0." + this.songVolume);
+        if (audioPlayer.getSongStatus()) {
+          audioPlayer.stop();
+          this.isSongPlaying = false;
+          audioPlayer.setSongStatus(false);
         }
+      },
+      doLike: (cancionId) => {
+        this.$axios.put(constants.REST_API_URL + "/addSongToLikedList/" + cancionId + "/" + this.user.username)
+          .then(response => {
+            console.log(response);
+            console.log("HAS DADO LIEK!");
+          })
+          .catch(error => console.error(error))
+      },
+      doComment: () => {
+        console.log("Acabas de comentar tal!");
+      },
+      getAllSongs: () => {
+        this.$axios.get(constants.REST_API_URL + "/getCanciones")
+          .then(response => {
+            this.canciones = response.data;
+            console.log(this.canciones);
+          })
+          .catch(error => console.error(error))
+      },
+      getUserData: () => {
+        let userId = localStorage.getItem("user");
+        this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
+          .then(response => {
+            console.log(response);
+            this.user = response.data;
+          });
       }
     }
-  }
+  },
+  methods: {
+
+
+  },
+  beforeMount(){
+    this.getAllSongs();
+    this.getUserData();
+  },
 }
 </script>

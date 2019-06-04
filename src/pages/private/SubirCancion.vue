@@ -21,38 +21,29 @@
 </style>
 
 <script>
-export default {
+  import constants from '../../statics/js/configuration'
+
+
+  export default {
   name: 'Home',
   methods : {
-    factoryFn (files) {
-      let formData = new FormData();
-      formData.append("file",files);
-      return {
-        url: "http://localhost:8080/subirCancion",
-        method: 'POST',
-        fieldValues: [{
-          name: "file",
-          value: formData
-        }, {
-          name:"username",
-          value: "fjrotgerl"
-        }],
-
-
-
-      }
-
-      /*console.log(files);
-      await fetch("http://localhost:8080/subirCancion", {
-        method: 'PUT',
-        headers: "",
-        body: {
-          file: new byte[2],
-          username: "fjrotgerl"
+    async factoryFn (files) {
+      let file = new FormData();
+      file.append("file",files);
+      await this.$axios.post(constants.REST_API_URL + "/subirCancion", {
+        file: file,
+        username: "fjrotgerl"
+      }, {
+        headers: {
+          "content-type": "multipart/form-data"
         }
       })
-        .then(response => console.log(response))
-        .catch(error => console.log(error) )*/
+        .then(response => {
+          console.log(response);
+          console.log("CANCION SUBIDA");
+        })
+        .catch(error => console.error(error))
+
     }
   }
 }

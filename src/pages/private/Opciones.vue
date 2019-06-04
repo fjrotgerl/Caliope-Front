@@ -4,7 +4,6 @@
       <div>
         <q-splitter
           v-model="splitterModel"
-          style="height: 250px"
         >
 
           <template v-slot:before>
@@ -44,6 +43,22 @@
                   label="Email"
                   lazy-rules
                   :rules="[ val => val.includes('@') && val.includes('.') || 'Revisa tu dirección de correo']"
+                />
+
+                <q-input
+                  ref="user.nombre"
+                  filled
+                  v-model="user.nombre"
+                  label="Nombre"
+                  lazy-rules
+                  :rules="[ val => val.includes('@') && val.includes('.') || 'Revisa tu dirección de correo']"
+                />
+
+                <q-input
+                  ref="user.apellidos"
+                  filled
+                  v-model="user.apellidos"
+                  label="Email"
                 />
 
                 <q-input
@@ -129,6 +144,9 @@
 </template>
 
 <script>
+  import constants from '../../statics/js/configuration'
+
+
   export default {
     name: 'Opciones',
     data () {
@@ -145,19 +163,19 @@
         splitterModel: 20,
         step: 1,
         accept: false,
-        user: {
-          username: '',
-          email: '',
-          password: '',
-          nombre: '',
-          apellidos: '',
-          edad: '',
-          direccion: '',
-          telefono: '',
-          fechaNacimiento: ''
-        }
+        user: { },
 
+        getUserData: async () => {
+          let userId = localStorage.getItem("user");
+          await this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
+            .then(response => {
+              this.user = response.data;
+            });
+        }
       }
+    },
+    async beforeMount(){
+      await this.getUserData();
     }
   }
 </script>

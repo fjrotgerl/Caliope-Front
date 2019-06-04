@@ -14,6 +14,8 @@
           </template>
         </q-input>
 
+        <q-btn flat rounded color="accent" label="Subir canción" @click="$router.push('/user/subircancion')"/>
+
         <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir')"/>
 
         <q-btn-dropdown color="primary" :label="user.username">
@@ -46,13 +48,26 @@
       <router-view />
     </q-page-container>
 
-    <q-footer v-if="isSongPlaying" reveal bordered class="bg-grey-8 text-white">
+    <q-footer reveal bordered class="bg-brown-5 text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
-          </q-avatar>
-          Title
+          <q-knob
+            show-value
+            class="text-white q-ma-md"
+            v-model="songVolume"
+            size="60px"
+            @drag-value="changeSongVolume"
+            :thickness="0.2"
+            color="orange"
+            center-color="black"
+            track-color="transparent"
+          ><q-icon name="volume_up" />
+          </q-knob>
+
+          <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
+          <q-btn @click="stopSong" icon="stop" color="primary" style="margin-right: 20px;"></q-btn>
+
+
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -61,21 +76,44 @@
 </template>
 
 <script>
+  import audioPlayer from '../statics/js/audioPlayer'
+  import constants from '../statics/js/configuration'
 
   export default {
     data () {
+
       return {
         text: "",
         username: "",
         user: { },
         isSongPlaying: false,
-        toogleFooter: (status) => {
-          this.isSongPlaying = status;
+        songVolume: constants.DEFAULT_SONG_VOLUME,
+
+        toogleSong: () => {
+          audioPlayer.toogle();
+          this.isSongPlaying = audioPlayer.getSongStatus();
+        },
+        stopSong: () => {
+          if (audioPlayer.getSongStatus()) {
+            audioPlayer.stop();
+            this.isSongPlaying = false;
+            audioPlayer.setSongStatus(false);
+          }
+        },
+        changeSongVolume: () => {
+          if (audioPlayer.getSongStatus()) {
+            if (this.songVolume < 10) {
+              audioPlayer.changeVolume("0.0" + this.songVolume);
+            } else {
+              audioPlayer.changeVolume("0." + this.songVolume);
+            }
+          }
         },
         getUserData: () => {
-          let userToken = localStorage.getItem("token");
-          this.$axios.post(constants.REST_API_URL + "/getUsuarioByToken/" + userToken)
+          let userId = localStorage.getItem("user");
+          this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
             .then(response => {
+              console.log(response);
               this.user = response.data;
             });
         }

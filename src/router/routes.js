@@ -48,6 +48,14 @@ const routes = [
       {
         path: 'opciones',
         component: () => import("pages/private/Opciones.vue")
+      },
+      {
+        path: 'perfil',
+        component: () => import("pages/private/Perfil.vue")
+      },
+      {
+        path: 'subircancion',
+        component: () => import("pages/private/SubirCancion.vue")
       }
     ]
   }
