@@ -7,6 +7,11 @@
         <h2>Feed</h2>
         <div class="flex column justify-between">
 
+
+
+
+          <!-- ---------------------------------------- -->
+          <!-- CANCIONES -->
           <!-- ---------------------------------------- -->
           <div class="row flex cancion" v-for="cancion in canciones">
             <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
@@ -16,11 +21,35 @@
                 <span>{{cancion.autor.username}}</span>
               </div>
               <div>
-                <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
+                <q-btn @click="openDialog(cancion.id)" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
                 <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
               </div>
             </div>
           </div>
+          <!-- ---------------------------------------- -->
+
+
+
+
+          <!-- ---------------------------------------- -->
+          <!-- MODAL AÑADIR COMENTARIO -->
+          <!-- ---------------------------------------- -->
+          <q-dialog v-model="comentarioDialog" persistent>
+            <q-card style="min-width: 400px">
+              <q-card-section>
+                <div class="text-h6">Escribe tu comentario</div>
+              </q-card-section>
+
+              <q-card-section>
+                <q-input dense v-model="comentario" autofocus @keyup.enter="comentarioDialog = false" />
+              </q-card-section>
+
+              <q-card-actions align="right" class="text-primary">
+                <q-btn flat label="Cancelar" v-close-popup />
+                <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
           <!-- ---------------------------------------- -->
 
         </div>
@@ -45,6 +74,9 @@ export default {
       songVolume: constants.DEFAULT_SONG_VOLUME,
       canciones: {},
       user: {},
+      comentario: "",
+      comentarioDialog: false,
+      actualSongId: "",
 
       toogleSong: () => {
         audioPlayer.toogle();
@@ -59,14 +91,22 @@ export default {
       },
       doLike: (cancionId) => {
         this.$axios.put(constants.REST_API_URL + "/addSongToLikedList/" + cancionId + "/" + this.user.username)
-          .then(response => {
-            console.log(response);
-            console.log("HAS DADO LIEK!");
-          })
           .catch(error => console.error(error))
       },
+      openDialog: (cancionId) => {
+        this.comentarioDialog = true;
+        this.comentario = "";
+        this.actualSongId = cancionId;
+      },
       doComment: () => {
-        console.log("Acabas de comentar tal!");
+        this.comentarioDialog = true;
+        this.$axios.put(constants.REST_API_URL + "/addCommentByCancionId/" + this.user.username + "/" + this.actualSongId, {
+          "mensaje": this.comentario
+        })
+          .then(() => {
+            console.log("TODO OK");
+          })
+          .catch(error => console.error(error))
       },
       getAllSongs: () => {
         this.$axios.get(constants.REST_API_URL + "/getCanciones")
