@@ -56,6 +56,7 @@ var actualTimeSong = 0;
 var actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
 
 let getSongUrl = constants.REST_API_URL + "/obtenerCancion/fjrotgerl/";
+let getSongName = "";
 
 function init() {
   // Fix up prefixing
@@ -66,7 +67,7 @@ function init() {
       context,
       [
         //'http://localhost:8080/obtenerCancion/fjrotgerl/iphone-notificacion',
-        getSongUrl + 'oliver-heldens-fire-in-my-soul-audio-ft-shungudzo'
+        getSongUrl + getSongName
       ],
       finishedLoading
     );
@@ -126,4 +127,8 @@ function stop() {
   context.suspend();
 }
 
-export default { stop, toogle, getSongStatus, changeVolume, setSongStatus }
+function setSong(nombreCancion) {
+  getSongName = nombreCancion;
+}
+
+export default { stop, toogle, getSongStatus, changeVolume, setSongStatus, setSong }

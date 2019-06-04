@@ -11,7 +11,7 @@
           <!-- CANCIONES -->
           <!-- ---------------------------------------- -->
           <div class="row flex cancion" v-for="cancion in canciones">
-            <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
+            <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
             <div class="flex column justify-between" style="width:90%;">
               <div class="flex row justify-around">
                 <q-btn color="primary" :label="cancion.nombre" />
@@ -75,9 +75,15 @@ export default {
       comentarioDialog: false,
       actualSongId: "",
 
-      toogleSong: () => {
-        audioPlayer.toogle();
-        this.isSongPlaying = audioPlayer.getSongStatus();
+      toogleSong: (cancionId) => {
+        console.log(cancionId);
+        this.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
+          .then(response => {
+            let nombreCancion = response.data;
+            audioPlayer.setSong(nombreCancion);
+            audioPlayer.toogle();
+            this.isSongPlaying = audioPlayer.getSongStatus();
+          });
       },
       stopSong: () => {
         if (audioPlayer.getSongStatus()) {
