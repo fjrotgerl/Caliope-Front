@@ -20,6 +20,12 @@
 
         <q-btn-dropdown color="primary" :label="user.username">
           <q-list>
+            <q-item v-if="user.permiso == 2" clickable v-close-popup>
+              <q-item-section>
+                <q-btn flat rounded outline label="Administrar" @click="$router.push('/user/administrador/')"/>
+              </q-item-section>
+            </q-item>
+
             <q-item clickable v-close-popup>
               <q-item-section>
                 <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username)"/>

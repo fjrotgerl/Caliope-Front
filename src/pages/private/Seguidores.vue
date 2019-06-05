@@ -11,12 +11,12 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>{{seguidor.username}}</q-item-label>
-            <q-item-label caption>{{seguidor.nombre + " " + seguidor.apellidos}}</q-item-label>
+            <q-item-label @click="$router.push('/user/perfil/' + seguidor.username)">{{seguidor.username}}</q-item-label>
+            <q-item-label @click="$router.push('/user/perfil/' + seguidor.username)" caption>{{seguidor.nombre + " " + seguidor.apellidos}}</q-item-label>
           </q-item-section>
         </q-item>
 
-        <img src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <img @click="$router.push('/user/perfil/' + seguidor.username)" src="https://cdn.quasar.dev/img/parallax2.jpg">
       </q-card>
     </div>
 
@@ -60,5 +60,6 @@ export default {
     await this.getSeguidores();
 
   },
+
 }
 </script>

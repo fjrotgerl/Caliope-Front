@@ -35,7 +35,7 @@ export default function (/* { store, ssrContext } */) {
   }
 
   Router.beforeEach((to, from, next) => {
-    if(to.path === '/user' ) {
+    if(to.path.startsWith('/user/')) {
       if (existToken()) {
         axios.post(constants.AUTH_API_URL + "/verify-token", {}, {
           headers: {
@@ -43,13 +43,13 @@ export default function (/* { store, ssrContext } */) {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-          .then(response => console.log(response))
           .catch(error => console.error(error));
         next();
       } else {
         next("/")
       }
     } else {
+      console.log("Xd");
       next();
     }
   });

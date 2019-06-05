@@ -5,6 +5,9 @@
 
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
 
+    <q-btn v-if="otherUserId !== you" style="margin: 20px;" color="primary" @click="followUser" :label="'Seguir a ' + otherUserId " />
+
+
     <h3>Canciones de {{this.user.username}}</h3>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in mySongs">
@@ -61,23 +64,39 @@ export default {
       comentario: "",
       comentarioDialog: false,
       actualSongId: "",
+      otherUserId: "",
+      you: "",
 
       toogleSong: (cancionId) => this.$tools.toogleSong(cancionId, this.isSongPlaying, this),
       stopSong: () => this.$tools.stopSong(this.isSongPlaying),
       doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),
+      doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this),
       openDialog: (cancionId) => {
         this.comentarioDialog = true;
         this.comentario = "";
         this.actualSongId = cancionId;
       },
-      doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this)
+      followUser: () => {
+        this.$axios.put(constants.REST_API_URL + "/followUser/" + this.user.username + "/" + this.you)
+          .catch(error => console.error(error));
+      }
     }
   },
   async beforeMount(){
-    this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
+    this.otherUserId = this.$route.params.userId;
+    this.user = await this.$tools.getUserData(this.otherUserId, this);
     this.likedSongs = await this.$tools.getLikedSongs(this.user.username, this);
     this.mySongs = await this.$tools.getUserSongs(this.user.username, this);
-
+    this.you = window.localStorage.getItem("user");
   },
+  watch: {
+    async '$route' (to, from) {
+      // react to route changes...
+      this.otherUserId = to.params.userId;
+      this.user = await this.$tools.getUserData(this.otherUserId, this);
+      this.likedSongs = await this.$tools.getLikedSongs(this.user.username, this);
+      this.mySongs = await this.$tools.getUserSongs(this.user.username, this);
+    }
+  }
 }
 </script>

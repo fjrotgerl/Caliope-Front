@@ -4,7 +4,7 @@
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
-        <h2 @click="test">Feed</h2>
+        <h2 >Feed</h2>
         <div class="flex column justify-between">
 
           <!-- ---------------------------------------- -->

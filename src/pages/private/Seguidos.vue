@@ -11,12 +11,12 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>{{seguido.username}}</q-item-label>
-            <q-item-label caption>{{seguido.nombre + " " + seguido.apellidos}}</q-item-label>
+            <q-item-label @click="$router.push('/user/perfil/' + seguido.username)">{{seguido.username}}</q-item-label>
+            <q-item-label @click="$router.push('/user/perfil/' + seguido.username)" caption>{{seguido.nombre + " " + seguido.apellidos}}</q-item-label>
           </q-item-section>
         </q-item>
 
-        <img src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <img @click="$router.push('/user/perfil/' + seguido.username)" src="https://cdn.quasar.dev/img/parallax2.jpg">
       </q-card>
     </div>
 
