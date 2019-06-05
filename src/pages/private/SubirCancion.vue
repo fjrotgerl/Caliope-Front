@@ -11,9 +11,15 @@
           accept=".mp3"
           style="max-width: 300px"
         />
+        <q-input
+          ref="cancion.nombre"
+          filled
+          v-model="cancion.nombre"
+          label="Nombre de la canción"
+        />
+        <q-select v-model="cancion.genero" :options="generos" label="Escoge genero" />
       </div>
     </div>
-
   </q-page>
 </template>
 
@@ -29,6 +35,10 @@
     data () {
       return {
         user: {},
+        cancion:{},
+        generos: [
+          'Blues', 'Country', 'Pop', 'Rock', 'Electrónica', 'Disco', 'Heavy Metal', 'Hip hop', 'Ranchera'
+        ],
         fileUpload: (files) => {
           let moment = require('moment');
           let now = moment().format("YYYY-MM-DD");
