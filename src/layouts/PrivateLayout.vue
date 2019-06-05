@@ -22,7 +22,7 @@
           <q-list>
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil')"/>
+                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/{{this.user.username}}')"/>
               </q-item-section>
             </q-item>
 

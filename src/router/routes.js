@@ -50,7 +50,7 @@ const routes = [
         component: () => import("pages/private/Opciones.vue")
       },
       {
-        path: 'perfil',
+        path: 'perfil/:userId',
         component: () => import("pages/private/Perfil.vue")
       },
       {

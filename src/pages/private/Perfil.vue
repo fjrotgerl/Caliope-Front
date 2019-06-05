@@ -5,7 +5,7 @@
 
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
 
-    <h3>Tus canciones</h3>
+    <h3>Canciones de {{this.user.username}}</h3>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in mySongs">
       <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
@@ -108,7 +108,7 @@ export default {
           .catch(error => console.error(error))
       },
       getUserData: async () => {
-        let userId = localStorage.getItem("user");
+        let userId = this.$route.params.userId;
         await this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
           .then(response => {
             console.log(response);
