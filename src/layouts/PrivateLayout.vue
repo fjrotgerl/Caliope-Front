@@ -100,15 +100,7 @@
             audioPlayer.setSongStatus(false);
           }
         },
-        changeSongVolume: () => {
-          if (audioPlayer.getSongStatus()) {
-            if (this.songVolume < 10) {
-              audioPlayer.changeVolume("0.0" + this.songVolume);
-            } else {
-              audioPlayer.changeVolume("0." + this.songVolume);
-            }
-          }
-        },
+        changeSongVolume: this.$tools.changeSongVolume(),
         getUserData: () => {
           let userId = localStorage.getItem("user");
           this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
