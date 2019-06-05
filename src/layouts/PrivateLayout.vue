@@ -22,7 +22,7 @@
           <q-list>
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/{{this.user.username}}')"/>
+                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username)"/>
               </q-item-section>
             </q-item>
 
@@ -100,7 +100,9 @@
             audioPlayer.setSongStatus(false);
           }
         },
-        changeSongVolume: this.$tools.changeSongVolume(),
+        changeSongVolume: () => {
+          this.$tools.changeSongVolume(this.songVolume)
+        },
         getUserData: () => {
           let userId = localStorage.getItem("user");
           this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)

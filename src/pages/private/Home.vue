@@ -4,7 +4,7 @@
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
-        <h2>Feed</h2>
+        <h2 @click="test">Feed</h2>
         <div class="flex column justify-between">
 
           <!-- ---------------------------------------- -->
@@ -60,7 +60,6 @@
 </style>
 
 <script>
-  import audioPlayer from '../../statics/js/audioPlayer'
   import constants from '../../statics/js/configuration'
 
 export default {
@@ -75,72 +74,24 @@ export default {
       comentarioDialog: false,
       actualSongId: "",
 
-      toogleSong: (cancionId) => {
-        this.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
-          .then(response => {
-            let nombreCancion = response.data;
-            audioPlayer.setSong(nombreCancion);
-              this.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
-                .then(response => {
-                  let autorCancion = response.data;
-                  audioPlayer.setAutor(autorCancion);
-                  console.log(autorCancion);
-                  audioPlayer.toogle();
-                });
-            this.isSongPlaying = audioPlayer.getSongStatus();
-          });
-      },
-      stopSong: () => {
-        if (audioPlayer.getSongStatus()) {
-          audioPlayer.stop();
-          this.isSongPlaying = false;
-          audioPlayer.setSongStatus(false);
-        }
-      },
-      doLike: (cancionId) => {
-        this.$axios.put(constants.REST_API_URL + "/addSongToLikedList/" + cancionId + "/" + this.user.username)
-          .catch(error => console.error(error))
-      },
+      toogleSong: (cancionId) => this.$tools.toogleSong(cancionId, this.isSongPlaying, this),
+      stopSong: () => this.$tools.stopSong(this.isSongPlaying),
+      doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),
       openDialog: (cancionId) => {
         this.comentarioDialog = true;
         this.comentario = "";
         this.actualSongId = cancionId;
       },
-      doComment: () => {
-        this.comentarioDialog = true;
-        this.$axios.put(constants.REST_API_URL + "/addCommentByCancionId/" + this.user.username + "/" + this.actualSongId, {
-          "mensaje": this.comentario
-        })
-          .then(() => {
-            console.log("TODO OK");
-          })
-          .catch(error => console.error(error))
-      },
-      getAllSongs: () => {
-        this.$axios.get(constants.REST_API_URL + "/getCanciones")
-          .then(response => {
-            this.canciones = response.data;
-            console.log(this.canciones);
-          })
-          .catch(error => console.error(error))
-      },
-      getUserData: () => {
-        let userId = localStorage.getItem("user");
-        this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
-          .then(response => {
-            console.log(response);
-            this.user = response.data;
-          });
-      }
+      doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this),
     }
   },
   methods: {
 
 
   },
-  beforeMount(){
-    this.getAllSongs();
-    this.getUserData();
+  async beforeMount(){
+    this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
+    this.canciones = await this.$tools.getAllSongs(this);
   },
 }
 </script>

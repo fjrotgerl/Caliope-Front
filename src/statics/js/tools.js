@@ -1,14 +1,93 @@
 import audioPlayer from './audioPlayer'
 import constants from './configuration'
 
-function changeSongVolume () {
+/* Obtener los datos de un usuario */
+async function getUserData (userName, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userName)
+    .then(response => {
+      return response.data;
+    });
+
+}
+
+/* Play/Stop una cancion */
+function toogleSong (cancionId, isSongPlaying, vue) {
+  vue.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
+    .then(response => {
+      let nombreCancion = response.data;
+      audioPlayer.setSong(nombreCancion);
+      vue.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
+        .then(response => {
+          let autorCancion = response.data;
+          audioPlayer.setAutor(autorCancion);
+          console.log(autorCancion);
+          audioPlayer.toogle();
+        });
+      isSongPlaying = audioPlayer.getSongStatus();
+    });
+}
+
+/* Stop cancion */
+function stopSong(isSongPlaying) {
   if (audioPlayer.getSongStatus()) {
-    if (this.songVolume < 10) {
-      audioPlayer.changeVolume("0.0" + this.songVolume);
+    audioPlayer.stop();
+    isSongPlaying = false;
+    audioPlayer.setSongStatus(false);
+  }
+}
+
+
+/* Cambiar volumen de una cancion */
+function changeSongVolume (songVolume) {
+  if (audioPlayer.getSongStatus()) {
+    if (songVolume < 10) {
+      audioPlayer.changeVolume("0.0" + songVolume);
     } else {
-      audioPlayer.changeVolume("0." + this.songVolume);
+      audioPlayer.changeVolume("0." + songVolume);
     }
   }
 }
 
-export default { changeSongVolume }
+/* Dar like */
+function doLike(cancionId, username, vue) {
+  vue.$axios.put(constants.REST_API_URL + "/addSongToLikedList/" + cancionId + "/" + username)
+      .catch(error => console.error(error))
+}
+
+/* Comentar */
+async function doComment(comentarioDialog, userId, songId, comentario, vue ) {
+  comentarioDialog = true;
+  await vue.$axios.put(constants.REST_API_URL + "/addCommentByCancionId/" + userId + "/" + songId, {
+    "mensaje": comentario
+  })
+    .catch(error => console.error(error))
+}
+
+/* Obtener las canciones */
+async function getAllSongs(vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getCanciones")
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener las canciones */
+async function getUserSongs(username, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getSongsFromUser/" + username)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener canciones de mg de x usuario */
+async function getLikedSongs(username, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getLikedSongsByUserId/" + username)
+    .then(response => {
+      return  response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+export default { changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs }
