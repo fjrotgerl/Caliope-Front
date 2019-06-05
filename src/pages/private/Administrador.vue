@@ -22,33 +22,11 @@
             <q-tab-panel name="users">
               <div class="text-h6">Lista de usuarios</div>
               <div>
-                <div class="row flex justify-between" style="border:1px solid black;padding:10px;">
+                <div class="row flex justify-between usuario" v-for="usuario in user">
                   <div class="column flex">
-                    <span>Username</span>
-                    <span>Seguidores</span>
-                    <span>Seguidos</span>
-                  </div>
-                  <div class="row flex">
-                    <button class="expulsar">EXPULSAR</button>
-                    <button class="modificar">MODIFICAR</button>
-                  </div>
-                </div>
-                <div class="row flex justify-between" style="border:1px solid black;padding:10px;">
-                  <div class="column flex">
-                    <span>Username</span>
-                    <span>Seguidores</span>
-                    <span>Seguidos</span>
-                  </div>
-                  <div class="row flex">
-                    <button class="expulsar">EXPULSAR</button>
-                    <button class="modificar">MODIFICAR</button>
-                  </div>
-                </div>
-                <div class="row flex justify-between" style="border:1px solid black;padding:10px;">
-                  <div class="column flex">
-                    <span>Username</span>
-                    <span>Seguidores</span>
-                    <span>Seguidos</span>
+                    <span>{{usuario.username}}</span>
+                    <span>{{usuario.numeroSeguidores}}</span>
+                    <span>{{usuario.numeroSeguidos}}</span>
                   </div>
                   <div class="row flex">
                     <button class="expulsar">EXPULSAR</button>
@@ -61,45 +39,16 @@
             <q-tab-panel name="songs">
               <div class="text-h6">Lista de canciones</div>
               <div>
-                <div class="row flex cancion">
-                  <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
+                <div class="row flex cancion" v-for="cancion in mySongs">
+                  <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
                   <div class="flex column justify-between" style="width:90%;">
                     <div class="flex row justify-around">
-                      <span>Nombre Canción</span>
-                      <span>Nombre Autor</span>
+                      <span>{{cancion.nombre}}</span>
+                      <span>{{cancion.autor.username}}</span>
                     </div>
-                    <div class="flex row justify-around">
-                      <span>Comentar</span>
-                      <span>Me gusta</span>
-                      <span>...</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row flex cancion">
-                  <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-                  <div class="flex column justify-between" style="width:90%;">
-                    <div class="flex row justify-around">
-                      <span>Nombre Canción</span>
-                      <span>Nombre Autor</span>
-                    </div>
-                    <div class="flex row justify-around">
-                      <span>Comentar</span>
-                      <span>Me gusta</span>
-                      <span>...</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row flex cancion">
-                  <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-                  <div class="flex column justify-between" style="width:90%;">
-                    <div class="flex row justify-around">
-                      <span>Nombre Canción</span>
-                      <span>Nombre Autor</span>
-                    </div>
-                    <div class="flex row justify-around">
-                      <span>Comentar</span>
-                      <span>Me gusta</span>
-                      <span>...</span>
+                    <div>
+                      <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
+                      <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
                     </div>
                   </div>
                 </div>
@@ -114,13 +63,35 @@
 </template>
 
 <script>
+  import constants from '../../statics/js/configuration'
   export default {
     name: 'Administrador',
     data () {
       return {
-        tab: 'users'
+        mySongs: {},
+        user: {},
+        tab: 'users',
+        getUserSongs: async () => {
+          await this.$axios.get(constants.REST_API_URL + "/getSongsFromUser/" + this.user.username)
+            .then(response => {
+              this.mySongs = response.data;
+            })
+            .catch(error => console.error(error))
+        },
+        getUserData: async () => {
+        let userId = this.$route.params.userId;
+        await this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
+          .then(response => {
+            console.log(response);
+            this.user = response.data;
+          });
       }
-    }
+      }
+    },
+  async beforeMount(){
+    await this.getUserData();
+    await this.getUserSongs();
+  }
   }
 </script>
 
