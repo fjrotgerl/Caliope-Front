@@ -5,6 +5,10 @@ import axios from 'axios'
 
 import routes from './routes'
 
+import tools from '../statics/js/tools'
+
+Vue.prototype.$tools = tools;
+
 Vue.use(VueRouter)
 
 /*
