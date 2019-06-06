@@ -67,7 +67,12 @@ export default {
       otherUserId: "",
       you: "",
 
-      toogleSong: (cancionId) => this.$tools.toogleSong(cancionId, this.isSongPlaying, this),
+      toogleSong: (cancionId) => {
+        this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
+        if (!this.isSongPlaying) {
+          this.addOneRepro(cancionId);
+        }
+      },
       stopSong: () => this.$tools.stopSong(this.isSongPlaying),
       doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),
       doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this),
@@ -79,6 +84,11 @@ export default {
       followUser: () => {
         this.$axios.put(constants.REST_API_URL + "/followUser/" + this.user.username + "/" + this.you)
           .catch(error => console.error(error));
+      },
+      addOneRepro: (cancionId) => {
+        console.log(this.actualSongId);
+        this.$axios.put(constants.REST_API_URL + "/addNewRepro/" + this.actualSongId)
+          .catch(error => console.error(error))
       }
     }
   },

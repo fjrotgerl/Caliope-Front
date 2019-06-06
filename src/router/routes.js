@@ -38,7 +38,7 @@ const routes = [
         component: () => import("pages/private/Descubrir.vue")
       },
       {
-        path: 'cancion',
+        path: 'cancion/:cancionId',
         component: () => import("pages/private/Cancion.vue")
       },
       {

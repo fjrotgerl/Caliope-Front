@@ -35,7 +35,10 @@
     data () {
       return {
         user: {},
-        cancion:{},
+        cancion: {
+          nombre: "",
+          genero: "Seleccione un genero"
+        },
         generos: [
           'Blues', 'Country', 'Pop', 'Rock', 'Electrónica', 'Disco', 'Heavy Metal', 'Hip hop', 'Ranchera'
         ],
@@ -45,11 +48,11 @@
           let fileName = files.name.replace(".mp3", "");
           let bodyFormdata = new FormData();
           bodyFormdata.append("file", files);
-          bodyFormdata.set("nombre", "nombre_cancion");
+          bodyFormdata.set("nombre", this.cancion.nombre);
           bodyFormdata.set("duracion", "50");
           bodyFormdata.set("cancion_path", fileName);
           bodyFormdata.set("userId", this.user.username);
-          bodyFormdata.set("genero", "Flamenco");
+          bodyFormdata.set("genero", this.cancion.genero);
           bodyFormdata.set("fechaRegistro", now);
 
           console.log(bodyFormdata);

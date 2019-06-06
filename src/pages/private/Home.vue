@@ -1,11 +1,16 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column">
 
+
+
+
+  <q-page class="flex column">
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
         <h2 >Feed</h2>
         <div class="flex column justify-between">
+
+
 
           <!-- ---------------------------------------- -->
           <!-- CANCIONES -->
@@ -14,8 +19,8 @@
             <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
             <div class="flex column justify-between" style="width:90%;">
               <div class="flex row justify-around">
-                <q-btn color="primary" :label="cancion.nombre" />
-                <q-btn color="primary" :label="cancion.autor.username" />
+                <q-btn @click="$router.push('/user/cancion/' + cancion.id)" color="primary" :label="cancion.nombre" />
+                <q-btn @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary" :label="cancion.autor.username" />
               </div>
               <div>
                 <q-btn @click="openDialog(cancion.id)" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
@@ -66,7 +71,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      isSongPlaying: false,
+      isSongPlaying: true,
       songVolume: constants.DEFAULT_SONG_VOLUME,
       canciones: {},
       user: {},
@@ -74,7 +79,12 @@ export default {
       comentarioDialog: false,
       actualSongId: "",
 
-      toogleSong: (cancionId) => this.$tools.toogleSong(cancionId, this.isSongPlaying, this),
+      toogleSong: (cancionId) => {
+        this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
+        if (!this.isSongPlaying) {
+          this.addOneRepro(cancionId);
+        }
+      },
       stopSong: () => this.$tools.stopSong(this.isSongPlaying),
       doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),
       openDialog: (cancionId) => {
@@ -83,6 +93,10 @@ export default {
         this.actualSongId = cancionId;
       },
       doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this),
+      addOneRepro: (cancionId) => {
+        this.$axios.put(constants.REST_API_URL + "/addNewRepro/" + cancionId)
+          .catch(error => console.error(error))
+      }
     }
   },
   methods: {
