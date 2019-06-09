@@ -13,6 +13,12 @@
   background: linear-gradient(0deg, rgba(11,11,11,1) 0%, rgba(43,43,43,1) 100%);
 };
 
+.bg-blue-gradient {
+  background: #373b44; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #373b44, #4286f4); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #373b44, #4286f4);
+}
+
 .bg-no-opacity {
   background: rgba(0, 0, 0, 0);
 };
@@ -82,10 +88,48 @@ a {
 }
 
 .cancion, .playlist{
-  border:1px solid black;
+  border: 1px solid black;
   padding: 20px;
+  margin-bottom: 20px;
   height: 100px;
-  }
+  };
+
+.playButton {
+  margin-right: 20px;
+};
+
+button:hover {
+  background-color:rgba(0, 0, 0, 0);
+};
+
+.underlineHover {
+    -webkit-transition: color 0.3s; /* For Safari 3.1 to 6.0 */
+    transition: color 0.3s;
+  };
+
+.underlineHover:hover {
+  color: white;
+  cursor: pointer;
+};
+
+.likeHover {
+  -webkit-transition: color 0.3s, font-size 0.3s;  /* For Safari 3.1 to 6.0 */
+  transition: color 0.3, font-size 0.3s;
+};
+
+.likeHover:hover {
+  color: red;
+  cursor: pointer;
+  font-size: 28px;
+};
+
+.m-20 {
+  margin: 0 20px;
+};
+
+.font-size25 {
+  font-size: 25px;
+}
 
   .menu-lateral{
     width: 80%;

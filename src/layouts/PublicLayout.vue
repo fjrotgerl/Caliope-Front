@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-layout view="hHh lpR fFf" class="bg-img">
+  <q-layout view="hhh lpR fFf" class="bg-img">
 
     <q-header class="bg-no-opacity text-accent">
       <q-toolbar id="menu-superior">

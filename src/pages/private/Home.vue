@@ -1,30 +1,36 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 
-
-
-
-  <q-page class="flex column">
+  <q-page class="flex column bg-blue-gradient">
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
         <h2 >Feed</h2>
         <div class="flex column justify-between">
 
-
-
           <!-- ---------------------------------------- -->
           <!-- CANCIONES -->
           <!-- ---------------------------------------- -->
           <div class="row flex cancion" v-for="cancion in canciones">
-            <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <q-btn @click="$router.push('/user/cancion/' + cancion.id)" color="primary" :label="cancion.nombre" />
-                <q-btn @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary" :label="cancion.autor.username" />
+            <a  class="playButton"  @click="toogleSong(cancion.id)">
+              <i class="material-icons underlineHover font-size25">
+                {{isSongPlaying ? 'pause' : 'play_arrow'}}
+              </i>
+            </a>
+            <div class="flex column justify-between">
+              <div>
+                <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
               </div>
               <div>
-                <q-btn @click="openDialog(cancion.id)" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
-                <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
+
+                <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+
+                <a @click="doLike(cancion.id)">
+                  <i class="material-icons likeHover font-size25">
+                    favorite
+                  </i>
+                </a>
+
               </div>
             </div>
           </div>
@@ -66,12 +72,13 @@
 
 <script>
   import constants from '../../statics/js/configuration'
+  import audioPlayer from "../../statics/js/audioPlayer";
 
 export default {
   name: 'Home',
   data () {
     return {
-      isSongPlaying: true,
+      isSongPlaying: false,
       songVolume: constants.DEFAULT_SONG_VOLUME,
       canciones: {},
       user: {},
@@ -79,7 +86,12 @@ export default {
       comentarioDialog: false,
       actualSongId: "",
 
+      test: () => {
+        console.log(this.isSongPlaying);
+      },
+
       toogleSong: (cancionId) => {
+        this.isSongPlaying = !audioPlayer.getSongStatus();
         this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
         if (!this.isSongPlaying) {
           this.addOneRepro(cancionId);
