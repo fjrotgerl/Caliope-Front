@@ -12,16 +12,16 @@
           <!-- ---------------------------------------- -->
           <div class="row flex cancion" v-for="cancion in canciones">
             <a  class="playButton"  @click="toogleSong(cancion.id)">
-              <i class="material-icons underlineHover font-size25">
+              <i class="material-icons underlineHover font-size55">
                 {{isSongPlaying ? 'pause' : 'play_arrow'}}
               </i>
             </a>
             <div class="flex column justify-between">
-              <div>
+              <div class="cancion-info">
                 <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
                 <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
               </div>
-              <div>
+              <div class="cancion-opciones">
 
                 <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
 
