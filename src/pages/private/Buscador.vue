@@ -5,108 +5,34 @@
       <div class="col-9">
         <h2>Búsqueda</h2>
         <div class="flex column justify-between">
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
+          <div class="row flex cancion" v-for="cancion in canciones">
+            <a  class="playButton"  @click="toogleSong(cancion.id)">
+              <i class="material-icons underlineHover font-size55">
+                {{isSongPlaying ? 'pause' : 'play_arrow'}}
+              </i>
+            </a>
+            <div class="flex column justify-between">
+              <div class="cancion-info">
+                <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
               </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
-              </div>
-            </div>
-          </div>
-          <div class="row flex cancion">
-            <q-btn icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-            <div class="flex column justify-between" style="width:90%;">
-              <div class="flex row justify-around">
-                <span>Nombre Canción</span>
-                <span>Nombre Autor</span>
-              </div>
-              <div class="flex row justify-around">
-                <span>Comentar</span>
-                <span>Me gusta</span>
-                <span>...</span>
+              <div class="cancion-opciones">
+
+                <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+
+                <a @click="doLike(cancion.id)">
+                  <i class="material-icons likeHover font-size25">
+                    favorite
+                  </i>
+                </a>
+
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-3">
-        <h2 class="menu-lateral">Filtro</h2>
+        <h3 class="menu-lateral">Filtro</h3>
         <div class="flex column menu-lateral">
           <span id="todo">Todo</span>
           <span id="usuario">Usuario</span>
@@ -122,6 +48,18 @@
 
 <script>
   export default {
-    name: 'Buscador'
+    name: 'Buscador',
+    data () {
+      return {
+        isSongPlaying: false,
+        songVolume: constants.DEFAULT_SONG_VOLUME,
+        canciones: {},
+        user: {},
+        comentario: "",
+        comentarioDialog: false,
+        actualSongId: ""
+      }
+    }
   }
+
 </script>
