@@ -1,14 +1,24 @@
 <template>
   <q-page class="flex column">
     <div style="width: 80%;margin: 0 auto;">
-      <h2 style="background-color: cornflowerblue">{{this.cancionActual.nombre}} - {{this.cancionActual.autor.username}}</h2>
-      <div class="flex row">
-        <q-btn @click="toogleSong(idCancionActual)" icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
-        <div class="flex column justify-between" style="width:90%;">
+      <q-card class="my-card bg-purple text-white text-align-center">
+        <q-card-section>
+          <div class="text-h2">{{this.cancionActual.nombre}}</div>
+          <div class="text-subtitle2">{{this.cancionActual.autor.username}}</div>
+        </q-card-section>
+
+        <q-card-actions class="flex-center">
+          <q-btn @click="toogleSong(idCancionActual)" icon="play_arrow" color="primary" style="margin-right: 20px;"></q-btn>
+          <q-btn flat>Comentar</q-btn>
+          <q-btn flat>Me gusta</q-btn>
+        </q-card-actions>
+      </q-card>
+        <div class="flex row justify-between">
             <span>Genero: {{this.cancionActual.genero.nombre}}</span>
             <span>Reproducciones: 0</span>
+            <span>Duracion: 0:00</span>
+            <span>Fecha subida: XX/XX/XXXX</span>
         </div>
-      </div>
     </div>
     <div style="width: 80%;margin: 0 auto;" class="flex column justify-between">
       <h2 style="background-color: cornflowerblue">COMENTARIOS</h2>
