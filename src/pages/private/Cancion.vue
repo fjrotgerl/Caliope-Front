@@ -21,7 +21,7 @@
         </div>
     </div>
     <div style="width: 80%;margin: 0 auto;" class="flex column justify-between">
-      <h2 style="background-color: cornflowerblue">COMENTARIOS</h2>
+      <h2 style="background-color: cornflowerblue;color:white;" class="text-align-center">COMENTARIOS</h2>
 
       <!-- ---------------------------------------- -->
       <!-- COMENTARIOS -->
@@ -29,8 +29,19 @@
       <div v-for="comentario in comentarios"  class="flex row" style="margin-bottom: 5%">
         <q-btn @click="$router.push('/user/perfil/' + comentario.usuario.username)" icon="person" color="primary" style="margin-right: 20px;"></q-btn>
         <div class="flex column justify-between" style="width:90%;">
-          <span>{{comentario.usuario.username}}</span>
+          <h5 style="margin:0;">{{comentario.usuario.username}}</h5>
           <p>{{comentario.mensaje}}</p>
+        </div>
+      </div>
+
+      <div class="flex row" style="margin-bottom: 5%">
+        <q-btn icon="person" color="primary" style="margin-right: 20px"></q-btn>
+        <div class="flex column justify-between" style="width:90%;">
+          <h5 style="margin:0;">Usuario</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis arcu vitae dolor fermentum rutrum.
+            Donec egestas ultricies bibendum. Praesent at mattis arcu. Donec pellentesque sit amet elit ac tristique.
+            Duis pellentesque imperdiet magna, sit amet aliquam nibh consectetur sit amet. Nulla vehicula congue arcu,
+            sed luctus nisl tristique imperdiet. Praesent non dui ac ipsum tempor tincidunt ut ut quam.</p>
         </div>
       </div>
       <!-- ---------------------------------------- -->
