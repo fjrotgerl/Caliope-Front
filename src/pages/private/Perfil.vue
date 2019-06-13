@@ -11,32 +11,54 @@
     <h3>Canciones de {{this.user.username}}</h3>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in mySongs">
-      <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
-      <div class="flex column justify-between" style="width:90%;">
-        <div class="flex row justify-around">
-          <span>{{cancion.nombre}}</span>
-          <span>{{cancion.autor.username}}</span>
+      <a  class="playButton"  @click="toogleSong(cancion.id)">
+        <i class="material-icons underlineHover font-size55">
+          {{isSongPlaying ? 'pause' : 'play_arrow'}}
+        </i>
+      </a>
+      <div class="flex column justify-between">
+        <div class="cancion-info">
+          <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+          <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
         </div>
-        <div>
-          <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
-          <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
+        <div class="cancion-opciones">
+
+          <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+
+          <a @click="doLike(cancion.id)">
+            <i class="material-icons likeHover font-size25">
+              favorite
+            </i>
+          </a>
+
         </div>
       </div>
     </div>
     <!-- ---------------------------------------- -->
 
-    <h3>Canciones que te gustan</h3>
+    <h3>Canciones favoritas</h3>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in likedSongs">
-      <q-btn @click="toogleSong(cancion.id)" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
-      <div class="flex column justify-between" style="width:90%;">
-        <div class="flex row justify-around">
-          <span>{{cancion.nombre}}</span>
-          <span>{{cancion.autor.username}}</span>
+      <a  class="playButton"  @click="toogleSong(cancion.id)">
+        <i class="material-icons underlineHover font-size55">
+          {{isSongPlaying ? 'pause' : 'play_arrow'}}
+        </i>
+      </a>
+      <div class="flex column justify-between">
+        <div class="cancion-info">
+          <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+          <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
         </div>
-        <div>
-          <q-btn @click="doComment" label="Comentar" color="primary" style="margin-right: 20px;"></q-btn>
-          <q-btn @click="doLike(cancion.id)" icon="favorite" color="primary" style="margin-right: 20px;"></q-btn>
+        <div class="cancion-opciones">
+
+          <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+
+          <a @click="doLike(cancion.id)">
+            <i class="material-icons likeHover font-size25">
+              favorite
+            </i>
+          </a>
+
         </div>
       </div>
     </div>

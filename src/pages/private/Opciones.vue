@@ -1,11 +1,10 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <q-page>
-      <h2>OPCIONES</h2>
+      <h2 class="text-align-center">OPCIONES</h2>
       <div>
         <q-splitter
           v-model="splitterModel"
         >
-
           <template v-slot:before>
             <q-tabs
               v-model="tab"
@@ -58,7 +57,7 @@
                   ref="user.apellidos"
                   filled
                   v-model="user.apellidos"
-                  label="Email"
+                  label="Apellidos"
                 />
 
                 <q-input
@@ -70,6 +69,7 @@
                   lazy-rules
                   :rules="[ val => val.length >= 3  && val.length <= 32 || 'Introduce entre 3 y 32 caracteres']"
                 />
+
                 <q-btn
                   type="submit"
                   :loading="submitting"

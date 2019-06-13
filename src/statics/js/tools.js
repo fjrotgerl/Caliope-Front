@@ -97,4 +97,12 @@ async function getPlaylists(vue) {
     .catch(error => console.error(error))
 }
 
-export default { changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs, getPlaylists }
+async function getCancionesPlaylists(vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getPlaylistCanciones")
+    .then(response => {
+      return  response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+export default { getCancionesPlaylists, changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs, getPlaylists }
