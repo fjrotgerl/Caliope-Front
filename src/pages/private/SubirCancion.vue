@@ -10,6 +10,7 @@
           label="Solo .mp3"
           accept=".mp3"
           style="max-width: 300px"
+          :ref="uploaderRef"
         />
         <q-input
           ref="cancion.nombre"
@@ -18,6 +19,7 @@
           label="Nombre de la canción"
         />
         <q-select v-model="cancion.genero" :options="generos" label="Escoge genero" />
+        <q-btn @click="" label="Subir"></q-btn>
       </div>
     </div>
   </q-page>
@@ -39,9 +41,8 @@
           nombre: "",
           genero: "Seleccione un genero"
         },
-        generos: [
-          'Blues', 'Country', 'Pop', 'Rock', 'Electrónica', 'Disco', 'Heavy Metal', 'Hip hop', 'Ranchera'
-        ],
+        uploaderRef: "",
+        generos: [],
         fileUpload: (files) => {
           let moment = require('moment');
           let now = moment().format("YYYY-MM-DD");
@@ -73,14 +74,23 @@
           let userId = localStorage.getItem("user");
           this.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userId)
             .then(response => {
-              console.log(response);
               this.user = response.data;
             });
+        },
+        getGeneros: () => {
+          this.$axios.get(constants.REST_API_URL + "/getGeneros")
+            .then(response => {
+              for (let item in response.data) {
+                this.generos.push(response.data[item].nombre);
+              }
+            })
+            .catch(error => console.error(error));
         }
       }
     },
     beforeMount() {
       this.getUserData();
+      this.getGeneros();
     }
 
   }

@@ -6,7 +6,28 @@
 
 * {
   font-family 'customfont'
-}
+};
+
+
+.logo-layout {
+  margin-top: 10px;
+  max-width: 200px;
+  min-height: 45px;
+
+};
+
+@media (max-width: 800px) {
+  .logo-layout {
+    content:url("./../assets/caliope-logo.svg");
+  }
+};
+
+@media (min-width: 800px) {
+  .logo-layout {
+    content:url("./../assets/caliope-soloIcon.svg");
+  }
+};
+
 
 .bg-black-gradient {
   background: rgb(11,11,11);

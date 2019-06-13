@@ -4,7 +4,7 @@
     <q-header reveal bordered class="bg-primary text-accent">
       <q-toolbar>
         <q-toolbar-title id="home-publica">
-          <p @click="$router.push('/user/home'); text = ''">Inicio</p>
+          <img class="logo-layout" src="" @click="$router.push('/user/home')">
         </q-toolbar-title>
 
         <q-input style="margin-right: 5px;" @keydown.enter="sendDataToFinder" dark dense standout v-model="text" input-class="text-right">
@@ -93,10 +93,11 @@
         user: { },
         isSongPlaying: false,
         songVolume: constants.DEFAULT_SONG_VOLUME,
-
+        imgHeader: '',
         toogleSong: () => {
           audioPlayer.toogle();
           this.isSongPlaying = audioPlayer.getSongStatus();
+          console.log(this.$refs.imgHeader);
         },
         stopSong: () => {
           if (audioPlayer.getSongStatus()) {

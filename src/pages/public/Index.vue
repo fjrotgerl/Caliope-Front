@@ -3,7 +3,7 @@
 
 <!--      <q-carousel-slide :name="1" img-src="../statics/carousel/festival1.jpg" />-->
   <div class="absolute-center text-white q-pa-md">
-    <h1 class="mb-less-5 text-align-center text-weight-bold-450">CALÍOPE</h1>
+    <img src="./../../assets/caliope-soloIcon.svg">
     <h3 class="text-align-center">Crea y comparte tu música con el mundo. Tus creaciones no tienen límites.</h3>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis arcu vitae dolor fermentum rutrum.
       Donec egestas ultricies bibendum. Praesent at mattis arcu. Donec pellentesque sit amet elit ac tristique.

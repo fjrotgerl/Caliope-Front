@@ -4,7 +4,6 @@
     <q-header class="bg-no-opacity text-accent">
       <q-toolbar id="menu-superior">
         <q-toolbar-title id="home-publica">
-          <p @click="$router.push('/')">PARTE PÚBLICA</p>
         </q-toolbar-title>
 
 <!--        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>-->
