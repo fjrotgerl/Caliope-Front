@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-3" style="margin-top: 3%;">
         <h2 class="menu-lateral">Playlists para ti</h2>
         <div class="flex column menu-lateral">
           <div class="flex flex-center row justify-around" v-for="playlist in playlists" style="margin-right: 5%;margin-bottom:5%;">
