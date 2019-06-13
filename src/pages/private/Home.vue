@@ -11,10 +11,8 @@
           <!-- CANCIONES -->
           <!-- ---------------------------------------- -->
           <div class="row flex cancion" v-for="cancion in canciones">
-            <a  class="playButton"  @click="toogleSong(cancion.id)">
-              <i class="material-icons underlineHover font-size55">
-                {{isSongPlaying ? 'pause' : 'play_arrow'}}
-              </i>
+            <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
+              <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
             </a>
             <div class="flex column justify-between">
               <div class="cancion-info">
@@ -85,17 +83,36 @@ export default {
       comentario: "",
       comentarioDialog: false,
       actualSongId: "",
+      actualIcon: "play_arrow",
+      // Aquí se guarda la referencia a la cancion que este sonando
+      // Para que cuando se haga play en otra, esta se pare
+      songPlaying: "",
 
-      test: () => {
-        console.log(this.isSongPlaying);
-      },
+      toogleSong: async (cancionId, songPlaying) => {
 
-      toogleSong: (cancionId) => {
-        this.isSongPlaying = !audioPlayer.getSongStatus();
-        this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
-        if (!this.isSongPlaying) {
-          this.addOneRepro(cancionId);
+        // Entra si ya hay una cancion reproduciendose y es diferente a la que este sonando actualmente
+        if (this.isSongPlaying && songPlaying !== cancionId) {
+          // Paramos la cancion anterior y cambiamos el icono
+          let refs = this.$refs;
+          let oldSong = refs[this.songPlaying];
+          oldSong[0].innerHTML = 'play_arrow';
+          this.isSongPlaying = false;
+          await audioPlayer.setSongStatus(false);
+          await audioPlayer.stop();
         }
+
+
+        this.songPlaying = cancionId;
+        let refs = this.$refs;
+        let actualSong = refs[cancionId];
+        actualSong[0].innerHTML = this.isSongPlaying ? 'play_arrow' : 'pause';
+
+        this.isSongPlaying = await !audioPlayer.getSongStatus();
+        await this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
+        if (!this.isSongPlaying) {
+          await this.addOneRepro(cancionId);
+        }
+
       },
       stopSong: () => this.$tools.stopSong(this.isSongPlaying),
       doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),

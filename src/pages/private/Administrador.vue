@@ -29,8 +29,8 @@
                     <span>Usuarios seguidos: {{usuario.numeroSeguidos}}</span>
                   </div>
                   <div class="column flex">
-                    <button class="expulsar" style="margin-bottom: 10px;">EXPULSAR</button>
-                    <button class="modificar">MODIFICAR</button>
+                    <q-button class="expulsar" style="margin-bottom: 10px;">EXPULSAR</q-button>
+                    <q-button class="modificar">MODIFICAR</q-button>
                   </div>
                 </div>
               </div>

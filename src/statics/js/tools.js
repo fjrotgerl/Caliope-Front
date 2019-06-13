@@ -11,16 +11,15 @@ async function getUserData (userName, vue) {
 }
 
 /* Play/Stop una cancion */
-function toogleSong (cancionId, isSongPlaying, vue) {
-  vue.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
-    .then(response => {
+async function toogleSong (cancionId, isSongPlaying, vue) {
+  await vue.$axios.get(constants.REST_API_URL + "/getSongFilenameById/" + cancionId)
+    .then(async response => {
       let nombreCancion = response.data;
       audioPlayer.setSong(nombreCancion);
-      vue.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
+      await vue.$axios.get(constants.REST_API_URL + "/getAutorCancionByCancionId/" + cancionId)
         .then(response => {
           let autorCancion = response.data;
           audioPlayer.setAutor(autorCancion);
-          console.log(autorCancion);
           audioPlayer.toogle();
         });
       isSongPlaying = audioPlayer.getSongStatus();
