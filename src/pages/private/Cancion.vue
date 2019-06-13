@@ -3,8 +3,8 @@
     <div style="width: 80%;margin: 0 auto;">
       <q-card class="my-card bg-purple text-white text-align-center">
         <q-card-section>
-          <div class="text-h2">{{this.cancionActual.nombre}}</div>
-          <div class="text-subtitle2">{{this.cancionActual.autor.username}}</div>
+          <div class="text-h2">{{cancionActual.nombre}}</div>
+          <div class="text-subtitle2">{{cancionActual.autor.username}}</div>
         </q-card-section>
 
         <q-card-actions class="flex-center">
@@ -14,10 +14,10 @@
         </q-card-actions>
       </q-card>
         <div class="flex row justify-between">
-            <span>Genero: {{this.cancionActual.genero.nombre}}</span>
-            <span>Reproducciones: 0</span>
-            <span>Duracion: 0:00</span>
-            <span>Fecha subida: XX/XX/XXXX</span>
+            <span>Genero: {{cancionActual.genero.nombre}}</span>
+            <span>Reproducciones: {{cancionActual.reproducciones}}</span>
+            <span>Duracion: 0</span>
+            <span>Fecha subida: {{moment(cancionActual.fechaRegistro)}}</span>
         </div>
     </div>
     <div style="width: 80%;margin: 0 auto;" class="flex column justify-between">
@@ -33,25 +33,14 @@
           <p>{{comentario.mensaje}}</p>
         </div>
       </div>
-
-      <div class="flex row" style="margin-bottom: 5%">
-        <q-btn icon="person" color="primary" style="margin-right: 20px"></q-btn>
-        <div class="flex column justify-between" style="width:90%;">
-          <h5 style="margin:0;">Usuario</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis arcu vitae dolor fermentum rutrum.
-            Donec egestas ultricies bibendum. Praesent at mattis arcu. Donec pellentesque sit amet elit ac tristique.
-            Duis pellentesque imperdiet magna, sit amet aliquam nibh consectetur sit amet. Nulla vehicula congue arcu,
-            sed luctus nisl tristique imperdiet. Praesent non dui ac ipsum tempor tincidunt ut ut quam.</p>
-        </div>
-      </div>
       <!-- ---------------------------------------- -->
-
     </div>
   </q-page>
 </template>
 
 <script>
   import constants from '../../statics/js/configuration'
+  import moment from 'moment'
 
   export default {
     name: 'Cancion',
@@ -59,21 +48,26 @@
       return {
         idCancionActual: "",
         cancionActual: {
-          autor: { }
+          nombre: "",
+          autor: { },
+          genero: { },
+
         },
+        moment: (fecha) => { return moment(fecha).format(constants.DATE_FORMAT) },
         comentarios: {},
         getCancion: () => {
           this.$axios.get(constants.REST_API_URL + "/getCancionById/" + this.idCancionActual)
             .then(response => {
               this.cancionActual = response.data;
+
             })
             .catch(error => console.error(error))
         },
         getComentarios: () => {
-          console.log(this.idCancionActual);
           this.$axios.get(constants.REST_API_URL + "/getComentariosFromCancion/" + this.idCancionActual)
             .then(response => {
               this.comentarios = response.data;
+
             })
             .catch(error => console.error(error));
         },

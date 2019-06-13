@@ -4,43 +4,42 @@
     <q-header reveal bordered class="bg-primary text-accent">
       <q-toolbar>
         <q-toolbar-title id="home-publica">
-          <p @click="$router.push('/user/home')">Inicio</p>
+          <p @click="$router.push('/user/home'); text = ''">Inicio</p>
         </q-toolbar-title>
 
-        <q-input style="margin-right: 5px;" dark dense standout v-model="text" input-class="text-right">
+        <q-input style="margin-right: 5px;" @keydown.enter="sendDataToFinder" dark dense standout v-model="text" input-class="text-right">
           <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+            <q-icon @click="sendDataToFinder" name="search" />
           </template>
         </q-input>
 
-        <q-btn flat rounded color="accent" label="Subir canción" @click="$router.push('/user/subircancion')"/>
+        <q-btn flat rounded color="accent" label="Subir canción" @click="$router.push('/user/subircancion'); text = ''"/>
 
-        <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir')"/>
+        <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir'); text = ''"/>
 
         <q-btn-dropdown color="primary" :label="user.username">
           <q-list>
             <q-item v-if="user.permiso == 2" clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Administrar" @click="$router.push('/user/administrador/')"/>
+                <q-btn flat rounded outline label="Administrar" @click="$router.push('/user/administrador/'); text = ''"/>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username)"/>
+                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username); text = ''"/>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Opciones" @click="$router.push('/user/opciones')"/>
+                <q-btn flat rounded outline label="Opciones" @click="$router.push('/user/opciones'); text = ''"/>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Cerrar sesión" @click="$router.push('/')"/>
+                <q-btn flat rounded outline label="Cerrar sesión" @click="$router.push('/'); text = ''"/>
               </q-item-section>
             </q-item>
           </q-list>
@@ -116,6 +115,10 @@
               console.log(response);
               this.user = response.data;
             });
+        },
+        sendDataToFinder: () => {
+          this.$tools.setFinderData(this.text);
+          this.$router.push("/user/buscador")
         }
       }
     },

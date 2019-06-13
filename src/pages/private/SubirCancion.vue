@@ -46,6 +46,7 @@
           let moment = require('moment');
           let now = moment().format("YYYY-MM-DD");
           let fileName = files.name.replace(".mp3", "");
+          console.log(files);
           let bodyFormdata = new FormData();
           bodyFormdata.append("file", files);
           bodyFormdata.set("nombre", this.cancion.nombre);

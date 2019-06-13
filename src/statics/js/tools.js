@@ -1,6 +1,9 @@
 import audioPlayer from './audioPlayer'
 import constants from './configuration'
 
+
+let finderData = "";
+
 /* Obtener los datos de un usuario */
 async function getUserData (userName, vue) {
   return await vue.$axios.get(constants.REST_API_URL + "/getUsuarioById/" + userName)
@@ -105,4 +108,12 @@ async function getCancionesPlaylists(vue) {
     .catch(error => console.error(error))
 }
 
-export default { getCancionesPlaylists, changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs, getPlaylists }
+function getFinderData() {
+  return finderData;
+}
+
+function setFinderData(newFinderData) {
+  finderData = newFinderData;
+}
+
+export default { getCancionesPlaylists, changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs, getPlaylists, getFinderData, setFinderData }

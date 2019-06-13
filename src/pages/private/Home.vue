@@ -128,10 +128,6 @@ export default {
       }
     }
   },
-  methods: {
-
-
-  },
   async beforeMount(){
     this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
     this.canciones = await this.$tools.getAllSongs(this);

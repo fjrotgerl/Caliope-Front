@@ -3,3 +3,5 @@ exports.REST_API_URL = "http://localhost:8080";
 
 exports.DEFAULT_SONG_VOLUME = 50;
 
+exports.DATE_FORMAT = "YYYY/MM/DD";
+

@@ -67,7 +67,6 @@ function init() {
     bufferLoader = new BufferLoader(
       context,
       [
-        //'http://localhost:8080/obtenerCancion/fjrotgerl/iphone-notificacion',
         getSongUrl + "/" + getUserSong + "/" + getSongName
       ],
       finishedLoading
@@ -81,6 +80,8 @@ function finishedLoading(bufferList) {
 
   // Creamos el know
   gainNode = context.createGain();
+
+  console.log(bufferLoader.bufferList[0].duration);
 
   // Cargamos el archivo de audio.
   source = context.createBufferSource();
@@ -136,4 +137,4 @@ function setAutor(autorCancion) {
   getUserSong = autorCancion;
 }
 
-export default { stop, toogle, getSongStatus, changeVolume, setSongStatus, setSong, setAutor }
+export default { stop, toogle, getSongStatus, changeVolume, setSongStatus, setSong, setAutor, init }
