@@ -17,6 +17,7 @@
             <div class="flex column justify-between">
               <div class="cancion-info">
                 <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                <p> - </p>
                 <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
               </div>
               <div class="cancion-opciones">

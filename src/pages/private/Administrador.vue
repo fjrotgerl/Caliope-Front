@@ -34,6 +34,7 @@
                 >
 
                   <template v-slot:top>
+                    <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="autorenew" label="Actualizar" @click="refreshData" ></q-btn>
                     <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="delete" label="Eliminar" @click="removeUserExtra" ></q-btn>
                     <q-space ></q-space>
                     <q-input borderless dense debounce="300" color="primary" v-model="filter">
@@ -63,6 +64,7 @@
                 >
 
                   <template v-slot:top>
+                    <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="autorenew" label="Actualizar" @click="refreshData" ></q-btn>
                     <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="delete" label="Eliminar" @click="removeSongExtra" ></q-btn>
                     <q-space ></q-space>
                     <q-input borderless dense debounce="300" color="primary" v-model="filter">
@@ -247,7 +249,11 @@
               item.fechaRegistro = moment(item.fechaRegistro).format(constants.DATE_FORMAT);
             }
           });
-      }
+        },
+        refreshData: () => {
+          this.getUserSongs();
+          this.getUserData();
+        }
       }
     },
   async beforeMount(){

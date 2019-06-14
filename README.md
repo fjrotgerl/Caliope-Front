@@ -6,7 +6,6 @@ Cosas por hacer:
 
 - Crear playlists y poder añadir canciones a las mismas.
 
-
 - Que se muestren los seguidores y los seguidos de los demas.
 
 - Pagina descubrir: que salgan canciones aleatorias.
