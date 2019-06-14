@@ -6,24 +6,20 @@
 
     <div class="col-12">
 
-
-
       <!-- Playlists -->
       <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: 300px;">
+
         <q-card @click="$router.push('/user/playlists/' + otherUserId + '/' + playlist.id)" class="my-card playlistHover container">
+          <img src="../../assets/playlist.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
 
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" >
-            <div class="absolute-bottom text-subtitle2 text-center">
-              {{playlist.nombre}}
-            </div>
-
-            <div class="overlay">
-                <i class="icon material-icons underlineHover font-size55">remove_red_eye</i>
-            </div>
-
-          </q-img>
-
+          <q-card-section style="background-color: cornflowerblue;">
+            <div class="text-h5 text-align-center">{{playlist.nombre}}</div>
+          </q-card-section>
+          <div class="overlay">
+            <i class="icon material-icons underlineHover font-size55">hearing</i>
+          </div>
         </q-card>
+
       </div>
 
       <!--  CREATE PLAYLIST DIALOG  -->
