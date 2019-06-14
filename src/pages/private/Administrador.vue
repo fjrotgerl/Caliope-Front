@@ -20,19 +20,31 @@
 
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="users">
-              <div class="text-h6">Lista de usuarios</div>
               <div>
-                <div class="row flex justify-between usuario" v-for="usuario in user">
-                  <div class="column flex">
-                    <span class="text-weight-bold">{{usuario.username}}</span>
-                    <span>Seguidores: {{usuario.numeroSeguidores}}</span>
-                    <span>Usuarios seguidos: {{usuario.numeroSeguidos}}</span>
-                  </div>
-                  <div class="column flex">
-                    <q-btn class="expulsar" style="margin-bottom: 10px;">EXPULSAR</q-btn>
-                    <q-btn class="modificar">MODIFICAR</q-btn>
-                  </div>
-                </div>
+
+                <q-table
+                  title="Lista de canciones"
+                  :data="user"
+                  :columns="columnsUser"
+                  row-key="username"
+                  selection="single"
+                  :selected.sync="selectedUser"
+                  :filter="filterUser"
+                  :loading="loadingUser"
+                >
+
+                  <template v-slot:top>
+                    <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="delete" label="Eliminar" @click="removeUserExtra" ></q-btn>
+                    <q-space ></q-space>
+                    <q-input borderless dense debounce="300" color="primary" v-model="filter">
+                      <template v-slot:append>
+                        <q-icon name="search" ></q-icon>
+                      </template>
+                    </q-input>
+                  </template>
+
+                </q-table>
+
               </div>
             </q-tab-panel>
 
@@ -70,6 +82,7 @@
       </div>
     </div>
 
+    <!--  Cancion no seleccionada  -->
     <q-dialog v-model="noSongSelected">
       <q-card>
         <q-card-section>
@@ -86,6 +99,24 @@
       </q-card>
     </q-dialog>
 
+    <!--  Usuario no seleccionado  -->
+    <q-dialog v-model="noUserSelected">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Información</div>
+        </q-card-section>
+
+        <q-card-section>
+          No has seleccionado a ningún usuario
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Aceptar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!--  Esta seguro dialog  -->
     <q-dialog v-model="areYouSure">
       <q-card>
         <q-card-section>
@@ -98,6 +129,24 @@
 
         <q-card-actions align="center">
           <q-btn flat label="Sí" color="primary" @click="removeSong" v-close-popup />
+          <q-btn flat label="No" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!--  Esta seguro user dialog  -->
+    <q-dialog v-model="areYouSureUser">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alerta</div>
+        </q-card-section>
+
+        <q-card-section>
+          ¿Está seguro de que sea eliminar al usuario?
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn flat label="Sí" color="primary" @click="removeUser" v-close-popup />
           <q-btn flat label="No" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -116,7 +165,9 @@
       return {
         /* MODALS */
         noSongSelected: false,
+        noUserSelected: false,
         areYouSure: false,
+        areYouSureUser: false,
         /* CANCIONES TABLE */
         selected: [],
         columns: [
@@ -129,6 +180,25 @@
         loading: false,
         filter: '',
         rowCount: 10,
+        /* USERS TABLE */
+        selectedUser: [],
+        columnsUser: [
+          { name: 'username', field: "username", label: 'Nombre de usuario', align: 'center', sortable: true },
+          { name: 'email', field: "email", label: 'Email', align: 'center', sortable: true },
+          { name: 'fullName', field: row => row.nombre + ", " + row.apellidos, label: 'Nombre completo', align: 'center', sortable: true },
+          { name: 'permiso', field: row => {
+            if (row.permiso === 0) return "Baneado";
+            else if (row.permiso === 1) return "Normal";
+            else if (row.permiso === 2) return "Admin";
+            }, label: 'permiso', align: 'center', sortable: true },
+          { name: 'numeroSeguidores', field: 'numeroSeguidores', label: 'Seguidores', align: 'center', sortable: true },
+          { name: 'numeroSeguidos', field: 'numeroSeguidos', label: 'Seguidos', align: 'center', sortable: true },
+          { name: 'fechaRegistro', field: 'fechaRegistro', label: 'Fecha de registro', align: 'center', sortable: true },
+
+        ],
+        loadingUser: false,
+        filterUser: '',
+        /* Borrar cancion */
         removeSongExtra: () => {
           if (this.selected[0] === undefined) {
             this.noSongSelected = true;
@@ -141,13 +211,22 @@
           this.$axios.put(constants.REST_API_URL + "/deleteSongById/" + this.selected[0].id)
             .catch(error => console.error(error));
         },
-        mySongs: {
-          autor: {
-            username: ""
-          },
-        },
+        /* Borrar usuario */
+        removeUserExtra: () => {
+          if (this.selectedUser[0] === undefined) {
+            this.noUserSelected = true;
+          } else {
+            this.areYouSureUser = true;
 
-        user: {},
+          }
+        },
+        removeUser: () => {
+          this.$axios.put(constants.REST_API_URL + "/deleteUserByUsername/" + this.selectedUser[0].username)
+            .catch(error => console.error(error));
+        },
+        mySongs: [],
+
+        user: [],
         tab: 'users',
         test: () => console.log(this.mySongs),
         getUserSongs: async () => {
@@ -164,6 +243,9 @@
         await this.$axios.get(constants.REST_API_URL + "/getUsuarios/")
           .then(response => {
             this.user = response.data;
+            for (let item of this.user) {
+              item.fechaRegistro = moment(item.fechaRegistro).format(constants.DATE_FORMAT);
+            }
           });
       }
       }
