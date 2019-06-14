@@ -1,6 +1,8 @@
 <template>
   <q-page class="q-pa-md">
 
+    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/playlists/' + otherUserId)" label="Playlists" />
+
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidores')" label="Seguidores" />
 
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
@@ -107,8 +109,7 @@ export default {
         this.$axios.put(constants.REST_API_URL + "/followUser/" + this.user.username + "/" + this.you)
           .catch(error => console.error(error));
       },
-      addOneRepro: (cancionId) => {
-        console.log(this.actualSongId);
+      addOneRepro: () => {
         this.$axios.put(constants.REST_API_URL + "/addNewRepro/" + this.actualSongId)
           .catch(error => console.error(error))
       }

@@ -26,11 +26,11 @@ const routes = [
         component: () => import("pages/private/Home.vue")
       },
       {
-        path: 'playlist',
+        path: 'playlists/:userId/:nombrePlaylist',
         component: () => import("pages/private/Playlist.vue")
       },
       {
-        path: 'playlists',
+        path: 'playlists/:userId',
         component: () => import("pages/private/Playlists.vue")
       },
       {

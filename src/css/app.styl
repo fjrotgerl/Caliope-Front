@@ -16,6 +16,46 @@
 
 };
 
+.icon {
+  color: white;
+  font-size: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+};
+
+.container:hover .overlay {
+  opacity: 1;
+};
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+  background-color: red;
+};
+
+.playlistHover {
+  -webkit-transition: filter 0.3s;  /* For Safari 3.1 to 6.0 */
+  transition: filter 0.3;
+}
+
+.playlistHover:hover {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  cursor: pointer;
+
+}
+
 @media (max-width: 800px) {
   .logo-layout {
     content:url("./../assets/caliope-logo.svg");
@@ -79,9 +119,6 @@
   margin-bottom:0;
 };
 
-//.q-input {
-//  margin-bottom: 10px;
-//}
 
 a {
   color: inherit;
@@ -125,14 +162,14 @@ a {
   padding-right: 20px;
   height: -webkit-fill-available;
   justify-content: space-between;
-}
+};
 
-  .cancion-info{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: -webkit-fill-available;
-  }
+.cancion-info{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: -webkit-fill-available;
+}
 
 .playButton {
   margin-right: 20px;
