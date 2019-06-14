@@ -12,7 +12,6 @@
               class="text-teal"
             >
               <q-tab name="info" icon="info" label="Informacion" />
-              <q-tab name="calidad" icon="high_quality" label="Calidad" />
               <q-tab name="ecu" icon="equalizer" label="Ecualizacion" />
             </q-tabs>
           </template>
@@ -58,6 +57,7 @@
                   filled
                   v-model="user.apellidos"
                   label="Apellidos"
+                  style="margin-bottom: 20px"
                 />
 
                 <q-input
@@ -83,54 +83,54 @@
                 </q-btn>
               </q-tab-panel>
 
-              <q-tab-panel name="calidad">
-                <div class="text-h4 q-mb-md">Calidad</div>
-                <div class="q-pa-md">
-                  <q-list link>
-                    <q-item tag="label" v-ripple>
-                      <q-item-section avatar>
-                        <q-radio v-model="calidad" val="baja" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Baja</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item tag="label" v-ripple>
-                      <q-item-section avatar>
-                        <q-radio v-model="calidad" val="media" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Media</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item tag="label" v-ripple>
-                      <q-item-section avatar top>
-                        <q-radio v-model="calidad" val="alta" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Alta</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item tag="label" v-ripple>
-                      <q-item-section avatar top>
-                        <q-radio v-model="calidad" val="muy-alta" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Muy alta</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </div>
-              </q-tab-panel>
-
               <q-tab-panel name="ecu">
                 <div class="text-h4 q-mb-md">Ecualizacion</div>
-                <div class="q-pa-md" style="max-width: 300px">
-                  <div class="q-gutter-md">
-                    <q-select v-model="model" :options="options" label="Predeterminada" />
+                <div class="q-pa-md">
+                  <div class="q-gutter-md flex row">
+                    <div class="flex column text-align-center">
+                      <span>nombre1</span>
+                    <q-knob
+                      :min="0"
+                      :max="100"
+                      v-model="value1"
+                      show-value
+                      size="50px"
+                      :thickness="0.22"
+                      color="teal"
+                      track-color="grey-3"
+                      class="q-ma-md"
+                    />
+                    </div>
+
+                    <div class="flex column text-align-center">
+                    <span>nombre2</span>
+                    <q-knob
+                      :min="0"
+                      :max="100"
+                      v-model="value2"
+                      show-value
+                      size="50px"
+                      :thickness="0.22"
+                      color="teal"
+                      track-color="grey-3"
+                      class="q-ma-md"
+                    />
+                    </div>
+
+                    <div class="flex column text-align-center">
+                      <span>nombre3</span>
+                    <q-knob
+                      :min="0"
+                      :max="100"
+                      v-model="value3"
+                      show-value
+                      size="50px"
+                      :thickness="0.22"
+                      color="teal"
+                      track-color="grey-3"
+                      class="q-ma-md"
+                    />
+                    </div>
                   </div>
                   <q-btn label="Guardar"></q-btn>
                 </div>
@@ -153,9 +153,6 @@
       return {
         model: null,
         calidad: "",
-        options: [
-          'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-        ],
         val: 'media',
         test: '',
         submitting: false,
