@@ -77,18 +77,19 @@ export default {
   name: 'Home',
   data () {
     return {
-      isSongPlaying: false,
-      songVolume: constants.DEFAULT_SONG_VOLUME,
       canciones: {},
       user: {},
-      comentario: "",
-      comentarioDialog: false,
+
+      /* Reproductor cancion */
+      songPlaying: "",
       actualSongId: "",
       actualIcon: "play_arrow",
-      // Aquí se guarda la referencia a la cancion que este sonando
-      // Para que cuando se haga play en otra, esta se pare
-      songPlaying: "",
+      comentarioDialog: false,
+      comentario: "",
+      songVolume: constants.DEFAULT_SONG_VOLUME,
+      isSongPlaying: false,
 
+      /* Reproductor functions */
       toogleSong: async (cancionId, songPlaying) => {
 
         // Entra si ya hay una cancion reproduciendose y es diferente a la que este sonando actualmente

@@ -92,6 +92,7 @@ async function getLikedSongs(username, vue) {
     .catch(error => console.error(error))
 }
 
+/* Obtener todas las playlists */
 async function getPlaylists(vue) {
   return await vue.$axios.get(constants.REST_API_URL + "/getPlaylist")
     .then(response => {
@@ -100,9 +101,30 @@ async function getPlaylists(vue) {
     .catch(error => console.error(error))
 }
 
-async function getCancionesPlaylists(vue) {
-  return await vue.$axios.get(constants.REST_API_URL + "/getPlaylistCanciones")
+/* Obtener las playlists de un usuario */
+async function getPlaylistsFromUser(username, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getUserPlaylistsByUserId/" + username)
     .then(response => {
+      return  response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener las canciones de una playlists en concreto */
+async function getSongFromPlaylist(playlistId, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getCancionesFromPlaylist/" + playlistId)
+    .then(response => {
+      console.log(response.data);
+      return  response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener playlist por id */
+async function getPlaylistById(playlistId, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getPlaylistById/" + playlistId)
+    .then(response => {
+      console.log(response.data);
       return  response.data;
     })
     .catch(error => console.error(error))
@@ -116,4 +138,6 @@ function setFinderData(newFinderData) {
   finderData = newFinderData;
 }
 
-export default { getCancionesPlaylists, changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs, getUserData,getUserSongs, getLikedSongs, getPlaylists, getFinderData, setFinderData }
+export default { changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs,
+  getUserData,getUserSongs, getLikedSongs, getPlaylists, getFinderData, setFinderData, getPlaylistsFromUser,
+  getSongFromPlaylist, getPlaylistById }
