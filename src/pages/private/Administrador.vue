@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column">
     <h2 class="text-align-center">Panel de control de administrador</h2>
     <h3 class="text-align-center">{{user.username}}</h3>
@@ -29,40 +29,39 @@
                     <span>Usuarios seguidos: {{usuario.numeroSeguidos}}</span>
                   </div>
                   <div class="column flex">
-                    <q-button class="expulsar" style="margin-bottom: 10px;">EXPULSAR</q-button>
-                    <q-button class="modificar">MODIFICAR</q-button>
+                    <q-btn class="expulsar" style="margin-bottom: 10px;">EXPULSAR</q-btn>
+                    <q-btn class="modificar">MODIFICAR</q-btn>
                   </div>
                 </div>
               </div>
             </q-tab-panel>
 
             <q-tab-panel name="songs">
-              <div class="text-h6">Lista de canciones</div>
               <div>
-                <div class="row flex cancion" v-for="cancion in mySongs">
-                  <a  class="playButton"  @click="toogleSong(cancion.id)">
-                    <i class="material-icons underlineHover font-size55">
-                      {{isSongPlaying ? 'pause' : 'play_arrow'}}
-                    </i>
-                  </a>
-                  <div class="flex column justify-between">
-                    <div class="cancion-info">
-                      <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
-                      <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
-                    </div>
-                    <div class="cancion-opciones">
 
-                      <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+                <q-table
+                  title="Lista de canciones"
+                  :data="mySongs"
+                  :columns="columns"
+                  row-key="id"
+                  selection="single"
+                  :selected.sync="selected"
+                  :filter="filter"
+                  :loading="loading"
+                >
 
-                      <a @click="doLike(cancion.id)">
-                        <i class="material-icons likeHover font-size25">
-                          favorite
-                        </i>
-                      </a>
+                  <template v-slot:top>
+                    <q-btn class="on-right" flat dense color="primary" :disable="loading" icon="delete" label="Eliminar" @click="removeSongExtra" ></q-btn>
+                    <q-space ></q-space>
+                    <q-input borderless dense debounce="300" color="primary" v-model="filter">
+                      <template v-slot:append>
+                        <q-icon name="search" ></q-icon>
+                      </template>
+                    </q-input>
+                  </template>
 
-                    </div>
-                  </div>
-                </div>
+                </q-table>
+
               </div>
             </q-tab-panel>
           </q-tab-panels>
@@ -70,30 +69,100 @@
         </q-card>
       </div>
     </div>
+
+    <q-dialog v-model="noSongSelected">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Información</div>
+        </q-card-section>
+
+        <q-card-section>
+          No has seleccionado ningúna canción
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Aceptar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="areYouSure">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alerta</div>
+        </q-card-section>
+
+        <q-card-section>
+          ¿Está seguro de que sea eliminar la canción?
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn flat label="Sí" color="primary" @click="removeSong" v-close-popup />
+          <q-btn flat label="No" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
 <script>
   import constants from '../../statics/js/configuration'
+  import moment from 'moment'
+
   export default {
     name: 'Administrador',
     data () {
       return {
-        mySongs: {},
+        /* MODALS */
+        noSongSelected: false,
+        areYouSure: false,
+        /* CANCIONES TABLE */
+        selected: [],
+        columns: [
+          { name: 'nombre', field: "nombre", label: 'Nombre', align: 'center', sortable: true },
+          { name: 'autor', field: row => row.autor.username, label: 'Autor', align: 'center', sortable: true },
+          { name: 'reproducciones', field: 'reproducciones', label: 'Reproducciones', align: 'center', sortable: true },
+          { name: 'genero', field: row => row.genero.nombre, label: 'Genero', align: 'center', sortable: true },
+          { name: 'fechaRegistro', field: 'fechaRegistro', label: 'Fecha registro', align: 'center', sortable: true }
+        ],
+        loading: false,
+        filter: '',
+        rowCount: 10,
+        removeSongExtra: () => {
+          if (this.selected[0] === undefined) {
+            this.noSongSelected = true;
+          } else {
+            this.areYouSure = true;
+
+          }
+        },
+        removeSong: () => {
+          this.$axios.put(constants.REST_API_URL + "/deleteSongById/" + this.selected[0].id)
+            .catch(error => console.error(error));
+        },
+        mySongs: {
+          autor: {
+            username: ""
+          },
+        },
+
         user: {},
         tab: 'users',
+        test: () => console.log(this.mySongs),
         getUserSongs: async () => {
           await this.$axios.get(constants.REST_API_URL + "/getCanciones/")
             .then(response => {
               this.mySongs = response.data;
+              for (let item of this.mySongs) {
+                item.fechaRegistro = moment(item.fechaRegistro).format(constants.DATE_FORMAT);
+              }
             })
             .catch(error => console.error(error))
         },
         getUserData: async () => {
-        let userId = this.$route.params.userId;
         await this.$axios.get(constants.REST_API_URL + "/getUsuarios/")
           .then(response => {
-            console.log(response);
             this.user = response.data;
           });
       }
