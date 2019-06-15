@@ -1,24 +1,27 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="">
 
-    <h2>Sube tu canción</h2>
+    <h2 class="text-align-center">Sube tu canción</h2>
 
-    <div class="q-pa-md">
-      <div class="q-gutter-md row items-start">
+    <div class="q-pa-md flex justify-center">
+      <div class="q-gutter-md flex column justify-center fa-align-center" style="width: 50%;padding:50px;border:1px solid gray;border-radius: 90px">
         <q-uploader
           :factory="fileUpload"
           label="Solo .mp3"
           accept=".mp3"
-          style="max-width: 300px"
+          style="max-width: 300px;margin:0 auto;"
           :ref="uploaderRef"
         />
+        <q-separator />
         <q-input
           ref="cancion.nombre"
           filled
           v-model="cancion.nombre"
           label="Nombre de la canción"
         />
+        <q-separator />
         <q-select v-model="cancion.genero" :options="generos" label="Escoge genero" />
+        <q-separator />
         <q-btn @click="" label="Subir"></q-btn>
       </div>
     </div>

@@ -7,9 +7,9 @@
     <div class="col-12">
 
       <!-- Playlists -->
-      <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: 300px;">
+      <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
 
-        <q-card @click="$router.push('/user/playlists/' + otherUserId + '/' + playlist.id)" class="my-card playlistHover container">
+        <q-card @click="$router.push('/user/playlists/' + otherUserId + '/' + playlist.id)" class="my-card playlistHover container" style="width: max-content;min-width: 300px;">
           <img src="../../assets/playlist.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
 
           <q-card-section style="background-color: cornflowerblue;">
