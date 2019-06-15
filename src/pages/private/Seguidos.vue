@@ -2,25 +2,21 @@
   <q-page class="">
     <h3>Gente a la que sigues</h3>
 
-    <div v-for="seguido in seguidos" class="q-pa-md float-left" style="width: 300px;">
-      <q-card class="my-card">
-        <q-item>
-          <q-item-section avatar>
-            <q-avatar icon="account_circle" >
-            </q-avatar>
-          </q-item-section>
+    <div v-for="seguido in seguidos" class="q-pa-md float-left " style="width: 300px;">
 
-          <q-item-section>
-            <q-item-label @click="$router.push('/user/perfil/' + seguido.username)">{{seguido.username}}</q-item-label>
-            <q-item-label @click="$router.push('/user/perfil/' + seguido.username)" caption>{{seguido.nombre + " " + seguido.apellidos}}</q-item-label>
-          </q-item-section>
-        </q-item>
+      <q-card @click="$router.push('/user/perfil/' + seguido.username)" class="my-card usuarioHover container">
+        <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
 
-        <img @click="$router.push('/user/perfil/' + seguido.username)" src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <q-card-section style="background-color: mediumslateblue;">
+          <div class="text-h5 text-align-center">{{seguido.username}}</div>
+          <div class="text-h6 text-align-center">{{seguido.nombre + " " + seguido.apellidos}}</div>
+        </q-card-section>
+        <div class="overlay">
+          <i class="icon material-icons underlineHover font-size55">visibility</i>
+        </div>
       </q-card>
+
     </div>
-
-
 
   </q-page>
 </template>

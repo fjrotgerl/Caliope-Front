@@ -2,25 +2,21 @@
   <q-page class="">
     <h3>Tus seguidores</h3>
 
-    <div v-for="seguidor in seguidores" class="q-pa-md float-left" style="width: 300px;">
-      <q-card class="my-card">
-        <q-item>
-          <q-item-section avatar>
-            <q-avatar icon="account_circle" >
-            </q-avatar>
-          </q-item-section>
+    <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 300px;">
 
-          <q-item-section>
-            <q-item-label @click="$router.push('/user/perfil/' + seguidor.username)">{{seguidor.username}}</q-item-label>
-            <q-item-label @click="$router.push('/user/perfil/' + seguidor.username)" caption>{{seguidor.nombre + " " + seguidor.apellidos}}</q-item-label>
-          </q-item-section>
-        </q-item>
+      <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container">
+        <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
 
-        <img @click="$router.push('/user/perfil/' + seguidor.username)" src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <q-card-section style="background-color: mediumslateblue;">
+          <div class="text-h5 text-align-center">{{seguidor.username}}</div>
+          <div class="text-h6 text-align-center">{{seguidor.nombre + " " + seguidor.apellidos}}</div>
+        </q-card-section>
+        <div class="overlay">
+          <i class="icon material-icons underlineHover font-size55">visibility</i>
+        </div>
       </q-card>
+
     </div>
-
-
 
   </q-page>
 </template>
