@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-pa-md" :style="color">
 
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/playlists/' + otherUserId)" label="Playlists" />
 
@@ -85,6 +85,7 @@ export default {
       likedSongs: {},
       mySongs: {},
       user: {},
+      color:"",
       comentario: "",
       comentarioDialog: false,
       actualSongId: "",
@@ -129,6 +130,7 @@ export default {
       this.user = await this.$tools.getUserData(this.otherUserId, this);
       this.likedSongs = await this.$tools.getLikedSongs(this.user.username, this);
       this.mySongs = await this.$tools.getUserSongs(this.user.username, this);
+      this.color = this.$tools.randomColor();
     }
   }
 }

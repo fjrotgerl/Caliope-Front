@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 
-  <q-page class="flex column bg-blue-gradient">
+  <q-page class="flex column" :style="color">
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
@@ -34,9 +34,6 @@
             </div>
           </div>
           <!-- ---------------------------------------- -->
-
-
-
 
           <!-- ---------------------------------------- -->
           <!-- MODAL AÑADIR COMENTARIO -->
@@ -79,7 +76,7 @@ export default {
     return {
       canciones: {},
       user: {},
-
+      color:"",
       /* Reproductor cancion */
       songPlaying: "",
       actualSongId: "",
@@ -133,6 +130,7 @@ export default {
   async beforeMount(){
     this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
     this.canciones = await this.$tools.getAllSongs(this);
-  },
+    this.color = this.$tools.randomColor();
+  }
 }
 </script>

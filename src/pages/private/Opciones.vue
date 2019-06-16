@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <q-page>
+    <q-page class="flex column" :style="color">
       <h2 class="text-align-center">OPCIONES</h2>
       <div>
         <q-splitter
@@ -151,6 +151,7 @@
     name: 'Opciones',
     data () {
       return {
+        color:"",
         model: null,
         calidad: "",
         val: 'media',
@@ -173,6 +174,7 @@
     },
     async beforeMount(){
       await this.getUserData();
+      this.color = this.$tools.randomColor();
     }
   }
 </script>

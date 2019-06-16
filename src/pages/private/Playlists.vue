@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column">
+  <q-page class="flex column" :style="color">
     <div class="flex flex-center"><h1>Playlists de {{user.username}}</h1></div>
 
     <q-btn v-if="you === otherUserId" style="margin: 20px; width: 150px;" color="primary" @click="createPlaylistDialog = true" label="Crear playlist"></q-btn>
@@ -61,6 +61,7 @@
         myPlaylists: [],
         user: {},
         otherUserId: "",
+        color:"",
         newPlaylistName: "",
         you: "",
         /* FUNCTIONS */
@@ -82,7 +83,7 @@
         this.user = await this.$tools.getUserData(this.otherUserId, this);
         this.myPlaylists = await this.$tools.getPlaylistsFromUser(this.user.username, this);
         this.you = window.localStorage.getItem("user");
-
+        this.color = this.$tools.randomColor();
       }
     }
   }

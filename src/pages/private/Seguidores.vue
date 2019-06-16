@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="">
+  <q-page class="flex column" :style="color">
     <h3>Tus seguidores</h3>
 
     <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 300px;">
@@ -33,6 +33,7 @@ export default {
     return {
       seguidores: { },
       usuario: { },
+      color:"",
 
       getUserData: async () => {
         let userId = localStorage.getItem("user");
@@ -54,7 +55,7 @@ export default {
   async beforeMount(){
     await this.getUserData();
     await this.getSeguidores();
-
+    this.color = this.$tools.randomColor();
   },
 
 }

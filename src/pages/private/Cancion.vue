@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column">
+  <q-page class="flex column" :style="color">
     <div style="width: 80%;margin: 0 auto;">
       <q-card class="my-card bg-purple text-white text-align-center">
         <q-card-section>
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div style="width: 80%;margin: 0 auto;" class="flex column justify-between">
-      <h2 style="background-color: cornflowerblue;color:white;" class="text-align-center">COMENTARIOS</h2>
+      <h2 style="color:white;" class="text-align-center">COMENTARIOS</h2>
 
       <!-- ---------------------------------------- -->
       <!-- COMENTARIOS -->
@@ -46,6 +46,7 @@
     name: 'Cancion',
     data () {
       return {
+        color:"",
         idCancionActual: "",
         cancionActual: {
           nombre: "",
@@ -78,6 +79,7 @@
       this.idCancionActual = this.$route.params.cancionId;
       await this.getComentarios();
       await this.getCancion();
+      this.color = this.$tools.randomColor();
     },
     watch: {
       async '$route'(to, from) {

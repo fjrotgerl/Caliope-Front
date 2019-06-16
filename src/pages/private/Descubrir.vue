@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column">
+  <q-page class="flex column" :style="color">
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
@@ -58,13 +58,15 @@
       return {
         canciones: {},
         user:{},
-        playlists:{}
+        playlists:{},
+        color:""
       }
     },
     async beforeMount(){
       this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
       this.canciones = await this.$tools.getAllSongs(this);
       this.playlists = await this.$tools.getPlaylists(this);
+      this.color = this.$tools.randomColor();
     }
   }
 </script>

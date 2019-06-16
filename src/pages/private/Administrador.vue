@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column">
+  <q-page class="flex column" :style="color">
     <h2 class="text-align-center">Panel de control de administrador</h2>
     <h3 class="text-align-center">{{user.username}}</h3>
     <div class="q-pa-md">
@@ -200,6 +200,7 @@
         ],
         loadingUser: false,
         filterUser: '',
+        color:"",
         /* Borrar cancion */
         removeSongExtra: () => {
           if (this.selected[0] === undefined) {
@@ -259,6 +260,7 @@
   async beforeMount(){
     await this.getUserData();
     await this.getUserSongs();
+    this.color = this.$tools.randomColor();
   }
   }
 </script>

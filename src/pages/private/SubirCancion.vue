@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="">
+  <q-page class="" :style="color">
 
     <h2 class="text-align-center">Sube tu canción</h2>
 
@@ -40,6 +40,7 @@
     data () {
       return {
         user: {},
+        color:"",
         cancion: {
           nombre: "",
           genero: "Seleccione un genero"
@@ -94,6 +95,7 @@
     beforeMount() {
       this.getUserData();
       this.getGeneros();
+      this.color = this.$tools.randomColor();
     }
 
   }

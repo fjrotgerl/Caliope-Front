@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column">
+  <q-page class="flex column" :style="color">
     <div class="flex flex-center"><h1>{{playlist.nombre}}</h1></div>
     <div class="col-12">
       <h2 class="text-align-center">Canciones</h2>
@@ -81,6 +81,7 @@ export default {
       /* Reproductor cancion */
       songPlaying: "",
       actualSongId: "",
+      color:"",
       actualIcon: "play_arrow",
       comentarioDialog: false,
       comentario: "",
@@ -132,6 +133,7 @@ export default {
     this.playlistId = this.$route.params.nombrePlaylist;
     this.cancionesPlaylist = await this.$tools.getSongFromPlaylist(this.playlistId,this);
     this.playlist = await this.$tools.getPlaylistById(this.playlistId, this);
+    this.color = this.$tools.randomColor();
   },
   watch: {
     async '$route'(to, from) {
