@@ -4,13 +4,15 @@
     <h2 class="text-align-center">Sube tu canción</h2>
 
     <div class="q-pa-md flex justify-center">
-      <div class="q-gutter-md flex column justify-center fa-align-center" style="width: 50%;padding:50px;border:1px solid gray;border-radius: 90px">
+      <div class="q-gutter-md flex column justify-center fa-align-center" style="width: 50%;padding:50px;border:1px solid gray;border-radius: 90px; background-color: white">
         <q-uploader
           :factory="fileUpload"
           label="Solo .mp3"
           accept=".mp3"
-          style="max-width: 300px;margin:0 auto;"
-          :ref="uploaderRef"
+          style="margin:0 auto;"
+          ref="uploaderRef"
+          bordered
+
         />
         <q-separator />
         <q-input
@@ -18,13 +20,32 @@
           filled
           v-model="cancion.nombre"
           label="Nombre de la canción"
+          maxlength="32"
+          counter
         />
         <q-separator />
         <q-select v-model="cancion.genero" :options="generos" label="Escoge genero" />
         <q-separator />
-        <q-btn @click="" label="Subir"></q-btn>
+        <q-btn @click="$refs.uploaderRef.upload()" label="Subir"></q-btn>
       </div>
     </div>
+
+
+    <!-- ---------------------------------------- -->
+    <!-- INFO -->
+    <!-- ---------------------------------------- -->
+    <q-dialog v-model="seamless" seamless position="bottom">
+      <q-card>
+
+        <q-card-section class="row items-center no-wrap">
+          <div class="text-weight-bold">{{infoText}}</div>
+          <q-btn flat round icon="close" v-close-popup />
+          <q-btn flat round icon="home" @click="$router.push('/user/home')" />
+        </q-card-section>
+
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -39,19 +60,21 @@
   name: 'Home',
     data () {
       return {
+        multiple: false,
         user: {},
         color:"",
         cancion: {
           nombre: "",
           genero: "Seleccione un genero"
         },
+        infoText: "",
         uploaderRef: "",
+        seamless: false,
         generos: [],
         fileUpload: (files) => {
           let moment = require('moment');
           let now = moment().format("YYYY-MM-DD");
           let fileName = files.name.replace(".mp3", "");
-          console.log(files);
           let bodyFormdata = new FormData();
           bodyFormdata.append("file", files);
           bodyFormdata.set("nombre", this.cancion.nombre);
@@ -68,9 +91,10 @@
               "content-type": "multipart/form-data"
             }
           })
-            .then(response => {
-              console.log(response);
-              console.log("CANCION SUBIDA");
+            .then(() => {
+              this.seamless = true;
+              this.infoText = "Canción subida correctamente";
+              setTimeout(() => this.seamless = false, 5000);
             })
             .catch(error => console.error(error))
         },

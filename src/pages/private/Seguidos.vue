@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column" :style="color">
-    <h3>Gente a la que sigues</h3>
+    <h3>Seguidos de {{this.otherUserId}}</h3>
 
     <div v-for="seguido in seguidos" class="q-pa-md float-left " style="width: 300px;">
 
@@ -34,6 +34,7 @@ export default {
       seguidos: { },
       usuario: { },
       color:"",
+      otherUserId: "",
 
       getUserData: async () => {
         let userId = localStorage.getItem("user");
@@ -43,7 +44,7 @@ export default {
           });
       },
       getSeguidos: async () => {
-        await this.$axios.get(constants.REST_API_URL + "/getSeguidos/" + this.usuario.username)
+        await this.$axios.get(constants.REST_API_URL + "/getSeguidos/" + this.otherUserId)
           .then(response => {
             this.seguidos = response.data;
             console.log()
@@ -52,9 +53,18 @@ export default {
     }
   },
   async beforeMount(){
+    this.otherUserId = this.$route.params.userId;
     await this.getUserData();
     await this.getSeguidos();
     this.color = this.$tools.randomColor();
   },
+  watch: {
+    async '$route'(to, from) {
+      // react to route changes...
+      this.otherUserId = to.params.userId;
+      this.user = await this.$tools.getUserData(this.otherUserId, this);
+      this.color = this.$tools.randomColor();
+    }
+  }
 }
 </script>

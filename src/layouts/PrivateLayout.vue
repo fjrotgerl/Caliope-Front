@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" ref="layout">
 
     <q-header reveal bordered class="bg-primary text-accent">
       <q-toolbar>
@@ -53,8 +53,9 @@
       <router-view />
     </q-page-container>
 
-    <q-footer reveal bordered class="bg-brown-5 text-white">
-      <q-toolbar>
+    <!-- <q-footer reveal bordered class="bg-brown-5 text-white">
+      <q-toolbar             @click="test"
+      >
         <q-toolbar-title>
           <q-knob
             show-value
@@ -69,13 +70,13 @@
           ><q-icon name="volume_up" />
           </q-knob>
 
-          <q-btn @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
+          <q-btn ref="layoutBtn" @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
           <q-btn @click="stopSong" icon="stop" color="primary" style="margin-right: 20px;"></q-btn>
 
 
         </q-toolbar-title>
       </q-toolbar>
-    </q-footer>
+    </q-footer> -->
 
   </q-layout>
 </template>
@@ -91,13 +92,16 @@
         text: "",
         username: "",
         user: { },
-        isSongPlaying: false,
+        isSongPlaying: audioPlayer.getSongStatus(),
         songVolume: constants.DEFAULT_SONG_VOLUME,
         imgHeader: '',
+        layout: "",
+
         toogleSong: () => {
           audioPlayer.toogle();
           this.isSongPlaying = audioPlayer.getSongStatus();
-          console.log(this.$refs.imgHeader);
+          console.log(this.$refs);
+
         },
         stopSong: () => {
           if (audioPlayer.getSongStatus()) {
@@ -120,7 +124,8 @@
         sendDataToFinder: () => {
           this.$tools.setFinderData(this.text);
           this.$router.push("/user/buscador")
-        }
+        },
+        test: () => console.log(this.isSongPlaying),
       }
     },
     beforeMount(){

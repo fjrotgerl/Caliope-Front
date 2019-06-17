@@ -51,9 +51,11 @@ var bufferLoader;
 var playing = false;
 var source;
 var gainNode;
+var sinea;
 var isNewSong = true;
 var actualTimeSong = 0;
 var actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
+var actualOscillator = 100;
 
 let getSongUrl = constants.REST_API_URL + "/obtenerCancion/";
 let getSongName = "";
@@ -99,6 +101,11 @@ function finishedLoading(bufferList) {
   // Conectamos el knob con la salida de audio
   gainNode.connect(context.destination);
   source.start(actualTimeSong);
+
+  // Oscilator
+  sinea = context.createDelay(1);
+  sinea.connect(gainNode);
+
 }
 
 

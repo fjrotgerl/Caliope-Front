@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column" :style="color">
-    <h3>Tus seguidores</h3>
+    <h3>Seguidores de {{this.otherUserId}}</h3>
 
     <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 300px;">
 
@@ -34,6 +34,7 @@ export default {
       seguidores: { },
       usuario: { },
       color:"",
+      otherUserId: "",
 
       getUserData: async () => {
         let userId = localStorage.getItem("user");
@@ -44,7 +45,8 @@ export default {
           });
       },
       getSeguidores: async () => {
-        await this.$axios.get(constants.REST_API_URL + "/getSeguidores/" + this.usuario.username)
+        console.log(this.otherUserId);
+        await this.$axios.get(constants.REST_API_URL + "/getSeguidores/" + this.otherUserId)
           .then(response => {
             this.seguidores = response.data;
             console.log(this.seguidores)
@@ -53,10 +55,21 @@ export default {
     }
   },
   async beforeMount(){
+    this.otherUserId = this.$route.params.userId;
     await this.getUserData();
     await this.getSeguidores();
     this.color = this.$tools.randomColor();
+    this.color = this.$tools.randomColor();
+
   },
+  watch: {
+    async '$route' (to, from) {
+      // react to route changes...
+      this.otherUserId = to.params.userId;
+      this.user = await this.$tools.getUserData(this.otherUserId, this);
+      this.color = this.$tools.randomColor();
+    }
+  }
 
 }
 </script>

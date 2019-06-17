@@ -59,13 +59,16 @@
         canciones: {},
         user:{},
         playlists:{},
-        color:""
+        color:"",
+        isSongPlaying: false,
+
+        /* Funciones */
       }
     },
     async beforeMount(){
       this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
-      this.canciones = await this.$tools.getAllSongs(this);
-      this.playlists = await this.$tools.getPlaylists(this);
+      this.canciones = await this.$tools.getRandomSongs(5, this);
+      this.playlists = await this.$tools.getRandomPlaylists(5, this);
       this.color = this.$tools.randomColor();
     }
   }

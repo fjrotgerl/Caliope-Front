@@ -3,9 +3,9 @@
 
     <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/playlists/' + otherUserId)" label="Playlists" />
 
-    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidores')" label="Seguidores" />
+    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidores/' + otherUserId)" label="Seguidores" />
 
-    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos')" label="Seguidos" />
+    <q-btn style="margin: 20px;" color="primary" @click="$router.push('/user/seguidos/' + otherUserId)" label="Seguidos" />
 
     <q-btn v-if="otherUserId !== you" style="margin: 20px;" color="primary" @click="followUser" :label="'Seguir a ' + otherUserId " />
 
@@ -122,6 +122,7 @@ export default {
     this.likedSongs = await this.$tools.getLikedSongs(this.user.username, this);
     this.mySongs = await this.$tools.getUserSongs(this.user.username, this);
     this.you = window.localStorage.getItem("user");
+    this.color = this.$tools.randomColor();
   },
   watch: {
     async '$route' (to, from) {

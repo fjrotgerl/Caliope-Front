@@ -62,11 +62,11 @@ const routes = [
         component: () => import("pages/private/Administrador.vue")
       },
       {
-        path: 'seguidores',
+        path: 'seguidores/:userId',
         component: () => import("pages/private/Seguidores.vue")
       },
       {
-        path: 'seguidos',
+        path: 'seguidos/:userId',
         component: () => import("pages/private/Seguidos.vue")
       }
     ]

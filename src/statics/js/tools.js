@@ -56,6 +56,21 @@ function doLike(cancionId, username, vue) {
       .catch(error => console.error(error))
 }
 
+/* Quitar like */
+function doUnLike(cancionId, username, vue) {
+  vue.$axios.post(constants.REST_API_URL + "/removeSongFromLikedList/" + cancionId + "/" + username)
+    .catch(error => console.error(error))
+}
+
+/* ¿Le gusta a un usuario x cancion? */
+function isThisSongLikedByTheUser(cancionId, username, vue) {
+  return vue.$axios.get(constants.REST_API_URL + "/isThisSongLikedByTheUser/" + cancionId + "/" + username)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.error(error))
+}
+
 /* Comentar */
 async function doComment(comentarioDialog, userId, songId, comentario, vue ) {
   comentarioDialog = true;
@@ -77,6 +92,15 @@ async function getAllSongs(vue) {
 /* Obtener las canciones */
 async function getUserSongs(username, vue) {
   return await vue.$axios.get(constants.REST_API_URL + "/getSongsFromUser/" + username)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener un numero de cancion aleatorias */
+async function getRandomSongs(numberSongs, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getRandomSongs/" + numberSongs)
     .then(response => {
       return response.data;
     })
@@ -114,7 +138,6 @@ async function getPlaylistsFromUser(username, vue) {
 async function getSongFromPlaylist(playlistId, vue) {
   return await vue.$axios.get(constants.REST_API_URL + "/getCancionesFromPlaylist/" + playlistId)
     .then(response => {
-      console.log(response.data);
       return  response.data;
     })
     .catch(error => console.error(error))
@@ -124,7 +147,15 @@ async function getSongFromPlaylist(playlistId, vue) {
 async function getPlaylistById(playlistId, vue) {
   return await vue.$axios.get(constants.REST_API_URL + "/getPlaylistById/" + playlistId)
     .then(response => {
-      console.log(response.data);
+      return  response.data;
+    })
+    .catch(error => console.error(error))
+}
+
+/* Obtener playlists random */
+async function getRandomPlaylists(number, vue) {
+  return await vue.$axios.get(constants.REST_API_URL + "/getRandomPlaylists/" + number)
+    .then(response => {
       return  response.data;
     })
     .catch(error => console.error(error))
@@ -139,10 +170,11 @@ function setFinderData(newFinderData) {
 }
 
 function randomColor() {
-      let array_colors = ["#373b44, #4286f4","#203a43, #2c5364","#373b44, #4286f4","#8360c3, #2ebf91","#ad5389, #3c1053","#642b73, #c6426e"];
-      return 'background: linear-gradient(to bottom, '+array_colors[Math.floor(Math.random() * 5)]+');';
-    }
+  let array_colors = ["#373b44, #4286f4","#203a43, #2c5364","#373b44, #4286f4","#8360c3, #2ebf91","#ad5389, #3c1053","#642b73, #c6426e"];
+  return 'background: linear-gradient(to bottom, '+array_colors[Math.floor(Math.random() * 5)]+');';
+}
 
 export default { changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs,
   getUserData,getUserSongs, getLikedSongs, getPlaylists, getFinderData, setFinderData, getPlaylistsFromUser,
-  getSongFromPlaylist, getPlaylistById, randomColor }
+  getSongFromPlaylist, getPlaylistById, randomColor,doUnLike, isThisSongLikedByTheUser,getRandomSongs,
+  getRandomPlaylists}

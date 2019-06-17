@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <q-page class="flex column" :style="color">
       <h2 class="text-align-center">OPCIONES</h2>
-      <div>
+      <div class="bg-white">
         <q-splitter
           v-model="splitterModel"
         >
@@ -12,7 +12,6 @@
               class="text-teal"
             >
               <q-tab name="info" icon="info" label="Informacion" />
-              <q-tab name="ecu" icon="equalizer" label="Ecualizacion" />
             </q-tabs>
           </template>
 
@@ -83,58 +82,6 @@
                 </q-btn>
               </q-tab-panel>
 
-              <q-tab-panel name="ecu">
-                <div class="text-h4 q-mb-md">Ecualizacion</div>
-                <div class="q-pa-md">
-                  <div class="q-gutter-md flex row">
-                    <div class="flex column text-align-center">
-                      <span>nombre1</span>
-                    <q-knob
-                      :min="0"
-                      :max="100"
-                      v-model="value1"
-                      show-value
-                      size="50px"
-                      :thickness="0.22"
-                      color="teal"
-                      track-color="grey-3"
-                      class="q-ma-md"
-                    />
-                    </div>
-
-                    <div class="flex column text-align-center">
-                    <span>nombre2</span>
-                    <q-knob
-                      :min="0"
-                      :max="100"
-                      v-model="value2"
-                      show-value
-                      size="50px"
-                      :thickness="0.22"
-                      color="teal"
-                      track-color="grey-3"
-                      class="q-ma-md"
-                    />
-                    </div>
-
-                    <div class="flex column text-align-center">
-                      <span>nombre3</span>
-                    <q-knob
-                      :min="0"
-                      :max="100"
-                      v-model="value3"
-                      show-value
-                      size="50px"
-                      :thickness="0.22"
-                      color="teal"
-                      track-color="grey-3"
-                      class="q-ma-md"
-                    />
-                    </div>
-                  </div>
-                  <q-btn label="Guardar"></q-btn>
-                </div>
-              </q-tab-panel>
             </q-tab-panels>
           </template>
 
