@@ -123,7 +123,7 @@
         },
         sendDataToFinder: () => {
           this.$tools.setFinderData(this.text);
-          this.$router.push("/user/buscador")
+          this.$router.push("/user/buscador/" + this.text)
         },
         test: () => console.log(this.isSongPlaying),
       }

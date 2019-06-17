@@ -95,9 +95,10 @@
         finderSong: true,
         finderData: "",
         finder: async () => {
+          console.log(1);
+          console.log(this.finderData);
           await this.$axios.get(constants.REST_API_URL + "/getSongsThatContains/" + this.finderData)
             .then(response => {
-              console.log(response);
               if (response.data === "" || response.data.length === 0) { return; }
               this.canciones = response.data;
             });
@@ -110,20 +111,30 @@
         checkData: () => {
           if (this.canciones === "" ) {
             this.finderSong = false;
-          }
+          } else { this.finderSong = true; }
           if (this.usuariosEncontrados === "") {
             this.finderUser = false;
-          }
+          } else { this.finderUser = true; }
         }
       }
     },
     async beforeMount(){
-      this.finderData = await this.$tools.getFinderData();
+      this.finderData = this.$route.params.data;
       await this.finder();
       await this.checkData();
       this.color = this.$tools.randomColor();
 
     },
+    watch: {
+      async '$route'(to, from) {
+        this.canciones = "";
+        this.finderUser = "";
+        this.finderData = await to.params.data;
+        await this.finder();
+        await this.checkData();
+        this.color = this.$tools.randomColor();
+      }
+    }
   }
 
 </script>

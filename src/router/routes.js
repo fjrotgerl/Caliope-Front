@@ -42,6 +42,10 @@ const routes = [
         component: () => import("pages/private/Cancion.vue")
       },
       {
+        path: 'buscador/:data',
+        component: () => import("pages/private/Buscador.vue")
+      },
+      {
         path: 'buscador',
         component: () => import("pages/private/Buscador.vue")
       },

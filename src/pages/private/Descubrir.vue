@@ -141,6 +141,6 @@
       this.canciones = await this.$tools.getRandomSongs(5, this);
       this.playlists = await this.$tools.getRandomPlaylists(5, this);
       this.color = this.$tools.randomColor();
-    }
+    },
   }
 </script>
