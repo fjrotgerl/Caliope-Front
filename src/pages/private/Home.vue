@@ -10,7 +10,7 @@
           <!-- ---------------------------------------- -->
           <!-- CANCIONES -->
           <!-- ---------------------------------------- -->
-          <div class="row flex cancion" v-for="cancion in canciones" style="background-color: white;">
+          <div class="row flex cancion" v-for="cancion in canciones">
             <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
               <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
             </a>

@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="" :style="color">
+  <q-page class="padded-top" :style="color">
 
-    <h2 class="text-align-center">Sube tu canción</h2>
+    <h2 class="text-align-center" style="margin-top:0;">Sube tu canción</h2>
 
     <div class="q-pa-md flex justify-center">
       <div class="q-gutter-md flex column justify-center fa-align-center" style="width: 50%;padding:50px;border:1px solid gray;border-radius: 90px; background-color: white">

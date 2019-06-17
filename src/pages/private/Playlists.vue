@@ -4,7 +4,7 @@
 
     <q-btn v-if="you === otherUserId" style="margin: 20px; width: 150px;" color="primary" @click="createPlaylistDialog = true" label="Crear playlist"></q-btn>
 
-    <div class="col-12">
+    <div class="col-12 flex justify-center">
 
       <!-- Playlists -->
       <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
@@ -87,4 +87,6 @@
       }
     }
   }
+
+
 </script>

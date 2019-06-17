@@ -13,7 +13,7 @@
           <q-btn flat>Me gusta</q-btn>
         </q-card-actions>
       </q-card>
-        <div class="flex row justify-between">
+        <div class="flex row justify-between" style="padding-top: 20px;">
             <span>Genero: {{cancionActual.genero.nombre}}</span>
             <span>Reproducciones: {{cancionActual.reproducciones}}</span>
             <span>Duracion: 0</span>

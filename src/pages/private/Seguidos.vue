@@ -1,20 +1,23 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column" :style="color">
-    <h3>Seguidos de {{this.otherUserId}}</h3>
+    <h3 class="text-align-center">Seguidos de {{this.otherUserId}}</h3>
+    <div class="flex justify-center">
 
-    <div v-for="seguido in seguidos" class="q-pa-md float-left " style="width: 300px;">
+      <div v-for="seguido in seguidos" class="q-pa-md" style="width: 300px;">
 
-      <q-card @click="$router.push('/user/perfil/' + seguido.username)" class="my-card usuarioHover container">
-        <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
+        <q-card @click="$router.push('/user/perfil/' + seguido.username)" class="my-card usuarioHover container">
+          <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
 
-        <q-card-section style="background-color: mediumslateblue;">
-          <div class="text-h5 text-align-center">{{seguido.username}}</div>
-          <div class="text-h6 text-align-center">{{seguido.nombre + " " + seguido.apellidos}}</div>
-        </q-card-section>
-        <div class="overlay">
-          <i class="icon material-icons underlineHover font-size55">visibility</i>
-        </div>
-      </q-card>
+          <q-card-section style="background-color: mediumslateblue;">
+            <div class="text-h5 text-align-center">{{seguido.username}}</div>
+            <div class="text-h6 text-align-center">{{seguido.nombre + " " + seguido.apellidos}}</div>
+          </q-card-section>
+          <div class="overlay">
+            <i class="icon material-icons underlineHover font-size55">visibility</i>
+          </div>
+        </q-card>
+
+      </div>
 
     </div>
 

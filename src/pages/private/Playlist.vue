@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column" :style="color">
     <div class="flex flex-center"><h1>{{playlist.nombre}}</h1></div>
-    <div class="col-12">
+    <div style="width: 70%;margin: 0 auto;">
       <h2 class="text-align-center">Canciones</h2>
 
       <!-- ---------------------------------------- -->

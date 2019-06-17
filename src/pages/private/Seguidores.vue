@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column" :style="color">
-    <h3>Seguidores de {{this.otherUserId}}</h3>
-
+    <h3 class="text-align-center">Seguidores de {{this.otherUserId}}</h3>
+<div class="flex justify-center">
     <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 300px;">
 
       <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container">
@@ -17,6 +17,7 @@
       </q-card>
 
     </div>
+</div>
 
   </q-page>
 </template>
