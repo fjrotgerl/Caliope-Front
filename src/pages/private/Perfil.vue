@@ -11,6 +11,9 @@
 
 
     <h3>Canciones de {{this.user.username}}</h3>
+    <div v-if="!mySongs[0]">
+      <h6>¡Ups! Este usuario aún no ha subido ninguna canción.</h6>
+    </div>
     <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in mySongs">
       <a  class="playButton"  @click="toogleSong(cancion.id)">
@@ -40,6 +43,10 @@
 
     <h3>Canciones favoritas</h3>
     <!-- ---------------------------------------- -->
+    <div v-if="!likedSongs[0]">
+      <h6>¡Ups! Aún no le gusta ninguna canción a este usuario.</h6>
+    </div>
+    <!-- ---------------------------------------- -->
     <div class="row flex cancion" v-for="cancion in likedSongs">
       <a  class="playButton"  @click="toogleSong(cancion.id)">
         <i class="material-icons underlineHover font-size55">
@@ -55,7 +62,7 @@
 
           <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
 
-          <a @click="doLike(cancion.id)">
+          <a style="color: red;" @click="doUnLike(cancion.id)">
             <i class="material-icons likeHover font-size25">
               favorite
             </i>
@@ -65,6 +72,20 @@
       </div>
     </div>
     <!-- ---------------------------------------- -->
+
+    <!-- ---------------------------------------- -->
+    <!-- INFO -->
+    <!-- ---------------------------------------- -->
+    <q-dialog v-model="seamless" seamless position="bottom">
+      <q-card>
+
+        <q-card-section class="row items-center no-wrap">
+          <div class="text-weight-bold">{{infoText}}</div>
+          <q-btn flat round icon="close" v-close-popup />
+        </q-card-section>
+
+      </q-card>
+    </q-dialog>
 
   </q-page>
 </template>
@@ -78,6 +99,8 @@
 
 export default {
   name: 'Perfil',
+  components: {},
+
   data () {
     return{
       isSongPlaying: false,
@@ -91,6 +114,8 @@ export default {
       actualSongId: "",
       otherUserId: "",
       you: "",
+      seamless: false,
+      infoText: "",
 
       toogleSong: (cancionId) => {
         this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
@@ -113,7 +138,13 @@ export default {
       addOneRepro: () => {
         this.$axios.put(constants.REST_API_URL + "/addNewRepro/" + this.actualSongId)
           .catch(error => console.error(error))
-      }
+      },
+      doUnLike: (cancionId) => {
+        this.$tools.doUnLike(cancionId, this.user.username, this);
+        this.seamless = true;
+        this.infoText = "Ya no te gusta la canción.";
+        setTimeout(() => this.seamless = false, 5000);
+      },
     }
   },
   async beforeMount(){

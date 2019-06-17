@@ -29,7 +29,7 @@
 
                 <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
 
-                <a :style="isThisSongLikedByTheUser(cancion.id,user.username) !== '' ? 'color: red' : 'color: black'" @click="doLike(cancion.id)">
+                <a @click="doLike(cancion.id)">
                   <i  class="material-icons likeHover font-size25">
                     favorite
                   </i>
@@ -78,7 +78,7 @@
 
               <q-card-actions align="right" class="text-primary">
                 <q-btn flat label="Cancelar" v-close-popup />
-                <q-btn flat label="Añadir comentario" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
+                <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
               </q-card-actions>
             </q-card>
           </q-dialog>
@@ -169,12 +169,6 @@ export default {
         this.$tools.doLike(cancionId, this.user.username, this);
         this.seamless = true;
         this.infoText = "Te gusta una nueva canción.";
-        setTimeout(() => this.seamless = false, 5000);
-      },
-      doUnLike: (cancionId) => {
-        this.$tools.doUnLike(cancionId, this.user.username, this);
-        this.seamless = true;
-        this.infoText = "Ya no te gusta la canción.";
         setTimeout(() => this.seamless = false, 5000);
       },
       openDialog: (cancionId) => {

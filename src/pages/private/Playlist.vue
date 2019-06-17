@@ -1,9 +1,13 @@
 <template>
   <q-page class="flex column" :style="color">
-    <div class="flex flex-center"><h1>{{playlist.nombre}}</h1></div>
+    <div class="flex flex-center"><h2>{{playlist.nombre}}</h2></div>
+    <div class="flex flex-center"><a style="margin-top: -50px;" class="underlineHover" :href="'/user/perfil/' + playlist.dueño.username">{{playlist.dueño.username}}</a></div>
     <div style="width: 70%;margin: 0 auto;">
       <h2 class="text-align-center">Canciones</h2>
 
+      <div v-if="!cancionesPlaylist[0]">
+        <h6>¡Ups! Este usuario aún tiene ninguna canción dentro de su playlists.</h6>
+      </div>
       <!-- ---------------------------------------- -->
       <!-- CANCIONES -->
       <!-- ---------------------------------------- -->
@@ -76,7 +80,9 @@ export default {
     return {
       cancionesPlaylist: {},
       playlistId: "",
-      playlist: {},
+      playlist: {
+        dueño: {}
+      },
 
       /* Reproductor cancion */
       songPlaying: "",

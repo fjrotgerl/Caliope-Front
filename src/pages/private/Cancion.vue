@@ -27,10 +27,10 @@
       <!-- COMENTARIOS -->
       <!-- ---------------------------------------- -->
       <div v-for="comentario in comentarios"  class="flex row" style="margin-bottom: 5%">
-        <q-btn @click="$router.push('/user/perfil/' + comentario.usuario.username)" icon="person" color="primary" style="margin-right: 20px;"></q-btn>
-        <div class="flex column justify-between" style="width:90%;">
-          <h5 style="margin:0;">{{comentario.usuario.username}}</h5>
-          <p>{{comentario.mensaje}}</p>
+        <q-btn flat icon="comment" color="primary" style="margin-right: 20px;"></q-btn>
+        <div class="flex column justify-between" style="width: 50%;">
+          <h5 style="margin:0;" class="underlineHover" @click="$router.push('/user/perfil/' + comentario.usuario.username)">{{comentario.usuario.username}}</h5>
+          <div style="word-wrap: break-word;">{{comentario.mensaje}}</div>
         </div>
       </div>
       <!-- ---------------------------------------- -->

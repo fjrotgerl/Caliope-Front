@@ -3,12 +3,15 @@
     <div class="flex flex-center"><h1>Buscador</h1></div>
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-9">
-        <h2>Búsqueda</h2>
         <div class="flex column justify-between">
+
+          <div v-if="usuariosEncontrados === '' && canciones === ''">
+            <h4>No se han obtenido resultados</h4>
+          </div>
 
           <!-- Canciones-->
           <div v-if="finderSong">
-            <h3>Canciones</h3>
+            <h4>{{canciones === "" ? 'No se han encontrado canciones' : 'Canciones'}}</h4>
             <div  class="row flex cancion" v-for="cancion in canciones">
               <a  class="playButton"  @click="toogleSong(cancion.id)">
                 <i class="material-icons underlineHover font-size55">
@@ -34,9 +37,10 @@
             </div>
           </div>
 
+
           <!-- Usuarios-->
           <div v-if="finderUser">
-            <h3>Usuarios</h3>
+            <h4>{{usuariosEncontrados === "" ? 'No se han encontrado usuarios' : 'Usuarios'}}</h4>
 
             <div v-for="usuario in usuariosEncontrados" class="q-pa-md float-left" style="width: 300px;">
               <q-card @click="$router.push('/user/perfil/' + usuario.username)" class="my-card usuarioHover container">
@@ -61,9 +65,9 @@
       <div class="col-3">
         <h3 class="menu-lateral">Filtro</h3>
         <div class="flex column menu-lateral">
-          <span id="todo" @click="finderUser = true; finderSong = true;">Todo</span>
-          <span id="usuario" @click="finderUser = true; finderSong = false;">Usuario</span>
-          <span id="cancion" @click="finderUser = false; finderSong = true;">Cancion</span>
+          <span class="underlineHover" id="todo" @click="finderUser = true; finderSong = true;">Todo</span>
+          <span class="underlineHover" id="usuario" @click="finderUser = true; finderSong = false;">Usuario</span>
+          <span class="underlineHover" id="cancion" @click="finderUser = false; finderSong = true;">Cancion</span>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
 
 Cosas por hacer:
 
-- Dar funcionalidad a las opciones
+- Hacer 'responsive' el texto de los comentarios
 
 - Que el footer y la cancion reproducida tengan relacion
 
@@ -17,6 +17,9 @@ HECHO:
 - Que se muestren los seguidores y los seguidos de los demas.
 
 - Pagina descubrir: que salgan canciones aleatorias.
+
+- Dar funcionalidad a las opciones
+
 
 
 

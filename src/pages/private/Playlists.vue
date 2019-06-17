@@ -6,6 +6,11 @@
 
     <div class="col-12 flex justify-center">
 
+      <div v-if="!myPlaylists[0]">
+        <h6>¡Ups! Este usuario aún tiene ninguna playlists creada.</h6>
+      </div>
+
+
       <!-- Playlists -->
       <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
 
