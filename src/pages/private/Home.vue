@@ -29,7 +29,7 @@
 
                 <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
 
-                <a :style="isThisSongLikedByTheUser(cancion.id,user.username) !== '' ? 'color: red' : 'color: black'" @click="">
+                <a :style="isThisSongLikedByTheUser(cancion.id,user.username) !== '' ? 'color: red' : 'color: black'" @click="doLike(cancion.id)">
                   <i  class="material-icons likeHover font-size25">
                     favorite
                   </i>
