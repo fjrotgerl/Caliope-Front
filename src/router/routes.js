@@ -12,8 +12,8 @@ const routes = [
         component: () => import("pages/public/Register.vue")
       },
       {
-        path: 'faq',
-        component: () => import("pages/public/PreguntasFrecuentes.vue")
+        path: 'contacto',
+        component: () => import("pages/public/Contacto.vue")
       }
     ]
   },
