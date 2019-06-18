@@ -204,7 +204,6 @@
           let refs = this.$refs;
           let actualSong = refs[cancionId];
           actualSong[0].innerHTML = this.isSongPlaying ? 'play_arrow' : 'pause';
-          //this.$refs.layoutBtn[0].innerHTML = this.isSongPlaying ? 'play_arrow' : 'pause';
 
           this.isSongPlaying = await !audioPlayer.getSongStatus();
           await this.$tools.toogleSong(cancionId, this.isSongPlaying, this);

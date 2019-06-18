@@ -1,7 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 <q-page class="">
 
-<!--      <q-carousel-slide :name="1" img-src="../statics/carousel/festival1.jpg" />-->
   <div class="absolute-center text-white q-pa-md">
     <img src="./../../assets/caliope-soloIcon.svg">
     <h3 class="text-align-center">Crea y comparte tu música con el mundo. Tus creaciones no tienen límites.</h3>

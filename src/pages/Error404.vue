@@ -1,13 +1,12 @@
 <template>
   <div class="fixed-center text-center">
     <p>
-      <img
-        style="width:30vw;max-width:150px;"
+      <img src="https://3.bp.blogspot.com/-kuyamxjua-M/W5FB684leoI/AAAAAAABI6Y/0hEQVp8AhkQOsVBWsqu0ezbsqjy0L5mzQCLcBGAs/s1600/Error%2B404%2Bmusic%2Bnot%2Bfound.jpg"
+        style="width:300vw;max-width:100%;"
       >
     </p>
-    <p class="text-faded">Sorry, nothing here...<strong>(404)</strong></p>
     <q-btn
-      color="secondary"
+      color="black"
       style="width:200px;"
       @click="$router.push('/')"
     >Go back</q-btn>

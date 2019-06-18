@@ -7,7 +7,6 @@
           <img class="logo-layout" src="" @click="$router.push('/')">
         </q-toolbar-title>
 
-<!--        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>-->
         <div id="menu-superior">
         <q-btn flat rounded color="accent" label="Contacto" @click="$router.push('/contacto')"/>
 
@@ -20,7 +19,6 @@
       </q-toolbar>
 
       <!-- Login modal -->
-      <!-- <div v-if="this.$q.screen.width > 500"> -->
         <q-dialog
           v-model="loginWindow"
         >
@@ -58,7 +56,6 @@
 
           </q-card>
         </q-dialog>
-      <!--</div> -->
 
       <q-dialog v-model="errorWindow" @escape-key="errorWindow = false">
         <q-card>

@@ -130,16 +130,16 @@
           this.$tools.setFinderData(this.text);
           this.$router.push("/user/buscador/" + this.text)
         },
-        refreshToken: () => {
-          this.$axios.post(constants.AUTH_API_URL + "/refresh-token", {}, {
-            headers: {
-              "refreshtoken": localStorage.getItem("token")
-            }
-          })
-            .then(response => {
-              localStorage.setItem("token",response.data);
-            })
-        },
+        // refreshToken: () => {
+        //   this.$axios.post(constants.AUTH_API_URL + "/refresh-token", {}, {
+        //     headers: {
+        //       "refreshtoken": localStorage.getItem("token")
+        //     }
+        //   })
+        //     .then(response => {
+        //       localStorage.setItem("token",response.data);
+        //     })
+        // },
       }
     },
     async beforeMount(){
