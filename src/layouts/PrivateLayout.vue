@@ -39,7 +39,7 @@
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Cerrar sesión" @click="$router.push('/'); text = ''"/>
+                <q-btn flat rounded outline label="Cerrar sesión" @click="closeSession"/>
               </q-item-section>
             </q-item>
           </q-list>
@@ -97,10 +97,15 @@
         imgHeader: '',
         layout: "",
 
+        closeSession: () => {
+          localStorage.clear()
+          this.$router.push('/');
+          this.text = '';
+
+        },
         toogleSong: () => {
           audioPlayer.toogle();
           this.isSongPlaying = audioPlayer.getSongStatus();
-          console.log(this.$refs);
 
         },
         stopSong: () => {
@@ -125,11 +130,21 @@
           this.$tools.setFinderData(this.text);
           this.$router.push("/user/buscador/" + this.text)
         },
-        test: () => console.log(this.isSongPlaying),
+        refreshToken: () => {
+          this.$axios.post(constants.AUTH_API_URL + "/refresh-token", {}, {
+            headers: {
+              "refreshtoken": localStorage.getItem("token")
+            }
+          })
+            .then(response => {
+              localStorage.setItem("token",response.data);
+            })
+        },
       }
     },
-    beforeMount(){
-      this.getUserData();
+    async beforeMount(){
+      await this.getUserData();
+      // this.refreshToken();
     },
   }
 </script>

@@ -14,6 +14,10 @@ const routes = [
       {
         path: 'faq',
         component: () => import("pages/public/PreguntasFrecuentes.vue")
+      },
+      {
+        path: 'check',
+        component: () => import("pages/Check.vue")
       }
     ]
   },

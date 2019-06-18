@@ -44,15 +44,20 @@ export default function (/* { store, ssrContext } */) {
           }
         })
           .catch(error => console.error(error));
+
         next();
       } else {
         next("/")
       }
     } else {
-      console.log("Xd");
       next();
     }
+    //
+
+
   });
+
+
 
   return Router
 }

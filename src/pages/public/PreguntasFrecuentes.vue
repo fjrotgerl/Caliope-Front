@@ -34,7 +34,7 @@
         />
 
         <div>
-          <q-btn style="width: 100%; " label="Envia" type="submit" color="primary"/>
+          <q-btn style="width: 100%; " @click="sendMail" label="Envia" type="submit" color="primary"/>
         </div>
       </q-form>
 
@@ -46,14 +46,25 @@
 </style>
 
 <script>
-export default {
+  const constants  = require('../../statics/js/configuration');
+
+  export default {
   name: '',
   data () {
     return {
       email: "",
       asunto: "",
       text: "",
-      accept: false
+      accept: false,
+      sendMail: () => {
+        this.$axios.post(constants.AUTH_API_URL + "/sendmail", {
+          'mail': {
+            'to': "caliope.no.reply@gmail.com",
+            'subject': this.asunto,
+            'message': "Email del usuario: " + this.email + "\n" + this.text
+          }
+        })
+      }
     }
   },
   methods: {

@@ -121,6 +121,6 @@
       goHome () {
         this.$router.push("/");
       }
-    }
+    },
   }
 </script>
