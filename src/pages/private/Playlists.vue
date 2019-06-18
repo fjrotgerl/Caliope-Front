@@ -10,7 +10,6 @@
         <h6>¡Ups! Este usuario aún tiene ninguna playlists creada.</h6>
       </div>
 
-
       <!-- Playlists -->
       <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
 
@@ -81,6 +80,7 @@
       this.user = await this.$tools.getUserData(this.otherUserId, this);
       this.myPlaylists = await this.$tools.getPlaylistsFromUser(this.user.username, this);
       this.you = window.localStorage.getItem("user");
+      this.color = this.$tools.randomColor();
     },
     watch: {
       async '$route' (to, from) {
@@ -88,7 +88,7 @@
         this.user = await this.$tools.getUserData(this.otherUserId, this);
         this.myPlaylists = await this.$tools.getPlaylistsFromUser(this.user.username, this);
         this.you = window.localStorage.getItem("user");
-        this.color = this.$tools.randomColor();
+
       }
     }
   }

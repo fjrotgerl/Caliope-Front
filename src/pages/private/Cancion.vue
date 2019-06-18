@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column" :style="color">
     <div style="width: 80%;margin: 0 auto;">
-      <q-card class="my-card bg-grey-14 text-white text-align-center">
+      <q-card class="my-card bg-black-gradient text-white text-align-center">
         <q-card-section>
           <div class="text-h2" style="margin-bottom: 10px;">{{cancionActual.nombre}}</div>
           <div class="text-subtitle2" @click="$router.push('/user/perfil/' + cancionActual.autor.username)">{{cancionActual.autor.username}}</div>

@@ -15,7 +15,7 @@
           v-model="email"
           label="Introduce tu Email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Escribe correctamente tu email']"
+          :rules="[ val => val && val.length > 0 && val.includes('@') || 'Escribe correctamente tu email']"
         />
 
         <q-input
@@ -23,7 +23,7 @@
           v-model="asunto"
           label="Introduce tu asunto"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Escribe correctamente tu email']"
+          :rules="[ val => val && val.length > 0 || 'Escribe correctamente tu asunto']"
         />
 
         <q-input
@@ -31,6 +31,7 @@
           label="Escribe tu mensaje"
           filled
           type="textarea"
+          :rules="[ val => val && val.length > 0 || 'Escribe tu mensaje']"
         />
 
         <div>

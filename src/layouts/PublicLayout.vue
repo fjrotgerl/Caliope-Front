@@ -9,7 +9,7 @@
 
 <!--        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>-->
         <div id="menu-superior">
-        <q-btn flat rounded color="accent" label="Preguntas frecuentes" @click="$router.push('/faq')"/>
+        <q-btn flat rounded color="accent" label="Contacto" @click="$router.push('/contacto')"/>
 
         <q-btn flat rounded color="accent" label="Iniciar sesión"  @click="loginWindow = true"/>
 
