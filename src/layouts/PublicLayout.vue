@@ -4,6 +4,7 @@
     <q-header class="bg-no-opacity text-accent">
       <q-toolbar id="menu-superior">
         <q-toolbar-title id="home-publica">
+          <img class="logo-layout" src="" @click="$router.push('/')">
         </q-toolbar-title>
 
 <!--        <q-btn flat rounded color="accent" label="Ir a la parte privada (solo dev)" @click="$router.push('/user')"/>-->
@@ -23,8 +24,8 @@
         <q-dialog
           v-model="loginWindow"
         >
-          <q-card style="width: 800px; max-width: 80vw; background: white;">
-            <div style="padding: 5% 25%;">
+          <q-card style="background-color:white; width: 50%; margin-bottom: 20px; padding: 20px; -webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px; box-shadow: 1px 1px 5px black;">
+            <div >
               <div class="row" style="margin-bottom: 5%;">
                 <q-card-section class="col-12">
                   <div class="text-h6">

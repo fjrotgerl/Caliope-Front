@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex flex-center bg-white">
+  <q-page class="flex flex-center">
 
     <q-dialog v-model="errorWindow" @escape-key="errorWindow = false">
       <q-card>
@@ -92,20 +92,9 @@
         </q-step>
 
 
-        <q-step
-          :name="3"
-          title="Finalizar"
-          icon="add_comment"
-        >
-          Para finalizar acepte los términos y condiciones. <br>
-
-          <q-toggle v-model="accept" label="Acepto los términos y condiciones" />
-
-        </q-step>
-
         <template v-slot:navigation>
           <q-stepper-navigation>
-            <q-btn v-if="step < 3" @click="$refs.stepper.next()" color="primary" :label="'Siguiente'" />
+            <q-btn v-if="step < 2" @click="$refs.stepper.next()" color="primary" :label="'Siguiente'" />
             <q-btn v-else @click="register" color="primary" :label="'Finalizar'" />
             <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Atras" class="q-ml-sm" />
           </q-stepper-navigation>

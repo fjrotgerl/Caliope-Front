@@ -1,64 +1,10 @@
 <template>
-<q-page class="flex flex-center bg-white q-pa-md column">
-  <q-expansion-item class="pregunta"
-    expand-separator
-    icon="question_answer"
-    label="Lorem ipsum dolor sit amet, consectetur adipisicing elit. 1"
-  >
-    <q-card>
-      <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-        commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-        eveniet doloribus ullam aliquid.
-      </q-card-section>
-    </q-card>
-  </q-expansion-item>
+<q-page class="flex flex-center q-pa-md column">
 
-  <q-expansion-item class="pregunta"
-                    expand-separator
-                    icon="question_answer"
-                    label="Lorem ipsum dolor sit amet, consectetur adipisicing elit. 2"
-  >
-    <q-card>
-      <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-        commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-        eveniet doloribus ullam aliquid.
-      </q-card-section>
-    </q-card>
-  </q-expansion-item>
-
-  <q-expansion-item class="pregunta"
-                    expand-separator
-                    icon="question_answer"
-                    label="Lorem ipsum dolor sit amet, consectetur adipisicing elit. 3"
-  >
-    <q-card>
-      <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-        commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-        eveniet doloribus ullam aliquid.
-      </q-card-section>
-    </q-card>
-  </q-expansion-item>
-
-  <q-expansion-item class="pregunta"
-                    expand-separator
-                    icon="question_answer"
-                    label="Lorem ipsum dolor sit amet, consectetur adipisicing elit. 4"
-  >
-    <q-card>
-      <q-card-section>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-        commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-        eveniet doloribus ullam aliquid.
-      </q-card-section>
-    </q-card>
-  </q-expansion-item>
   
-  <h3>CONTACTA CON NOSOTROS</h3>
+  <h3 class="text-white" style="text-shadow: 2px 2px 5px black;">CONTACTA CON NOSOTROS</h3>
 
-    <div style="width: 50%;margin: 50px 0;background-color: beige;padding: 50px;">
+    <div style="background-color:white; width: 50%; margin-bottom: 20px; padding: 20px; -webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px; box-shadow: 1px 1px 5px black;">
 
       <q-form
         @submit="onSubmit"
@@ -87,10 +33,8 @@
           type="textarea"
         />
 
-        <q-toggle v-model="accept" label="Acepto los terminos y condiciones" />
-
         <div>
-          <q-btn label="Envia" type="submit" color="primary"/>
+          <q-btn style="width: 100%; " label="Envia" type="submit" color="primary"/>
         </div>
       </q-form>
 

@@ -9,7 +9,7 @@
         <h6>¡Ups! Este usuario aún tiene ninguna canción dentro de su playlists.</h6>
       </div>
       <!-- ---------------------------------------- -->
-      <!-- CANCIONES -->
+      <!-- CANCION -->
       <!-- ---------------------------------------- -->
       <div class="row flex cancion" v-for="cancion in cancionesPlaylist">
         <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
@@ -23,10 +23,10 @@
           </div>
           <div class="cancion-opciones">
 
-            <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
+            <a class="underlineHover" style="margin: auto;" @click="openDialog(cancion.id)">Comentar</a>
 
             <a @click="doLike(cancion.id)">
-              <i class="material-icons likeHover font-size25">
+              <i  class="material-icons likeHover font-size25">
                 favorite
               </i>
             </a>
@@ -60,6 +60,42 @@
     </q-dialog>
     <!-- ---------------------------------------- -->
 
+    <!-- ---------------------------------------- -->
+    <!-- MODAL AÑADIR COMENTARIO -->
+    <!-- ---------------------------------------- -->
+    <q-dialog v-model="comentarioDialog" persistent>
+      <q-card style="min-width: 400px">
+        <q-card-section>
+          <div class="text-h6">Escribe tu comentario</div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-input dense v-model="comentario" autofocus @keyup.enter="doComment" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" v-close-popup />
+          <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <!-- ---------------------------------------- -->
+
+
+    <!-- ---------------------------------------- -->
+    <!-- INFO -->
+    <!-- ---------------------------------------- -->
+    <q-dialog v-model="seamless" seamless position="bottom">
+      <q-card>
+
+        <q-card-section class="row items-center no-wrap">
+          <div class="text-weight-bold">{{infoText}}</div>
+          <q-btn flat round icon="close" v-close-popup />
+        </q-card-section>
+
+      </q-card>
+    </q-dialog>
+
   </q-page>
 
 
@@ -85,16 +121,30 @@ export default {
       },
 
       /* Reproductor cancion */
+      likedSongs: {},
+      mySongs: {},
+      otherUserId: "",
+      you: "",
+      user: {},
+      color: "",
+      /* Reproductor cancion */
       songPlaying: "",
       actualSongId: "",
-      color:"",
       actualIcon: "play_arrow",
       comentarioDialog: false,
       comentario: "",
       songVolume: constants.DEFAULT_SONG_VOLUME,
       isSongPlaying: false,
+      addSongToPlaylistDialog: false,
+      myPlaylists: [],
+      myPlaylistsModal: null,
+      myPlaylistsNombre: [],
+      songSelected: "",
+      seamless: false,
+      infoText: "",
+      userLikedSongs: [],
 
-      /* Reproductor functions */
+      //* Reproductor functions */
       toogleSong: async (cancionId, songPlaying) => {
 
         // Entra si ya hay una cancion reproduciendose y es diferente a la que este sonando actualmente
@@ -113,6 +163,7 @@ export default {
         let refs = this.$refs;
         let actualSong = refs[cancionId];
         actualSong[0].innerHTML = this.isSongPlaying ? 'play_arrow' : 'pause';
+        //this.$refs.layoutBtn[0].innerHTML = this.isSongPlaying ? 'play_arrow' : 'pause';
 
         this.isSongPlaying = await !audioPlayer.getSongStatus();
         await this.$tools.toogleSong(cancionId, this.isSongPlaying, this);
@@ -122,13 +173,25 @@ export default {
 
       },
       stopSong: () => this.$tools.stopSong(this.isSongPlaying),
-      doLike: (cancionId) => this.$tools.doLike(cancionId, this.user.username, this),
+      doLike: (cancionId) => {
+        this.$tools.doLike(cancionId, this.user.username, this);
+        this.seamless = true;
+        this.infoText = "Te gusta una nueva canción.";
+        setTimeout(() => this.seamless = false, 5000);
+      },
       openDialog: (cancionId) => {
         this.comentarioDialog = true;
         this.comentario = "";
         this.actualSongId = cancionId;
       },
-      doComment: () => this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this),
+      doComment: () => {
+        this.$tools.doComment(this.comentarioDialog, this.user.username, this.actualSongId, this.comentario, this);
+        this.comentarioDialog = false;
+        this.seamless = true;
+        this.infoText = "¡Comentario añadido correctamente!";
+        setTimeout(() => this.seamless = false, 5000);
+
+      },
       addOneRepro: (cancionId) => {
         this.$axios.put(constants.REST_API_URL + "/addNewRepro/" + cancionId)
           .catch(error => console.error(error))
@@ -141,14 +204,5 @@ export default {
     this.playlist = await this.$tools.getPlaylistById(this.playlistId, this);
     this.color = this.$tools.randomColor();
   },
-  watch: {
-    async '$route'(to, from) {
-      // react to route changes...
-      this.playlistId = this.$route.params.nombrePlaylist;
-      this.cancionesPlaylist = await this.$tools.getSongFromPlaylist(this.playlistId, this);
-      this.playlist = await this.$tools.getPlaylistById(this.playlistId, this);
-
-    }
-  }
 }
 </script>
