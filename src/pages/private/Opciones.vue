@@ -1,21 +1,19 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <q-page class="flex column" :style="color">
       <h2 class="text-align-center">OPCIONES</h2>
-      <div class="bg-white">
-        <q-splitter
-          v-model="splitterModel"
-        >
-          <template v-slot:before>
+      <div class="q-gutter-y-md flex justify-center column" style="width:50%;margin:0 auto;margin-bottom: 50px;">
             <q-tabs
               v-model="tab"
-              vertical
-              class="text-teal"
+              dense
+              class="text-grey"
+              active-color="primary"
+              indicator-color="primary"
+              align="justify"
+              narrow-indicator
             >
               <q-tab name="info" icon="info" label="Informacion" />
             </q-tabs>
-          </template>
 
-          <template v-slot:after>
             <q-tab-panels
               v-model="tab"
               animated
@@ -87,9 +85,6 @@
               </q-tab-panel>
 
             </q-tab-panels>
-          </template>
-
-        </q-splitter>
       </div>
 
 
@@ -163,7 +158,6 @@
         test: '',
         submitting: false,
         tab: 'info',
-        splitterModel: 20,
         step: 1,
         accept: false,
         user: { },
