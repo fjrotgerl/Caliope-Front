@@ -1,5 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex flex-center">
+    <h3 class="text-white" style="text-shadow: 2px 2px 5px black;">CONTACTA CON NOSOTROS</h3>
 
 
   </q-page>
@@ -11,7 +12,7 @@
 <script>
 
   const md5        = require('md5');
-  const constants  = require('../statics/js/configuration');
+  const constants  = require('../../statics/js/configuration');
 
 export default {
   name: 'Register',
