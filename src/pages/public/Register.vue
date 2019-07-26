@@ -94,9 +94,10 @@
 
         <template v-slot:navigation>
           <q-stepper-navigation>
-            <q-btn v-if="step < 2" @click="$refs.stepper.next()" color="primary" :label="'Siguiente'" />
-            <q-btn v-else @click="register" color="primary" :label="'Finalizar'" />
-            <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Atras" class="q-ml-sm" />
+<!--            <q-btn v-close-popup @click="sendMail" type="submit" class="full-width" style="height: 40px;" color="white" text-color="black" icon="email" label="Enviar mensaje" />-->
+            <q-btn v-if="step < 2" @click="$refs.stepper.next()" :label="'Siguiente'" class="full-width" color="white" text-color="black" style="height: 40px;"/>
+            <q-btn v-else @click="register" :label="'Finalizar'" style="height: 40px; width: 48%; margin-right: 15px;" color="white" text-color="black"/>
+            <q-btn v-if="step > 1" @click="$refs.stepper.previous()" label="Atras" style="height: 40px; width: 48%;" color="white" text-color="black"/>
           </q-stepper-navigation>
         </template>
       </q-stepper>

@@ -53,9 +53,8 @@
       <router-view />
     </q-page-container>
 
-    <!-- <q-footer reveal bordered class="bg-brown-5 text-white">
-      <q-toolbar             @click="test"
-      >
+    <q-footer reveal bordered class="bg-brown-5 text-white">
+      <q-toolbar>
         <q-toolbar-title>
           <q-knob
             show-value
@@ -76,7 +75,7 @@
 
         </q-toolbar-title>
       </q-toolbar>
-    </q-footer> -->
+    </q-footer>
 
   </q-layout>
 </template>

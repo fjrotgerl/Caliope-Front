@@ -46,15 +46,15 @@ BufferLoader.prototype.load = function() {
 /* CARGA */
 
 //window.onload = init;
-var context;
-var bufferLoader;
-var playing = false;
-var source;
-var gainNode;
-var sinea;
-var isNewSong = true;
-var actualTimeSong = 0;
-var actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
+let context;
+let bufferLoader;
+const playing = false;
+let source;
+let gainNode;
+let sinea;
+let isNewSong = true;
+const actualTimeSong = 0;
+let actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
 
 let getSongUrl = constants.REST_API_URL + "/obtenerCancion/";
 let getSongName = "";
