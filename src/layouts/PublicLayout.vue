@@ -44,7 +44,7 @@
                 </template>
               </q-input>
 
-              <q-input outlined color="primary" bg-color="white" bottom-slots v-model="usuario.password" label="Contraseña">
+              <q-input outlined color="primary" bg-color="white" type="password" bottom-slots v-model="usuario.password" label="Contraseña">
                 <template v-slot:prepend>
                   <q-icon name="vpn_key" />
                 </template>

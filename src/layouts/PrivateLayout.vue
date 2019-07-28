@@ -17,29 +17,35 @@
 
         <q-btn flat rounded color="accent" label="descubrir" @click="$router.push('/user/descubrir'); text = ''"/>
 
-        <q-btn-dropdown color="primary" :label="user.username">
-          <q-list>
-            <q-item v-if="user.permiso == 2" clickable v-close-popup>
-              <q-item-section>
-                <q-btn flat rounded outline label="Administrar" @click="$router.push('/user/administrador/'); text = ''"/>
+        <q-btn-dropdown flat rounded :label="user.username" color="primary" text-color="white" content-style="background-color: #222222; color: white;">
+          <q-list color="primary" text-color="white">
+            <q-item v-if="user.permiso == 2" clickable v-close-popup >
+              <q-item-section >
+                <q-btn class="special-hover" flat rounded outline label="Administrar" @click="$router.push('/user/administrador/'); text = ''"/>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username); text = ''"/>
+                <q-btn class="special-hover" flat rounded outline label="Perfil" @click="$router.push('/user/perfil/' + user.username); text = ''"/>
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-close-popup>
-              <q-item-section>
-                <q-btn flat rounded outline label="Opciones" @click="$router.push('/user/opciones'); text = ''"/>
-              </q-item-section>
-            </q-item>
+            <q-separator inset dark></q-separator>
+
 
             <q-item clickable v-close-popup>
               <q-item-section>
-                <q-btn flat rounded outline label="Cerrar sesión" @click="closeSession"/>
+                <q-btn class="special-hover" flat rounded outline label="Opciones" @click="$router.push('/user/opciones'); text = ''"/>
+              </q-item-section>
+            </q-item>
+
+            <q-separator inset dark></q-separator>
+
+
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-btn class="special-hover" flat rounded outline label="Cerrar sesión" @click="closeSession"/>
               </q-item-section>
             </q-item>
           </q-list>
@@ -53,29 +59,29 @@
       <router-view />
     </q-page-container>
 
-    <q-footer reveal bordered class="bg-brown-5 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-knob
-            show-value
-            class="text-white q-ma-md"
-            v-model="songVolume"
-            size="60px"
-            @drag-value="changeSongVolume"
-            :thickness="0.2"
-            color="orange"
-            center-color="black"
-            track-color="transparent"
-          ><q-icon name="volume_up" />
-          </q-knob>
+<!--    <q-footer reveal bordered class="bg-brown-5 text-white">-->
+<!--      <q-toolbar>-->
+<!--        <q-toolbar-title>-->
+<!--          <q-knob-->
+<!--            show-value-->
+<!--            class="text-white q-ma-md"-->
+<!--            v-model="songVolume"-->
+<!--            size="60px"-->
+<!--            @drag-value="changeSongVolume"-->
+<!--            :thickness="0.2"-->
+<!--            color="orange"-->
+<!--            center-color="black"-->
+<!--            track-color="transparent"-->
+<!--          ><q-icon name="volume_up" />-->
+<!--          </q-knob>-->
 
-          <q-btn ref="layoutBtn" @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>
-          <q-btn @click="stopSong" icon="stop" color="primary" style="margin-right: 20px;"></q-btn>
+<!--          <q-btn ref="layoutBtn" @click="toogleSong" :icon="isSongPlaying ? 'pause' : 'play_arrow'" color="primary" style="margin-right: 20px;"></q-btn>-->
+<!--          <q-btn @click="stopSong" icon="stop" color="primary" style="margin-right: 20px;"></q-btn>-->
 
 
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
+<!--        </q-toolbar-title>-->
+<!--      </q-toolbar>-->
+<!--    </q-footer>-->
 
   </q-layout>
 </template>

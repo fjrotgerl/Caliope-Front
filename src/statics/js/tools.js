@@ -170,8 +170,9 @@ function setFinderData(newFinderData) {
 }
 
 function randomColor() {
-  let array_colors = ["#373b44, #4286f4","#203a43, #2c5364","#373b44, #4286f4","#8360c3, #2ebf91","#ad5389, #3c1053","#642b73, #c6426e"];
-  return 'background: linear-gradient(to bottom, '+array_colors[Math.floor(Math.random() * 5)]+');';
+  //   let array_colors = ["#373b44, #4286f4","#203a43, #2c5364","#373b44, #4286f4","#8360c3, #2ebf91","#ad5389, #3c1053","#642b73, #c6426e"];
+  let array_colors = ["#FF5F6D, #FFC371","#16BFFD, #CB3066" ,"#1D4350, #A43931"];
+  return 'background: linear-gradient(to bottom, ' + array_colors[Math.floor(Math.random() * 5)] + ');';
 }
 
 export default { changeSongVolume, toogleSong, stopSong, doLike, doComment, getAllSongs,
