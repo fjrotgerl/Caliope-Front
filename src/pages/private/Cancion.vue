@@ -1,7 +1,7 @@
 <template>
-  <q-page class="flex column" :style="color">
-    <div style="width: 80%;margin: 0 auto;">
-      <q-card class="my-card bg-black-gradient text-white text-align-center">
+  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+    <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+      <q-card class="my-card text-white text-align-center" style="background: rgba(0,0,0,0.5)">
         <q-card-section>
           <div class="text-h2" style="margin-bottom: 10px;">{{cancionActual.nombre}}</div>
           <div class="text-subtitle2" @click="$router.push('/user/perfil/' + cancionActual.autor.username)">{{cancionActual.autor.username}}</div>
@@ -9,20 +9,23 @@
 
         <q-card-actions class="flex-center">
           <a  class="playButton"  @click="toogleSong(idCancionActual, songPlaying)">
-            <i class="material-icons underlineHover font-size55" :ref="idCancionActual">play_arrow</i>
+            <i class="material-icons likeHover text-white" style="font-size: 40px;" :ref="idCancionActual">play_arrow</i>
           </a>
           <a style="margin: 0 20px;" @click="doLike(idCancionActual)">
-            <i  class="material-icons likeHover font-size25">
+            <i  class="material-icons likeHover font-size25 text-white">
               favorite
             </i>
           </a>
           <a style="margin: 0 20px;" @click="addSongToPlaylistDialog = true; songSelected = idCancionActual;">
-            <i class="material-icons underlineHover font-size25">
+            <i class="material-icons likeHover font-size25 text-white">
               playlist_add
             </i>
           </a>
-
-          <q-btn @click="comentarioDialog = true" flat>Comentar</q-btn>
+          <a style="margin: 0 20px;" @click="comentarioDialog = true">
+            <i class="material-icons likeHover font-size25 text-white">
+              chat
+            </i>
+          </a>
 
         </q-card-actions>
 
@@ -32,25 +35,25 @@
           <span style="margin: 20px;">Fecha subida: {{moment(cancionActual.fechaRegistro)}}</span>
         </div>
       </q-card>
-    </div>
-    <div style="width: 80%;margin: 0 auto;" class="flex column justify-between">
-      <h2 style="color:white;" class="text-align-center">COMENTARIOS</h2>
+    <div style="margin: 0 auto;" class="flex column justify-between">
+      <p class="heading">COMENTARIOS</p>
 
-      <div class="text-white text-align-center" v-if="!comentarios[0]">
+      <div class="text-primary text-align-center" v-if="!comentarios[0]">
         <h5>No hay comentarios</h5>
       </div>
       <!-- ---------------------------------------- -->
       <!-- COMENTARIOS -->
       <!-- ---------------------------------------- -->
-      <div v-for="comentario in comentarios"  class="flex row bg-grey-14" style="margin-bottom: 20px; padding: 20px; -webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px; box-shadow: 1px 1px 5px black;">
+      <div v-for="comentario in comentarios"  class="flex row" style="margin-bottom: 20px; padding: 20px; border-radius: 8px; background: rgba(0,0,0,0.2)">
         <i style="margin-right: 20px;" class="material-icons font-size25">
           comment
         </i>
-        <div color="white" class="flex column justify-between" style="width: 80%;">
-          <h5 style="margin:0;" class="underlineHover" @click="$router.push('/user/perfil/' + comentario.usuario.username)">{{comentario.usuario.username}}</h5>
-          <div style="word-wrap: break-word;">{{comentario.mensaje}}</div>
+        <div color="white" class="flex column">
+          <h5 style="margin:0;" class="underlineHover " @click="$router.push('/user/perfil/' + comentario.usuario.username)">{{comentario.usuario.username}}</h5>
+          <div style="word-wrap: break-word;" >{{comentario.mensaje}}</div>
         </div>
       </div>
+    </div>
       <!-- ---------------------------------------- -->
 
 
