@@ -1,42 +1,71 @@
 <template>
-  <q-page class="flex column" :style="color">
-    <div class="flex flex-center"><h2>{{playlist.nombre}}</h2></div>
-    <div class="flex flex-center"><a style="margin-top: -50px;" class="underlineHover" :href="'/user/perfil/' + playlist.dueño.username">{{playlist.dueño.username}}</a></div>
-    <div style="width: 70%;margin: 0 auto;">
-      <h2 class="text-align-center">Canciones</h2>
+  <q-page class="column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+    <div class="flex flex-center"><p class="heading">{{playlist.nombre}}</p></div>
+    <div class="flex flex-center"><a style="margin-top: -10px;" class="underlineHover" :href="'/user/perfil/' + playlist.dueño.username">{{playlist.dueño.username}}</a></div>
+    <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
+      <div class="col-12" style="max-width: 1200px;">
+        <p class="heading text-align-center" style="font-size: 35px;">Canciones</p>
 
-      <div v-if="!cancionesPlaylist[0]">
-        <h6>¡Ups! Este usuario aún tiene ninguna canción dentro de su playlists.</h6>
-      </div>
-      <!-- ---------------------------------------- -->
-      <!-- CANCION -->
-      <!-- ---------------------------------------- -->
-      <div class="row flex cancion" v-for="cancion in cancionesPlaylist">
-        <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
-          <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
-        </a>
-        <div class="flex column justify-between">
-          <div class="cancion-info">
-            <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
-            <p> - </p>
-            <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
-          </div>
-          <div class="cancion-opciones">
+        <div v-if="!cancionesPlaylist[0]">
+          <h6>¡Ups! Este usuario aún tiene ninguna canción dentro de su playlists.</h6>
+        </div>
 
-            <a class="underlineHover" style="margin: auto;" @click="openDialog(cancion.id)">Comentar</a>
+        <!-- ---------------------------------------- -->
+        <!-- CANCION -->
+        <!-- ---------------------------------------- -->
+        <div class="flex cancion" style="height: 90px;" v-for="cancion in cancionesPlaylist">
+          <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
+            <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
+          </a>
+          <div class="flex column justify-between">
+            <div class="cancion-info">
 
-            <a @click="doLike(cancion.id)">
-              <i  class="material-icons likeHover font-size25">
-                favorite
-              </i>
-            </a>
+              <div>
+                <div>
+                  <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{cancion.autor.username}}</a>
+                </div>
+                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 350px;">
+                  <a class="m-20 underlineHover" style="font-size: 1.4em;" @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                </div>
+              </div>
+            </div>
 
+            <div class="cancion-opciones">
+
+              <q-chip icon="music_note" size="10px" color="primary" text-color="white">{{cancion.genero.nombre}}</q-chip>
+
+              <q-btn-group outline>
+                <q-btn class="underlineHover" @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">
+                  <a>
+                    <i class="material-icons underlineHover font-size25">
+                      playlist_add
+                    </i>
+                  </a>
+                </q-btn>
+                <q-btn class="underlineHover" @click="openDialog(cancion.id)" >
+                  <a class="underlineHover" >
+                    <i class="material-icons underlineHover font-size25" >
+                      insert_comment
+                    </i>
+                  </a>
+                </q-btn>
+                <q-btn class="underlineHover" @click="doLike(cancion.id)">
+                  <a>
+                    <i  class="material-icons likeHover font-size25">
+                      favorite
+                    </i>
+                  </a>
+                </q-btn>
+              </q-btn-group>
+
+
+            </div>
           </div>
         </div>
+
+
+        <!-- ---------------------------------------- -->
       </div>
-      <!-- ---------------------------------------- -->
-
-
     </div>
 
     <!-- ---------------------------------------- -->

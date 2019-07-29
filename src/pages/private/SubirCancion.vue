@@ -1,20 +1,19 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="padded-top" :style="color">
+  <q-page class="column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
 
-    <h2 class="text-align-center" style="margin-top:0;">Sube tu canción</h2>
+    <p class="heading text-align-center">Sube tu canción</p>
 
-    <div class="q-pa-md flex justify-center">
-      <div class="q-gutter-md flex column justify-center fa-align-center" style="width: 50%;padding:50px;border:1px solid gray;border-radius: 90px; background-color: white">
+    <div class="flex justify-center">
+      <div class="flex column " style="width: 500px; padding:30px; border-radius: 8px; background: rgba(0, 0, 0, 0.2)">
         <q-uploader
           :factory="fileUpload"
           label="Solo .mp3"
           accept=".mp3"
-          style="margin:0 auto;"
+          style="margin: 0 auto 25px auto; width: 100%;"
           ref="uploaderRef"
           bordered
 
         />
-        <q-separator />
         <q-input
           ref="cancion.nombre"
           filled
@@ -22,11 +21,12 @@
           label="Nombre de la canción"
           maxlength="32"
           counter
+          color="primary"
+          bg-color="grey-1"
+          style="margin: 10px 0 0 0"
         />
-        <q-separator />
-        <q-select v-model="cancion.genero" :options="generos" label="Escoge genero" />
-        <q-separator />
-        <q-btn @click="$refs.uploaderRef.upload()" label="Subir"></q-btn>
+        <q-select style="margin: 10px 0 20px 0" v-model="cancion.genero" :options="generos" label="Escoge genero" color="primary" bg-color="grey-1" filled/>
+        <q-btn @click="$refs.uploaderRef.upload()" label="Subir" color="primary"></q-btn>
       </div>
     </div>
 

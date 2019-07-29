@@ -1,8 +1,10 @@
 <template>
-  <q-page class="flex column" :style="color">
-    <div class="flex flex-center"><h1>Playlists de {{user.username}}</h1></div>
+  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+    <div class="flex flex-center"><p class="heading">Playlists de {{user.username}}</p></div>
 
-    <q-btn v-if="you === otherUserId" style="margin: 20px; width: 150px;" color="primary" @click="createPlaylistDialog = true" label="Crear playlist"></q-btn>
+    <div class="full-width flex flex-center">
+      <q-btn v-if="you === otherUserId" style="margin: 20px; width: 150px;" color="primary" @click="createPlaylistDialog = true" label="Crear playlist"></q-btn>
+    </div>
 
     <div class="col-12 flex justify-center">
 
@@ -13,11 +15,11 @@
       <!-- Playlists -->
       <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
 
-        <q-card @click="$router.push('/user/playlists/' + otherUserId + '/' + playlist.id)" class="my-card playlistHover container" style="width: max-content;min-width: 300px;">
-          <img src="../../assets/playlist.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
+        <q-card @click="$router.push('/user/playlists/' + playlist.dueño.username + '/' + playlist.id)" class="playlistHover container" style="width: max-content; min-width: 250px; background: rgba(255,255,255,0.2)">
+          <img src="../../assets/playlist.png" style="height: 100px; width: 100px; margin: 0 auto; padding: 10px;">
 
-          <q-card-section style="background-color: cornflowerblue;">
-            <div class="text-h5 text-align-center">{{playlist.nombre}}</div>
+          <q-card-section style="background-color: #1c1c1c; color: white; height: 50px;">
+            <div class="text-align-center" style="padding-bottom: 30px;">{{playlist.nombre}}</div>
           </q-card-section>
           <div class="overlay">
             <i class="icon material-icons underlineHover font-size55">hearing</i>

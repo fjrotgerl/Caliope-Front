@@ -1,17 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <q-page class="flex column" :style="color">
-      <h2 class="text-align-center">OPCIONES</h2>
+  <q-page class="column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+
+      <p class="heading text-align-center">OPCIONES</p>
       <div class="q-gutter-y-md flex justify-center column" style="width:50%;margin:0 auto;margin-bottom: 50px;">
             <q-tabs
               v-model="tab"
               dense
               class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
+              active-color="white"
+              indicator-color="white"
               align="justify"
               narrow-indicator
             >
-              <q-tab name="info" icon="info" label="Informacion" />
             </q-tabs>
 
             <q-tab-panels
@@ -19,9 +19,10 @@
               animated
               transition-prev="jump-up"
               transition-next="jump-up"
+              style="background: rgba(0, 0, 0, 0.2); border-radius: 8px;"
             >
               <q-tab-panel name="info">
-                <div class="text-h4 q-mb-md">Informacion basica</div>
+                <div class="heading q-mb-md" style="font-size: 35px;">Información basica</div>
                 <q-input
                   ref="user.username"
                   filled
@@ -58,30 +59,14 @@
                   style="margin-bottom: 20px"
                 />
 
-                <q-btn
-                  label="Cambiar contraseña"
-                  class="q-mt-md"
-                  color="teal"
-                  @click="changePasswordModal = true"
-                  style="margin-right: 50px;"
-                >
-                  <template v-slot:loading>
-                    <q-spinner-facebook />
-                  </template>
-                </q-btn>
+                <q-separator inset style="margin: 0 0 10px 0;"></q-separator>
 
-                <q-btn
-                  type="submit"
-                  :loading="submitting"
-                  label="Guardar"
-                  class="q-mt-md"
-                  color="teal"
-                  @click="updateUserData"
-                >
-                  <template v-slot:loading>
-                    <q-spinner-facebook />
-                  </template>
-                </q-btn>
+                <q-btn @click="changePasswordModal = true" class="full-width" style="height: 40px;" color="primary" text-color="white" icon="user" label="Cambiar contraseña" />
+
+                <q-separator inset style="margin: 10px 0;"></q-separator>
+
+                <q-btn @click="updateUserData" class="full-width" style="height: 40px;" color="primary" text-color="white" icon="user" label="Guardar" />
+
               </q-tab-panel>
 
             </q-tab-panels>

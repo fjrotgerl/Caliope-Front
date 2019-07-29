@@ -1,145 +1,165 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column" :style="color">
+  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+    <div class="row justify-around q-ma-md" style="padding-bottom:20px;">
+      <div class="col-12" style="max-width: 1200px;">
+        <p class="heading">Descubrir</p>
+        <div class="column justify-center" >
 
-    <div class="column justify-center" style="padding: 100px;padding-bottom:20px;">
+          <q-tabs
+            v-model="tab"
+            dense
+            class="text-black"
+            style="background-color: #1c1c1c; border-top-left-radius: 5px; border-top-right-radius: 5px;"
+            active-color="white"
+            indicator-color="white"
+            align="justify"
+          >
 
+            <q-tab class="text-white" name="canciones" label="Canciones" />
+            <q-tab class="text-white" name="playlists" label="Playlists" />
+          </q-tabs>
 
-      <q-tabs
-        v-model="tab"
-        dense
-        class="text-black"
-        style="background-color: gray"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-        narrow-indicator
-      >
-        <q-tab name="canciones" label="Canciones" />
-        <q-tab name="playlists" label="Playlists" />
-      </q-tabs>
+          <q-separator />
 
-      <q-separator />
+          <q-tab-panels v-model="tab" animated style="background: rgba(0,0,0,0.1)">
+            <q-tab-panel name="canciones">
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="canciones">
-
-          <div class="text-h6">Canciones</div>
-          <div class="flex column justify-between">
-
-
-            <!-- ---------------------------------------- -->
-            <!-- CANCIONES -->
-            <!-- ---------------------------------------- -->
-            <div class="row flex cancion" v-for="cancion in canciones">
-              <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
-                <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
-              </a>
               <div class="flex column justify-between">
-                <div class="cancion-info">
-                  <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
-                  <p> - </p>
-                  <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
-                  <a @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">
-                    <i class="material-icons underlineHover font-size25">
-                      playlist_add
-                    </i>
+                <!-- ---------------------------------------- -->
+                <!-- CANCIONES -->
+                <!-- ---------------------------------------- -->
+                <div class="flex cancion" style="height: 90px;" v-for="cancion in canciones">
+                  <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
+                    <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
                   </a>
+                  <div class="flex column justify-between">
+                    <div class="cancion-info">
+
+                      <div>
+                        <div>
+                          <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{cancion.autor.username}}</a>
+                        </div>
+                        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 350px;">
+                          <a class="m-20 underlineHover" style="font-size: 1.4em;" @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cancion-opciones">
+
+                      <q-chip icon="music_note" size="10px" color="primary" text-color="white">{{cancion.genero.nombre}}</q-chip>
+
+                      <q-btn-group outline>
+                        <q-btn class="underlineHover" @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">
+                          <a>
+                            <i class="material-icons underlineHover font-size25">
+                              playlist_add
+                            </i>
+                          </a>
+                        </q-btn>
+                        <q-btn class="underlineHover" @click="openDialog(cancion.id)" >
+                          <a class="underlineHover" >
+                            <i class="material-icons underlineHover font-size25" >
+                              insert_comment
+                            </i>
+                          </a>
+                        </q-btn>
+                        <q-btn class="underlineHover" @click="doLike(cancion.id)">
+                          <a>
+                            <i  class="material-icons likeHover font-size25">
+                              favorite
+                            </i>
+                          </a>
+                        </q-btn>
+                      </q-btn-group>
+
+
+                    </div>
+                  </div>
                 </div>
-                <div class="cancion-opciones">
+                <!-- ---------------------------------------- -->
 
-                  <a class="underlineHover" @click="openDialog(cancion.id)">Comentar</a>
-
-                  <a @click="doLike(cancion.id)">
-                    <i  class="material-icons likeHover font-size25">
-                      favorite
-                    </i>
-                  </a>
-
-                </div>
               </div>
-            </div>
-            <!-- ---------------------------------------- -->
 
-          </div>
+            </q-tab-panel>
 
-        </q-tab-panel>
+            <q-tab-panel name="playlists">
+              <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
 
-        <q-tab-panel name="playlists">
-          <div class="text-h6">Playlists</div>
-          <div v-for="playlist in myPlaylists" class="q-pa-md float-left " style="width: auto;">
+                <q-card @click="$router.push('/user/playlists/' + playlist.dueño.username + '/' + playlist.id)" class="playlistHover container" style="width: max-content; min-width: 250px; background: rgba(255,255,255,0.2)">
+                  <img src="../../assets/playlist.png" style="height: 100px; width: 100px; margin: 0 auto; padding: 10px;">
 
-            <q-card @click="$router.push('/user/playlists/' + playlist.dueño.username + '/' + playlist.id)" class="my-card playlistHover container" style="width: max-content;min-width: 300px;">
-              <img src="../../assets/playlist.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
+                  <q-card-section style="background-color: #1c1c1c; color: white; height: 50px;">
+                    <div class="text-align-center" style="padding-bottom: 30px;">{{playlist.nombre}}</div>
+                  </q-card-section>
+                  <div class="overlay">
+                    <i class="icon material-icons underlineHover font-size55">hearing</i>
+                  </div>
+                </q-card>
 
-              <q-card-section style="background-color: cornflowerblue;">
-                <div class="text-h5 text-align-center">{{playlist.nombre}}</div>
+              </div>
+            </q-tab-panel>
+          </q-tab-panels>
+
+          <!-- ---------------------------------------- -->
+          <!-- MODAL AÑADIR COMENTARIO -->
+          <!-- ---------------------------------------- -->
+          <q-dialog v-model="comentarioDialog" persistent>
+            <q-card style="min-width: 400px">
+              <q-card-section>
+                <div class="text-h6">Escribe tu comentario</div>
               </q-card-section>
-              <div class="overlay">
-                <i class="icon material-icons underlineHover font-size55">hearing</i>
-              </div>
+
+              <q-card-section>
+                <q-input dense v-model="comentario" autofocus @keyup.enter="doComment" />
+              </q-card-section>
+
+              <q-card-actions align="right" class="text-primary">
+                <q-btn flat label="Cancelar" v-close-popup />
+                <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
+              </q-card-actions>
             </q-card>
+          </q-dialog>
+          <!-- ---------------------------------------- -->
 
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+          <!-- ---------------------------------------- -->
+          <!-- MODAL AÑADIR CANCION A PLAYLIST -->
+          <!-- ---------------------------------------- -->
+          <q-dialog v-model="addSongToPlaylistDialog" persistent>
+            <q-card style="min-width: 400px;" >
+              <q-card-section>
+                <div class="text-h6" >Añadir canción a la playlist</div>
+              </q-card-section>
 
-      <!-- ---------------------------------------- -->
-      <!-- MODAL AÑADIR COMENTARIO -->
-      <!-- ---------------------------------------- -->
-      <q-dialog v-model="comentarioDialog" persistent>
-        <q-card style="min-width: 400px">
-          <q-card-section>
-            <div class="text-h6">Escribe tu comentario</div>
-          </q-card-section>
+              <q-card-section>
 
-          <q-card-section>
-            <q-input dense v-model="comentario" autofocus @keyup.enter="doComment" />
-          </q-card-section>
+                <q-select style="z-index: 50;" v-model="myPlaylistsModal" :options="myPlaylistsNombre" label="Escoge tu playlist" />
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancelar" v-close-popup />
-            <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-      <!-- ---------------------------------------- -->
+              </q-card-section>
 
-      <!-- ---------------------------------------- -->
-      <!-- MODAL AÑADIR CANCION A PLAYLIST -->
-      <!-- ---------------------------------------- -->
-      <q-dialog v-model="addSongToPlaylistDialog" persistent>
-        <q-card style="min-width: 400px;" >
-          <q-card-section>
-            <div class="text-h6" >Añadir canción a la playlist</div>
-          </q-card-section>
+              <q-card-actions align="right" class="text-primary">
+                <q-btn flat label="Cancelar" v-close-popup />
+                <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+          <!-- ---------------------------------------- -->
 
-          <q-card-section>
+          <!-- ---------------------------------------- -->
+          <!-- INFO -->
+          <!-- ---------------------------------------- -->
+          <q-dialog v-model="seamless" seamless position="bottom">
+            <q-card>
 
-            <q-select style="z-index: 50;" v-model="myPlaylistsModal" :options="myPlaylistsNombre" label="Escoge tu playlist" />
+              <q-card-section class="row items-center no-wrap">
+                <div class="text-weight-bold">{{infoText}}</div>
+                <q-btn flat round icon="close" v-close-popup />
+              </q-card-section>
 
-          </q-card-section>
-
-          <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancelar" v-close-popup />
-            <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-      <!-- ---------------------------------------- -->
-
-      <!-- ---------------------------------------- -->
-      <!-- INFO -->
-      <!-- ---------------------------------------- -->
-      <q-dialog v-model="seamless" seamless position="bottom">
-        <q-card>
-
-          <q-card-section class="row items-center no-wrap">
-            <div class="text-weight-bold">{{infoText}}</div>
-            <q-btn flat round icon="close" v-close-popup />
-          </q-card-section>
-
-        </q-card>
-      </q-dialog>
+            </q-card>
+          </q-dialog>
+        </div>
+      </div>
     </div>
 
   </q-page>

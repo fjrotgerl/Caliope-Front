@@ -1,23 +1,28 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column" :style="color">
-    <h3 class="text-align-center">Seguidores de {{this.otherUserId}}</h3>
-<div class="flex justify-center">
-    <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 300px;">
+  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+    <p class="heading">Seguidores de {{this.otherUserId}}</p>
 
-      <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container">
-        <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
+    <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
+      <div class="col-12" style="max-width: 1200px;">
+        <div class="flex justify-center">
+            <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 200px;">
 
-        <q-card-section style="background-color: mediumslateblue;">
-          <div class="text-h5 text-align-center">{{seguidor.username}}</div>
-          <div class="text-h6 text-align-center">{{seguidor.nombre + " " + seguidor.apellidos}}</div>
-        </q-card-section>
-        <div class="overlay">
-          <i class="icon material-icons underlineHover font-size55">visibility</i>
+              <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container" style="width: max-content; min-width: 180px; background: rgba(255,255,255,0.2)">
+                <img src="../../assets/usuario_icono.png" style="height: 100px;width:auto;margin:0 auto;padding: 5px 0">
+
+                <q-card-section style="background-color: #1c1c1c; color: white;">
+                  <div class="text-h6 text-align-center">{{seguidor.username}}</div>
+                  <div class="text-align-center">{{seguidor.nombre + " " + seguidor.apellidos}}</div>
+                </q-card-section>
+                <div class="overlay">
+                  <i class="icon material-icons underlineHover font-size55">visibility</i>
+                </div>
+              </q-card>
+
+            </div>
         </div>
-      </q-card>
-
+      </div>
     </div>
-</div>
 
   </q-page>
 </template>
