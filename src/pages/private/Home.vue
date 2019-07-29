@@ -21,7 +21,7 @@
 
                     <div>
                       <div>
-                        <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{cancion.autor.username}}</a>
+                        <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username); ">{{test(cancion.autor)}}</a>
                       </div>
                       <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 350px;">
                         <a class="m-20 underlineHover" style="font-size: 1.4em;" @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
@@ -188,7 +188,8 @@ export default {
   data () {
     return {
       canciones: {},
-      user: {},
+      autor: { },
+      user: "",
       color: "",
       /* Reproductor cancion */
       songPlaying: "",
@@ -199,7 +200,7 @@ export default {
       songVolume: constants.DEFAULT_SONG_VOLUME,
       isSongPlaying: false,
       addSongToPlaylistDialog: false,
-      myPlaylists: [],
+      myPlaylists: "",
       myPlaylistsModal: null,
       myPlaylistsNombre: [],
       songSelected: "",
@@ -272,29 +273,36 @@ export default {
           return item.liked === userId;
         }
       },
+      test: (object) => {
+        if (object !== null) {
+          return object.username;
+        }
+      }
     }
   },
-  async beforeMount(){
-    this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
-    this.canciones = await this.$tools.getAllSongs(this);
+  async beforeCreate(){
+
+    this.user = this.$tools.getUserData(localStorage.getItem("user"), this);
     this.color = this.$tools.randomColor();
     this.myPlaylists = await this.$tools.getRandomPlaylists(5, this);
+    this.canciones = await this.$tools.getAllSongs(this);
 
-    for (let item of this.myPlaylists) {
-      this.myPlaylistsNombre.push({
-        label: item.nombre,
-        value: item.nombre,
-        id: item.id
-      });
-    }
 
-    for (let item of this.canciones) {
-      let xd = await this.$tools.isThisSongLikedByTheUser(item.id, this.user.username, this);
-      this.userLikedSongs.push({
-        liked: xd,
-        songId: item.id
-      });
-    }
+    // for (let item of this.myPlaylists) {
+    //   this.myPlaylistsNombre.push({
+    //     label: item.nombre,
+    //     value: item.nombre,
+    //     id: item.id
+    //   });
+    // }
+    //
+    // for (let item of this.canciones) {
+    //   let xd = await this.$tools.isThisSongLikedByTheUser(item.id, this.user.username, this);
+    //   this.userLikedSongs.push({
+    //     liked: xd,
+    //     songId: item.id
+    //   });
+    // }
 
   }
 }

@@ -56,7 +56,7 @@ let isNewSong = true;
 const actualTimeSong = 0;
 let actualVolumeSong = constants.DEFAULT_SONG_VOLUME === 100 ? "1" : "0." + constants.DEFAULT_SONG_VOLUME;
 
-let getSongUrl = constants.REST_API_URL + "/obtenerCancion/";
+let getSongUrl = constants.REST_API_URL + "/obtenerCancion";
 let getSongName = "";
 let getUserSong = "";
 

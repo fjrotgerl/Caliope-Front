@@ -96,7 +96,8 @@
       return {
         text: "",
         username: "",
-        user: { },
+        user: {
+        },
         isSongPlaying: audioPlayer.getSongStatus(),
         songVolume: constants.DEFAULT_SONG_VOLUME,
         imgHeader: '',
