@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
       <q-card class="my-card text-white text-align-center" style="background: rgba(0,0,0,0.5)">
         <q-card-section>

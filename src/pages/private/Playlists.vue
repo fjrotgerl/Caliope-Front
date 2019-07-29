@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <div class="flex flex-center"><p class="heading">Playlists de {{user.username}}</p></div>
 
     <div class="full-width flex flex-center">

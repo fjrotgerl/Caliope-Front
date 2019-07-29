@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-12" style="max-width: 1200px;">
         <div class="flex flex-center">

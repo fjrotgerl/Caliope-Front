@@ -1,5 +1,5 @@
 <template>
-  <q-page class="column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <div class="flex flex-center"><p class="heading">{{playlist.nombre}}</p></div>
     <div class="flex flex-center"><a style="margin-top: -10px;" class="underlineHover" :href="'/user/perfil/' + playlist.dueño.username">{{playlist.dueño.username}}</a></div>
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">

@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <p class="heading">Seguidores de {{this.otherUserId}}</p>
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">

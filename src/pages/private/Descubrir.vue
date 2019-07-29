@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
+  <q-page class="flex column bg-official">
     <div class="row justify-around q-ma-md" style="padding-bottom:20px;">
       <div class="col-12" style="max-width: 1200px;">
         <p class="heading">Descubrir</p>
