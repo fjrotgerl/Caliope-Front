@@ -9,7 +9,7 @@
     <div class="col-12 flex justify-center">
 
       <div v-if="!myPlaylists[0]">
-        <h6>¡Ups! Este usuario aún tiene ninguna playlists creada.</h6>
+        <h6>¡Ups! Este usuario aún no tiene ninguna playlists creada.</h6>
       </div>
 
       <!-- Playlists -->

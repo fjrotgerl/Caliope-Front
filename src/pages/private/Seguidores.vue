@@ -4,7 +4,10 @@
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-12" style="max-width: 1200px;">
-        <div class="flex justify-center">
+        <div v-if="!seguidores[0]">
+          <h6>¡Ups! Este usuario aún no tiene ningún seguidor.</h6>
+        </div>
+        <div v-else class="flex justify-center">
             <div v-for="seguidor in seguidores" class="q-pa-md float-left " style="width: 200px;">
 
               <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container" style="width: max-content; min-width: 180px; background: rgba(255,255,255,0.2)">

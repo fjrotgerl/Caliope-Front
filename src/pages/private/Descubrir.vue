@@ -37,7 +37,7 @@
 
                       <div>
                         <div>
-                          <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{cancion.autor.username}}</a>
+                          <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{test(cancion.autor)}}</a>
                         </div>
                         <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 350px;">
                           <a class="m-20 underlineHover" style="font-size: 1.4em;" @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
@@ -197,6 +197,11 @@
         seamless: false,
         infoText: "",
         userLikedSongs: [],
+        test: (object) => {
+          if (object !== null) {
+            return object.username;
+          }
+        },
 
         /* Reproductor functions */
         toogleSong: async (cancionId, songPlaying) => {

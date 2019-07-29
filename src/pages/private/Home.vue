@@ -189,7 +189,7 @@ export default {
     return {
       canciones: {},
       autor: { },
-      user: "",
+      user: {},
       color: "",
       /* Reproductor cancion */
       songPlaying: "",
@@ -282,27 +282,28 @@ export default {
   },
   async beforeCreate(){
 
-    this.user = this.$tools.getUserData(localStorage.getItem("user"), this);
+    this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
     this.color = this.$tools.randomColor();
     this.myPlaylists = await this.$tools.getRandomPlaylists(5, this);
     this.canciones = await this.$tools.getAllSongs(this);
 
 
-    // for (let item of this.myPlaylists) {
-    //   this.myPlaylistsNombre.push({
-    //     label: item.nombre,
-    //     value: item.nombre,
-    //     id: item.id
-    //   });
-    // }
-    //
-    // for (let item of this.canciones) {
-    //   let xd = await this.$tools.isThisSongLikedByTheUser(item.id, this.user.username, this);
-    //   this.userLikedSongs.push({
-    //     liked: xd,
-    //     songId: item.id
-    //   });
-    // }
+
+    for (let item of this.myPlaylists) {
+      this.myPlaylistsNombre.push({
+        label: item.nombre,
+        value: item.nombre,
+        id: item.id
+      });
+    }
+
+    for (let item of this.canciones) {
+      let xd = await this.$tools.isThisSongLikedByTheUser(item.id, this.user.username, this);
+      this.userLikedSongs.push({
+        liked: xd,
+        songId: item.id
+      });
+    }
 
   }
 }

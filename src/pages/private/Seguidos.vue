@@ -1,10 +1,13 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <q-page class="flex column bg-official">
-    <p class="heading">Seguidores de {{this.otherUserId}}</p>
+    <p class="heading">Seguidos de {{this.otherUserId}}</p>
 
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
       <div class="col-12" style="max-width: 1200px;">
-        <div class="flex justify-center">
+        <div v-if="!seguidos[0]">
+          <h6>¡Ups! Este usuario aún no sigue a nadie.</h6>
+        </div>
+        <div v-else class="flex justify-center">
           <div v-for="seguidor in seguidos" class="q-pa-md float-left " style="width: 200px;">
 
             <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container" style="width: max-content; min-width: 180px; background: rgba(255,255,255,0.2)">

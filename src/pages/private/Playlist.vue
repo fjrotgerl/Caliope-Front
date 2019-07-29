@@ -35,13 +35,13 @@
               <q-chip icon="music_note" size="10px" color="primary" text-color="white">{{cancion.genero.nombre}}</q-chip>
 
               <q-btn-group outline>
-                <q-btn class="underlineHover" @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">
-                  <a>
-                    <i class="material-icons underlineHover font-size25">
-                      playlist_add
-                    </i>
-                  </a>
-                </q-btn>
+<!--                <q-btn class="underlineHover" @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">-->
+<!--                  <a>-->
+<!--                    <i class="material-icons underlineHover font-size25">-->
+<!--                      playlist_add-->
+<!--                    </i>-->
+<!--                  </a>-->
+<!--                </q-btn>-->
                 <q-btn class="underlineHover" @click="openDialog(cancion.id)" >
                   <a class="underlineHover" >
                     <i class="material-icons underlineHover font-size25" >
@@ -67,6 +67,29 @@
         <!-- ---------------------------------------- -->
       </div>
     </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- MODAL AÑADIR CANCION A PLAYLIST -->
+    <!-- ---------------------------------------- -->
+    <q-dialog v-model="addSongToPlaylistDialog" persistent>
+      <q-card style="min-width: 400px;" >
+        <q-card-section>
+          <div class="text-h6" >Añadir canción a la playlist</div>
+        </q-card-section>
+
+        <q-card-section>
+
+          <q-select style="z-index: 50;" v-model="myPlaylistsModal" :options="myPlaylistsNombre" label="Escoge tu playlist" />
+
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" v-close-popup />
+          <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <!-- ---------------------------------------- -->
 
     <!-- ---------------------------------------- -->
     <!-- MODAL AÑADIR COMENTARIO -->
@@ -154,7 +177,9 @@ export default {
       mySongs: {},
       otherUserId: "",
       you: "",
-      user: {},
+      user: {
+        username: ""
+      },
       color: "",
       /* Reproductor cancion */
       songPlaying: "",
@@ -230,6 +255,16 @@ export default {
     this.cancionesPlaylist = await this.$tools.getSongFromPlaylist(this.playlistId,this);
     this.playlist = await this.$tools.getPlaylistById(this.playlistId, this);
     this.color = this.$tools.randomColor();
+    this.user = await this.$tools.getUserData(localStorage.getItem("user"), this);
+
+
+    for (let item of this.myPlaylists) {
+      this.myPlaylistsNombre.push({
+        label: item.nombre,
+        value: item.nombre,
+        id: item.id
+      });
+    }
   },
 }
 </script>
