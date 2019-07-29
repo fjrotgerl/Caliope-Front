@@ -63,7 +63,11 @@
                 <q-separator inset />
 
                 <q-card-section class="col-12">
-                  <q-btn v-close-popup @click="googleLogin()" class="full-width" style="height: 40px;" color="white" text-color="black" icon="img:../assets/google.jpg" label="Iniciar sesión con Google" />
+
+                  <q-btn v-close-popup @click="googleLogin()" class="full-width" style="height: 40px;" color="white" text-color="black" >
+                    <img style="width: 25px; height: 25px; margin-bottom: 2px;" src="../assets/google.jpg">
+                    Iniciar sesión con Google
+                  </q-btn>
                 </q-card-section>
               </div>
             </div>

@@ -34,7 +34,7 @@
       <q-stepper
         v-model="step"
         ref="stepper"
-        color="primary"
+        color="white"
 
       >
         <q-step
@@ -42,6 +42,8 @@
           title="Introduce tus credenciales"
           icon="settings"
           :done="step > 1"
+          color="primary"
+          flat
         >
           <q-input
             ref="user.username"
@@ -77,8 +79,8 @@
           :name="2"
           title="Datos personales"
           caption="Opcional"
-          icon="create_new_folder"
           :done="step > 2"
+
         >
 
           <div class="q-gutter-md">
