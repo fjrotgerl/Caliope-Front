@@ -1,124 +1,204 @@
 <template>
-  <q-page class="flex column" :style="color">
-    <div class="flex flex-center"><h1>Buscador</h1></div>
+  <q-page class="flex column" style="background: linear-gradient(to bottom, #BA5370, #F4E2D8); background-attachment: fixed;">
     <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
-      <div class="col-9">
-        <div class="flex column justify-between">
+      <div class="col-12" style="max-width: 1200px;">
+        <div class="flex flex-center">
+          <p class="heading">Buscador</p>
+        </div>
+        <div class="row justify-around" style="padding: 0 20px;padding-bottom:20px;">
+          <div class="col-9">
+            <div class="flex column justify-between">
 
-          <div v-if="usuariosEncontrados === '' && canciones === ''">
-            <h4>No se han obtenido resultados</h4>
-          </div>
+              <div v-if="usuariosEncontrados === '' && canciones === ''">
+                <h4 class="text-primary">No se han obtenido resultados</h4>
+              </div>
 
-          <!-- ---------------------------------------- -->
-          <!-- CANCIONES -->
-          <!-- ---------------------------------------- -->
-          <div v-if="finderSong">
-            <h4>{{canciones === "" ? 'No se han encontrado canciones' : 'Canciones'}}</h4>
-            <div class="row flex cancion" v-for="cancion in canciones">
-              <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
-                <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
-              </a>
-              <div class="flex column justify-between">
-                <div class="cancion-info">
-                  <a class="m-20 underlineHover"  @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
-                  <p> - </p>
-                  <a class="m-20 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)" color="primary">{{cancion.autor.username}}</a>
+              <!-- ---------------------------------------- -->
+              <!-- CANCIONES -->
+              <!-- ---------------------------------------- -->
+              <div v-if="finderSong">
+                <h4>{{canciones === "" ? 'No se han encontrado canciones' : 'Canciones'}}</h4>
+                <div class="flex cancion" style="height: 90px;" v-for="cancion in canciones">
+                  <a  class="playButton"  @click="toogleSong(cancion.id, songPlaying)">
+                    <i class="material-icons underlineHover font-size55" :ref="cancion.id">play_arrow</i>
+                  </a>
+                  <div class="flex column justify-between">
+                    <div class="cancion-info">
+
+                      <div>
+                        <div>
+                          <a class="m-20 text-grey-9 underlineHover"  @click="$router.push('/user/perfil/' + cancion.autor.username)">{{cancion.autor.username}}</a>
+                        </div>
+                        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 350px;">
+                          <a class="m-20 underlineHover" style="font-size: 1.4em;" @click="$router.push('/user/cancion/' + cancion.id)" color="primary">{{cancion.nombre}}</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cancion-opciones">
+
+                      <q-chip icon="music_note" size="10px" color="primary" text-color="white">{{cancion.genero.nombre}}</q-chip>
+
+                      <q-btn-group outline>
+                        <q-btn class="underlineHover" @click="addSongToPlaylistDialog = true; songSelected = cancion.id;">
+                          <a>
+                            <i class="material-icons underlineHover font-size25">
+                              playlist_add
+                            </i>
+                          </a>
+                        </q-btn>
+                        <q-btn class="underlineHover" @click="openDialog(cancion.id)" >
+                          <a class="underlineHover" >
+                            <i class="material-icons underlineHover font-size25" >
+                              insert_comment
+                            </i>
+                          </a>
+                        </q-btn>
+                        <q-btn class="underlineHover" @click="doLike(cancion.id)">
+                          <a>
+                            <i  class="material-icons likeHover font-size25">
+                              favorite
+                            </i>
+                          </a>
+                        </q-btn>
+                      </q-btn-group>
+
+
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- ---------------------------------------- -->
+              <!-- ---------------------------------------- -->
 
-          <!-- ---------------------------------------- -->
-          <!-- MODAL AÑADIR COMENTARIO -->
-          <!-- ---------------------------------------- -->
-          <q-dialog v-model="comentarioDialog" persistent>
-            <q-card style="min-width: 400px">
-              <q-card-section>
-                <div class="text-h6">Escribe tu comentario</div>
-              </q-card-section>
+              <!-- ---------------------------------------- -->
+              <!-- MODAL AÑADIR COMENTARIO -->
+              <!-- ---------------------------------------- -->
+              <q-dialog v-model="comentarioDialog" persistent>
+                <q-card style="min-width: 400px">
+                  <q-card-section>
+                    <div class="text-h6">Escribe tu comentario</div>
+                  </q-card-section>
 
-              <q-card-section>
-                <q-input dense v-model="comentario" autofocus @keyup.enter="doComment" />
-              </q-card-section>
+                  <q-card-section>
+                    <q-input dense v-model="comentario" autofocus @keyup.enter="doComment" />
+                  </q-card-section>
 
-              <q-card-actions align="right" class="text-primary">
-                <q-btn flat label="Cancelar" v-close-popup />
-                <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-          <!-- ---------------------------------------- -->
+                  <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Cancelar" v-close-popup />
+                    <q-btn flat label="Añadir comentario" @click="doComment" v-close-popup />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+              <!-- ---------------------------------------- -->
 
-          <!-- ---------------------------------------- -->
-          <!-- MODAL AÑADIR CANCION A PLAYLIST -->
-          <!-- ---------------------------------------- -->
-          <q-dialog v-model="addSongToPlaylistDialog" persistent>
-            <q-card style="min-width: 400px;" >
-              <q-card-section>
-                <div class="text-h6" >Añadir canción a la playlist</div>
-              </q-card-section>
+              <!-- ---------------------------------------- -->
+              <!-- MODAL AÑADIR CANCION A PLAYLIST -->
+              <!-- ---------------------------------------- -->
+              <q-dialog v-model="addSongToPlaylistDialog" persistent>
+                <q-card style="min-width: 400px;" >
+                  <q-card-section>
+                    <div class="text-h6" >Añadir canción a la playlist</div>
+                  </q-card-section>
 
-              <q-card-section>
+                  <q-card-section>
 
-                <q-select style="z-index: 50;" v-model="myPlaylistsModal" :options="myPlaylistsNombre" label="Escoge tu playlist" />
+                    <q-select style="z-index: 50;" v-model="myPlaylistsModal" :options="myPlaylistsNombre" label="Escoge tu playlist" />
 
-              </q-card-section>
+                  </q-card-section>
 
-              <q-card-actions align="right" class="text-primary">
-                <q-btn flat label="Cancelar" v-close-popup />
-                <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-          <!-- ---------------------------------------- -->
+                  <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Cancelar" v-close-popup />
+                    <q-btn flat label="Añadir" @click="addSongToPlaylist(myPlaylistsModal.id)" v-close-popup />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+              <!-- ---------------------------------------- -->
 
-          <!-- ---------------------------------------- -->
-          <!-- INFO -->
-          <!-- ---------------------------------------- -->
-          <q-dialog v-model="seamless" seamless position="bottom">
-            <q-card>
+              <!-- ---------------------------------------- -->
+              <!-- INFO -->
+              <!-- ---------------------------------------- -->
+              <q-dialog v-model="seamless" seamless position="bottom">
+                <q-card>
 
-              <q-card-section class="row items-center no-wrap">
-                <div class="text-weight-bold">{{infoText}}</div>
-                <q-btn flat round icon="close" v-close-popup />
-              </q-card-section>
+                  <q-card-section class="row items-center no-wrap">
+                    <div class="text-weight-bold">{{infoText}}</div>
+                    <q-btn flat round icon="close" v-close-popup />
+                  </q-card-section>
 
-            </q-card>
-          </q-dialog>
+                </q-card>
+              </q-dialog>
 
 
 
-          <!-- Usuarios-->
-          <div v-if="finderUser">
-            <h4>{{usuariosEncontrados === "" ? 'No se han encontrado usuarios' : 'Usuarios'}}</h4>
+              <!-- Usuarios-->
+              <div v-if="finderUser">
+                <h4>{{usuariosEncontrados === "" ? 'No se han encontrado usuarios' : 'Usuarios'}}</h4>
 
-            <div v-for="usuario in usuariosEncontrados" class="q-pa-md float-left" style="width: 300px;">
-              <q-card @click="$router.push('/user/perfil/' + usuario.username)" class="my-card usuarioHover container">
-                <img src="../../assets/usuario_icono.png" style="height: 150px;width:auto;margin:0 auto;padding: 5px 0">
+                <div v-for="seguidor in usuariosEncontrados" class="q-pa-md float-left " style="width: 200px;">
 
-                <q-card-section style="background-color: mediumslateblue;">
-                  <div class="text-h5 text-align-center">{{usuario.username}}</div>
-                  <div class="text-h6 text-align-center">{{usuario.nombre + " " + usuario.apellidos}}</div>
-                </q-card-section>
-                <div class="overlay">
-                  <i class="icon material-icons underlineHover font-size55">visibility</i>
+                  <q-card @click="$router.push('/user/perfil/' + seguidor.username)" class="my-card usuarioHover container" style="width: max-content; min-width: 180px; background: rgba(255,255,255,0.2)">
+                    <img src="../../assets/usuario_icono.png" style="height: 100px;width:auto;margin:0 auto;padding: 5px 0">
+
+                    <q-card-section style="background-color: #1c1c1c; color: white;">
+                      <div class="text-h6 text-align-center">{{seguidor.username}}</div>
+                      <div class="text-align-center">{{seguidor.nombre + " " + seguidor.apellidos}}</div>
+                    </q-card-section>
+                    <div class="overlay">
+                      <i class="icon material-icons underlineHover font-size55">visibility</i>
+                    </div>
+                  </q-card>
+
                 </div>
-              </q-card>
-            </div>
 
+              </div>
+
+
+
+            </div>
           </div>
 
+          <!-- ---------------------------------------- -->
+          <!-- PLAYLISTS -->
+          <!-- ---------------------------------------- -->
+          <div class="col-3" >
+            <template>
+              <div style="margin-left: 20px; background: rgba(255,255,255,0.8); margin-top: 50px; max-width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                <q-toolbar style="border-top-left-radius: 5px; border-top-right-radius: 5px;" class="bg-primary text-white shadow-2">
+                  <q-toolbar-title class="text-align-center">Filtro</q-toolbar-title>
+                </q-toolbar>
 
+                <q-list bordered>
+                  <q-item class="q-my-sm" clickable v-ripple @click="finderUser = true; finderSong = true;">
+                    <q-item-section avatar>
+                      <q-avatar style="background: rgba(0,0,0,0.2)" icon="search" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Todo</q-item-label>
+                    </q-item-section>
+                  </q-item>
 
-        </div>
-      </div>
-      <div class="col-3">
-        <h3 class="menu-lateral">Filtro</h3>
-        <div class="flex column menu-lateral">
-          <span class="underlineHover" id="todo" @click="finderUser = true; finderSong = true;">Todo</span>
-          <span class="underlineHover" id="usuario" @click="finderUser = true; finderSong = false;">Usuario</span>
-          <span class="underlineHover" id="cancion" @click="finderUser = false; finderSong = true;">Cancion</span>
+                  <q-item class="q-my-sm" clickable v-ripple @click="finderUser = true; finderSong = false;">
+                    <q-item-section avatar>
+                      <q-avatar style="background: rgba(0,0,0,0.2)" icon="person" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Usuario</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item class="q-my-sm" clickable v-ripple @click="finderUser = false; finderSong = true;">
+                    <q-item-section avatar>
+                      <q-avatar style="background: rgba(0,0,0,0.2)" icon="music_note" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Canción</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-separator />
+                </q-list>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
     </div>
